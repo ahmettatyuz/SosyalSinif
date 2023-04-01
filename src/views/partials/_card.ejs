@@ -1,0 +1,31 @@
+<div class="courseCard">
+  <span class="notify position-absolute translate-middle badge bg-danger">
+    1
+  </span>
+  <div class="courseCardHeader rounded-0 rounded-top" style="background-image: linear-gradient(to bottom, rgba(37, 55, 90, 0.5), rgba(37, 55, 90, 0.5)),url('<%= baseURL %>/image/math.jpeg');">
+    <%- include('./_dropdown') %>
+    <a href="">
+      <h2><%= sinif.ad %></h2>
+    </a>
+    <div class="courseTeacher"><%= sinif.ogretmen.ad %> </div>
+    <p><%= sinif.aciklama %></p>
+  </div>
+  <div class="courseCardBody">
+    <!-- burada ogretmen ve ogrenci için farklı birligler yer alacak -->
+    <!-- ogrenci için kaç tane ödevi olduğu yazacak -->
+    <!-- ogretmen için kac adet ogrenci olduğu belirtilecek -->
+    <% for( let index = 0; index < 7; index++ ) { %>
+    <!-- <div>
+      <i class="fa-solid fa-book-open"></i>
+      <span>1 yeni ödeviniz var</span>
+    </div> -->
+    <% } %>
+
+
+  </div>
+  <div class="couseCardFooter">
+    <!-- ogrenci için derse git -->
+    <!-- ogretmen için sınıfa git -->
+    <a href="<%= baseURL %>/ogrenci/dersler/1" class="courseBtn btn rounded-0 rounded-bottom">Derse git</a>
+  </div>
+</div>

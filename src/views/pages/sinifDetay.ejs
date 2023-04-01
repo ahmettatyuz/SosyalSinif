@@ -1,0 +1,41 @@
+<%- include('../partials/_sinifDersInfo') %>
+<div class="columnGroup d-md-flex justify-content-evenly">
+  <div class="column col-md-4 col-12">
+    <div class="title">
+      Duyurular
+      <button class="addRow" data-bs-toggle="modal" data-bs-target="#duyuruEkleModal"><i class="fa-solid fa-plus"></i></button>
+    </div>
+    <div class="columnItems">
+      <% for( let index = 0; index < 7; index++ ) { %>
+      <%- include('../partials/_duyuruRow') %>
+      <% } %>
+    </div>
+  </div>
+  <div class="column col-md-3 col-12">
+    <div class="title">
+      Ödevler
+      <button class="addRow" data-bs-toggle="modal" data-bs-target="#odevEkleModal"><i class="fa-solid fa-plus"></i></button>
+    </div>
+    <div class="columnItems">
+      <% for( let index = 0; index < 7; index++ ) { %>
+      <%- include('../partials/_odevRow') %>
+      <% } %>
+    </div>
+  </div>
+  <div class="column col-md-4 col-12">
+    <div class="title">
+      Öğrenciler
+      <button class="addRow" data-bs-toggle="modal" data-bs-target="#ogrenciEkleModal"><i class="fa-solid fa-plus"></i></button>
+    </div>
+    <div class="columnItems">
+      <% for( let index = 0; index < 7; index++ ) { %>
+      <%- include('../partials/_ogrenciRow') %>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/_duyuruEkleModal') %>
+<%- include('../partials/_odevEkleModal') %>
+<%- include('../partials/_ogrenciEkleModal') %>
+<%- include('../partials/_ogrenciDetayModal') %>

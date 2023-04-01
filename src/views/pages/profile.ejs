@@ -1,0 +1,169 @@
+<div class="row justify-content-between">
+  <div class="col-md-2 col-12">
+    <div class="profileImage">
+      <img src="https://picsum.photos/200/300" alt="">
+    </div>
+    <div class="profilIslemler text-center my-3">
+
+      <button class="button button-primary collapsed my-2" type="button" data-bs-toggle="collapse" data-bs-target="#bilgilerUpdate">Bilgileri Düzenle</button>
+
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#profileImageUpdate" class="button button-success my-2 collapsed">Profil Resmi Değiştir</button>
+
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#parolaUpdate" class="button button-warning my-2 collapsed">Parola Değiştir</button>
+
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#faceUpdate" class="button button-warning my-2 collapsed">Yüz Tanıma Bilgileri Değiştir</button>
+    </div>
+  </div>
+  <div class="col-md-9 col-12">
+    <div class="px-3 py-2" id="profileSettings">
+      <div class="accordion-item text-center">
+        <div id="bilgilerUpdate" class="accordion-collapse collapse show" data-bs-parent="#profileSettings">
+          <div class="accordion-body">
+            <h2>Bilgileri Düzenle</h2>
+            <form action="" method="">
+              <div class="d-flex gap-2 my-2">
+                <div class="w-50">
+                  <input type="text" class="form-control" placeholder="Adınızı girin" value="Ahmet">
+                </div>
+                <div class="w-50">
+                  <input type="text" class="form-control" placeholder="Soyadınızı girin" value="Tatyüz">
+                </div>
+              </div>
+              <div class="">
+                <input type="email" class="form-control" placeholder="Emailinizi girin" value="ahmettatyuz@gmail.com">
+              </div>
+              <div class="my-2">
+                <textarea class="form-control" name="" id="" rows="3" placeholder="Adresinizi girin">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora aliquam quas atque placeat.</textarea>
+              </div>
+
+              <div class="my-2 text-center">
+                <button class="button button-primary w-50">Güncelle</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item text-center">
+        <div id="profileImageUpdate" class="accordion-collapse collapse " data-bs-parent="#profileSettings">
+          <div class="accordion-body text-center">
+            <h2>Profil Resmi Değiştir</h2>
+            <img src="https://picsum.photos/200/300" class="profileImage" id="newProfile" alt="">
+            <form action="">
+              <input class="form-control my-3 w-50 mx-auto d-block" type="file" id=newProfile">
+              <button class="button button-primary my-3 w-50 d-block mx-auto" type="button">Önizle</button>
+
+              <button class="button button-success my-3 w-50 d-block mx-auto">Güncelle</button>
+            </form>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item text-center">
+        <div id="parolaUpdate" class="accordion-collapse collapse" data-bs-parent="#profileSettings">
+          <div class="accordion-body">
+            <h2>Parola Değiştir</h2>
+            <form action="">
+              <div class="d-block mx-auto col-md-6 col-12">
+                <div class="pwinput my-2">
+                  <i class="eye fa-solid fa-eye"></i>
+                  <input name="password" type="password" class="form-control" placeholder="Parolanızı girin">
+                </div>
+                <div class="pwinput my-2">
+                  <i class="eye fa-solid fa-eye"></i>
+                  <input name="password" type="password" class="form-control" placeholder="Parolanızı tekrar girin">
+                </div>
+                <button class="button button-warning w-100 my-2">
+                  Parolayı Güncelle
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item text-center">
+        <div id="faceUpdate" class="accordion-collapse collapse" data-bs-parent="#profileSettings">
+          <div class="accordion-body text-center">
+            <button id="profileOpenCamera" class="button button-primary">Fotoğraf Çek</button>
+            <div class="d-flex justify-content-center">
+              <%- include('../partials/_pencilLoader') %>
+            </div>
+
+            <div class="mt-2">
+              <div>
+                <canvas id="takenPhoto"></canvas>
+                <video id="webcam" autoplay class="w-100"></video>
+                <img src="//:0" alt="" id="profileCameraOutput">
+                <div class="profileCameraButtons">
+                  <button class="button button-primary" id="profileCameraTrigger">Çek</button>
+                  <button class="button button-danger" id="profileTurnOffCamera">İptal</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/webcam.js"></script>
+<script>
+  $(".eye").click(function() {
+    if ($(this).hasClass("fa-eye")) {
+      $(this).removeClass("fa-eye");
+      $(this).addClass("fa-eye-slash");
+      $(this).siblings("input[name=password]").attr("type", "text");
+    } else {
+      $(this).removeClass("fa-eye-slash");
+      $(this).addClass("fa-eye");
+      $(this).siblings("input[name=password]").attr("type", "password");
+    }
+  });
+
+  // var constraints = {
+  //   video: {
+  //     facingMode: "environment"
+  //   },
+  //   audio: false
+  // };
+  // var track = null;
+  // const cameraView = document.querySelector("#webcam"),
+  //   cameraOutput = document.querySelector("#camera--output"),
+  //   cameraSensor = document.querySelector("#camera--sensor"),
+  //   cameraTrigger = document.querySelector("#camera--trigger");
+
+  // function cameraStart() {
+  //   navigator.mediaDevices
+  //     .getUserMedia(constraints)
+  //     .then(function(stream) {
+  //       track = stream.getTracks()[0];
+  //       cameraView.srcObject = stream;
+  //     })
+  //     .catch(function(error) {
+  //       console.error("Oops. Something is broken.", error);
+  //     });
+  // }
+  // cameraTrigger.onclick = function() {
+  //   cameraSensor.width = cameraView.videoWidth;
+  //   cameraSensor.height = cameraView.videoHeight;
+  //   cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
+  //   cameraOutput.src = cameraSensor.toDataURL("image/webp");
+  //   cameraOutput.classList.add("taken");
+  // };
+  // window.addEventListener("load", cameraStart, false);
+
+  // function turnOffCamera() {
+  //   console.log("123");
+  //   const video = document.querySelector("#webcam");
+  //   localStream.getVideoTracks()[0].stop();
+  //   video.src = "";
+  //   video.srcObject = null;
+  //   localStream = null;
+  //   $("#face-id-open").css("display", "inline-block");
+  //   $("#face-id-close").css("display", "none");
+
+  //   $("#pencilLoader").css("display", "none");
+  //   $("#loginLoader").css("display", "inline-block");
+  // }
+</script>

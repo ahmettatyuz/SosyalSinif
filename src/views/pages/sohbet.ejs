@@ -1,0 +1,68 @@
+<div class="d-md-flex">
+  <div class="kisiler col-md-4 col-lg-3 col-12 p-0 m-0">
+    <div class="kisilerSearch p-1">
+      <input type="search" class="form-control" placeholder="Kişileri arayın">
+    </div>
+    <div class="kisilerList">
+      <% for( let index = 0; index < 28; index++ ) { %>
+      <%- include('../partials/_kisiRow',{index}) %>
+      <% } %>
+    </div>
+  </div>
+  <div class="mesajlar col-md-8 col-lg-9 col-12">
+    <div class="mesajHeader d-flex justify-content-between align-items-center">
+      <div class="mesajHeaderLeft d-flex align-items-center gap-3">
+        <div class="kisiImg">
+          <img src="https://picsum.photos/200/300" alt="">
+        </div>
+        <div>
+          <div class="kisiAd">Kişi Adı </div>
+          <div class="kisiStatus">Son görülme dün 21:06</div>
+        </div>
+
+      </div>
+      <div class="mesajHeaderRight">
+
+      </div>
+    </div>
+
+    <div class="mesajKutulari">
+      <% for( let index = 0; index < 5; index++ ) { %>
+      <%- include('../partials/_mesajKutusu',{content:"Merhaba",state:"receiver"}) %>
+      <%- include('../partials/_mesajKutusu',{content:"Merhaba",state:"sender"}) %>
+      <%- include('../partials/_mesajKutusu',{content:"Nasılsın",state:"sender"}) %>
+      <%- include('../partials/_mesajKutusu',{content:"İyiyim",state:"receiver"}) %>
+      <%- include('../partials/_mesajKutusu',{content:"Sen nasılsın",state:"receiver"}) %>
+      <%- include('../partials/_mesajKutusu',{content:"Merhaba",state:"receiver"}) %>
+      <%- include('../partials/_mesajKutusu',{content:"Merhaba ",state:"sender"}) %>
+      <%- include('../partials/_mesajKutusu',{content:"Lorem ipsum dolor sit amet consecteturasdasd, adipisicing elit. Quis, quisquam!",state:"sender"}) %>
+      <%- include('../partials/_mesajKutusu',{content:"Merhaba",state:"receiver"}) %>
+      <%- include('../partials/_mesajKutusu',{content:"Lorem ipsum dolor sit amet consecteturasdasd, adipisicing elit. Quis, quisquam!",state:"receiver"}) %>
+      <%- include('../partials/_mesajKutusu',{content:"Merhaba",state:"sender"}) %>
+      <%- include('../partials/_mesajKutusu',{content:"Nasılsın",state:"sender"}) %>
+      <%- include('../partials/_mesajKutusu',{content:"İyiyim",state:"receiver"}) %>
+      <%- include('../partials/_mesajKutusu',{content:"Sen nasılsın",state:"receiver"}) %>
+
+      <% } %>
+
+    </div>
+    <div class="mesajFooter d-flex justify-content-between">
+      <div class="mesajInput col-9 col-md-10 ">
+        <input type="text" class="form-control" placeholder="Bir mesaj yazın...">
+      </div>
+      <div class="dosyaEkleBtn col-md-1 text-center">
+        <button class="button button-primary px-3"><i class="fa-solid fa-file"></i></button>
+      </div>
+      <div class="mesajGonderBtn col-md-1 text-center">
+        <button class="button button-success px-3"><i class="fa-solid fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $("#container").removeClass("container");
+    $("#container").removeClass("my-2");
+  })
+</script>

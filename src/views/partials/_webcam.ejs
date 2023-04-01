@@ -1,0 +1,146 @@
+<!-- <video autoplay="false" id="webcam">
+    
+</video>
+
+<script>
+  $(document).ready(function() {
+    $("#face-id-open").click(function() {
+      const video = document.querySelector("#webcam");
+      if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({
+            video: true
+          })
+          .then((stream) => {
+            video.srcObject = stream;
+            $(this).css("display","none");
+            $("#face-id-close").css("display", "block");
+          })
+          .catch(() => {
+            console.log("sorun oluştu");
+          });
+      }
+    });
+
+    $("#face-id-close").click(function() {
+      console.log("kapat");
+      const video = document.querySelector("#webcam");
+      if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({
+            video: true
+          })
+          .then((stream) => {
+            stream.getTracks().forEach(function(track) {
+              console.log(track);
+              track.stop();
+              video.srcObject = null;
+              stream = null;
+              $("#face-id-close").css("display","none");
+              $("#face-id-open").css("display","block");
+            });
+          })
+          .catch(() => {
+            console.log("sorun oluştu");
+          });
+      }
+    })
+  })
+</script> -->
+
+
+
+
+
+<!-- <script>
+  async function openCamera() {
+    const video = document.querySelector("#webcam");
+    $("#pencilLoader").css("display", "block");
+    $("#loginLoader").css("display", "none");
+    await navigator.mediaDevices.getUserMedia({
+        video: true
+      })
+      .then(stream => {
+        window.localStream = stream;
+        video.srcObject = stream;
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    $("#face-id-open").css("display", "none");
+    $("#face-id-close").css("display", "inline-block");
+    $("#camera-trigger").css("display", "inline-block");
+    $("#pencilLoader").css("display", "none");
+    $("#loginLoader").css("display", "block");
+  }
+
+  function turnOffCamera() {
+    const video = document.querySelector("#webcam");
+    localStream.getVideoTracks()[0].stop();
+    video.src = "";
+    video.srcObject = null;
+    localStream = null;
+    $("#face-id-open").css("display", "inline-block");
+    $("#face-id-close").css("display", "none");
+
+    $("#pencilLoader").css("display", "none");
+    $("#loginLoader").css("display", "inline-block");
+  }
+
+  function cameraTrigger() {
+    cameraTrigger.onclick = function() {
+      cameraSensor.width = cameraView.videoWidth;
+      cameraSensor.height = cameraView.videoHeight;
+      cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
+      cameraOutput.src = cameraSensor.toDataURL("image/webp");
+      cameraOutput.classList.add("taken");
+    };
+  }
+
+
+  $(document).ready(function() {
+    $("#face-id-open").click(async function() {
+      const video = document.querySelector("#webcam");
+      $("#pencilLoader").css("display", "inline-block");
+      $("#loginLoader").css("display", "none");
+      await navigator.mediaDevices.getUserMedia({
+          video: true
+        })
+        .then(stream => {
+          window.localStream = stream;
+          video.srcObject = stream;
+
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      $("#face-id-open").css("display", "none");
+      $("#face-id-close").css("display", "inline-block");
+      $("#pencilLoader").css("display", "none");
+      $("#loginLoader").css("display", "block");
+
+    });
+
+    $("#face-id-close").click(function() {
+      const video = document.querySelector("#webcam");
+      localStream.getVideoTracks()[0].stop();
+      video.src = "";
+      video.srcObject = null;
+      localStream = null;
+      $("#face-id-open").css("display", "inline-block");
+      $("#face-id-close").css("display", "none");
+
+      $("#pencilLoader").css("display", "none");
+      $("#loginLoader").css("display", "block");
+
+    })
+  })
+</script> -->
+
+<!-- 
+cameraTrigger.onclick = function() {
+  cameraSensor.width = cameraView.videoWidth;
+  cameraSensor.height = cameraView.videoHeight;
+  cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
+  cameraOutput.src = cameraSensor.toDataURL("image/webp");
+  cameraOutput.classList.add("taken");
+}; -->

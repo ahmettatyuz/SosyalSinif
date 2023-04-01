@@ -1,0 +1,627 @@
+@import "colors.css";
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+/* offcanvas */
+.offcanvas {
+    background-color: var(--acik);
+    width: 260px !important;
+}
+
+.offcanvas-item a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 8px;
+    padding: 15px 5px;
+    color: var(--mavi);
+    border-radius: 10px;
+    transition: background-color 0.4s;
+}
+
+.offcanvas-item a:hover {
+    background-color: var(--acikmavi);
+}
+
+.offcanvas-item a i {
+    font-size: 1.3em;
+}
+
+/* navigation */
+.navigation {
+    border-bottom: 1px solid var(--acikmavi);
+    padding: 5px 5px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: white;
+}
+
+
+/* login */
+.login {
+    height: 100vh;
+    background-image: linear-gradient(to top, rgba(63, 113, 175, 1), rgb(255, 255, 255));
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+
+}
+
+.loginBox {
+    /* width: 50vw; */
+    /* border: 1px solid var(--acikmavi); */
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: var(--golge1);
+}
+
+.registerBox {
+    /* width: 50vw; */
+    /* border: 1px solid var(--acikmavi); */
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: var(--golge1);
+}
+
+.loginImage {
+    background-image: url("/image/loginimage.jpg");
+    /* height: 70vh; */
+    background-position: center;
+    background-size: cover;
+    padding: 0 !important;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#webcam {
+    height: 70vh;
+
+}
+
+
+.loginForm {
+    height: 70vh;
+    padding: 10px 50px 50px 40px;
+    overflow-y: scroll;
+}
+
+.login-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    color: var(--kapalimavi);
+    width: 100%;
+    padding: 0 20px;
+}
+
+@media (max-width: 575px) {
+    .login {
+        align-items: start !important;
+    }
+
+    .loginForm {
+        display: block;
+    }
+
+    .login-navigation {
+        position: static;
+    }
+
+}
+
+.loginTitle {
+    font-size: 30px;
+    font-weight: 200;
+    color: var(--kapalimavi);
+}
+
+.registerTitle {
+    font-size: 50px;
+    font-weight: 200;
+    color: var(--kapalimavi);
+}
+
+.form {
+    padding: 15px 20px;
+}
+
+.pwinput {
+    position: relative;
+}
+
+.eye {
+    color: var(--mavi);
+    cursor: pointer;
+    position: absolute;
+    right: 8px;
+    top: 11px;
+}
+
+.forgotPassword {
+    text-align: end;
+
+}
+
+.forgotPassword a {
+    text-decoration: none;
+    font-size: 12px;
+    color: var(--kapalimavi);
+    transition-duration: 0.3s;
+
+}
+
+.forgotPassword:hover a {
+    text-decoration: underline;
+}
+
+.nav-img img {
+    width: 100px;
+}
+
+.nav-img {
+    position: relative;
+    box-sizing: border-box;
+    left: 0px;
+    transition-duration: 0.3s;
+    padding: 10px;
+    border-radius: 5px;
+
+}
+
+.nav-img:hover {
+    left: 10px;
+}
+
+/* courseCard */
+.courseCard {
+    border: none;
+    height: 250px;
+    position: relative;
+    /* transition: transform 0.3s; */
+    transition-duration: 0.3s;
+    /* border: 1px solid var(--kapalimavi); */
+    border-radius: 5px;
+    /* overflow: hidden; */
+    box-shadow: var(--golge2);
+    background-color: var(--acikmavi);
+
+}
+
+@media (min-width: 575px) {
+    .courseCard:hover {
+        transform: scale(1.05);
+        box-shadow: var(--golge1);
+    }
+}
+
+.notify {
+    font-size: 13px;
+    top: 5px;
+    right: 5px;
+    z-index: 1;
+}
+
+.courseCardHeader {
+    background-position: center;
+    background-size: cover;
+    /* overflow: hidden; */
+    padding: 10px;
+    color: var(--acikmavi);
+
+}
+
+.courseCardHeader p {
+    margin: 0;
+}
+
+.courseCardHeader a {
+    color: var(--acikmavi);
+    text-decoration: none;
+}
+
+.courseOption {
+    background: none;
+    border: none;
+    color: white;
+    position: absolute;
+    right: 5px;
+    font-size: 20px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    transition-duration: 0.3s;
+}
+
+.courseOption:hover {
+    background-color: var(--acikmavi);
+    color: var(--kapalimavi);
+}
+
+.courseTeacher {
+    font-style: italic;
+}
+
+.courseCardBody {
+    /* display: flex;
+    align-items: center; */
+    padding: 10px;
+    gap: 1px;
+    color: var(--mavi);
+    overflow-y: scroll;
+    height: 100px;
+    position: relative;
+}
+
+.couseCardFooter {
+    width: 100%;
+}
+
+.courseBtn {
+    width: 100%;
+    display: inline-block;
+    background-color: var(--acikmavi);
+    border: none;
+    position: absolute;
+    bottom: 0;
+}
+
+.courseBtn:hover {
+    background-color: var(--mavi);
+    color: var(--acikmavi);
+}
+
+.courseBtn:active {
+    background-color: var(--kapalimavi) !important;
+    color: var(--acikmavi) !important;
+}
+
+
+/* profile offcanvas */
+.profileImage {
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    text-align: center;
+    margin: auto;
+    border: 2px solid var(--mavi);
+    border-radius: 50%;
+}
+
+.profileImage img {
+    width: 100%;
+    height: 100%;
+}
+
+.profileInfo {
+    color: var(--mavi);
+    text-align: center;
+}
+
+#takenPhoto{
+    display: none;
+}
+
+.profileCameraButtons{
+    display: none;
+}
+
+
+/* ders detay */
+.courseInfo {
+    position: relative;
+    background-position: center; 
+    background-size: cover;
+    background-image: linear-gradient(to bottom, rgba(37, 55, 90, 0.5), rgba(37, 55, 90, 0.5));
+    border-radius: 7px;
+    padding: 10px;
+    color: var(--acikmavi);
+    height: 200px;
+    margin-bottom: 10px;
+}
+
+.courseInfo h1 {
+    font-size: 60px;
+}
+
+
+
+.column {
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+    margin-bottom: 7px;
+}
+
+.column .addRow {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+}
+
+.title {
+    font-size: 30px;
+    text-align: center;
+    background-color: var(--mavi);
+    color: var(--acikmavi);
+    padding: 7px;
+    position: sticky;
+    top: 0;
+}
+
+.columnItems {
+    padding: 15px;
+    box-shadow: var(--icgolge);
+    height: 80vh;
+    overflow-y: scroll;
+}
+
+.columnRow {
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: var(--acikmavi);
+    border-radius: 7px;
+}
+
+.tarih {
+    font-size: 12px;
+}
+
+/* paneller */
+.panelDropdown {
+    padding: 0;
+    overflow: hidden;
+    z-index: 5;
+    box-shadow: var(--golge1);
+    background-color: var(--acikmavi);
+}
+
+.panelScrollArea {
+    height: 50vh;
+    overflow-y: scroll;
+}
+
+.panelTitle {
+    position: sticky;
+    top: 0;
+    padding: 10px;
+    background-color: var(--mavi);
+    color: white;
+}
+
+.panelRow a {
+    margin: 4px;
+    padding: 2px 10px;
+    width: 350px;
+    font-size: 14px;
+    transition-duration: 0.3s;
+    border-radius: 7px;
+    display: block;
+    text-decoration: none;
+}
+
+.panelRow a:hover {
+    background-color: var(--mavi);
+    color: white;
+}
+
+.panelRowLeft {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+/* ekleme modalları */
+.eklemeModal {
+    background-color: var(--acikmavi);
+    position: relative;
+}
+
+.modalInput {
+    margin: 10px 0;
+}
+
+.odevEkleBody {
+    height: 80vh;
+    overflow-y: scroll;
+}
+
+.modal-footer {
+    position: sticky;
+    bottom: 0;
+    right: 0;
+    border-top: 1px solid var(--mavi);
+    background-color: var(--acikmavi) !important;
+    width: 100%;
+    margin: 5px 0;
+}
+
+/* ogrenci bilgi */
+
+
+
+.ogrenciBilgiler {
+    font-size: 14px;
+
+}
+
+.ogrenciBilgiler div {
+    border-top: 1px solid var(--mavi);
+    margin: 3px 0;
+    padding: 5px;
+}
+
+
+/* sohbet */
+.kisiler {
+    padding: 10px;
+    height: calc(100vh - 73px);
+    overflow: hidden;
+    overflow-y: scroll;
+    background-color: var(--mavi);
+
+}
+
+.kisiler .kisilerSearch {
+    border-bottom: 1px solid var(--acikmavi);
+    position: sticky;
+    top: 0;
+    background-color: var(--mavi);
+}
+
+
+.kisi {
+    border-bottom: 1px solid var(--acikmavi);
+    padding: 10px;
+    color: var(--acikmavi);
+    transition-duration: 0.3s;
+}
+
+.kisi a {
+    text-decoration: none;
+    color: var(--acikmavi);
+}
+
+.kisi:hover,
+.kisi:hover a {
+    background-color: var(--acikmavi);
+    color: var(--mavi);
+}
+
+.kisiImg img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid var(--acikmavi);
+}
+
+
+.kisiSonMesaj {
+    font-size: 14px;
+}
+
+.mesajHeader {
+    background-color: var(--mavi);
+    padding: 5px 10px;
+    color: var(--acikmavi);
+    position: sticky;
+    top: 0;
+}
+
+.kisiStatus {
+    font-size: 14px;
+}
+
+.mesajlar {
+    background-color: var(--acikmavi);
+    /* height: calc(100vh - 191px); */
+}
+
+.mesajKutulari {
+    height: calc(100vh - 191px);
+    overflow-y: scroll;
+    padding: 10px 10px 10px 15px;
+    color: var(--acikmavi);
+    background-image: url("../image/sohbet-bg.png");
+}
+
+.mesaj {
+    padding: 10px;
+    margin: 5px 0;
+    display: inline-block;
+    background-color: var(--mavi);
+}
+
+.receiver {
+    border-radius: 0px 10px 10px 10px;
+}
+
+.sender {
+    border-radius: 10px 0 10px 10px;
+}
+
+.mesajTime {
+    font-size: 12px;
+}
+
+.mesajFooter {
+    background-color: var(--mavi);
+    padding: 10px;
+}
+
+/* profile */
+#profileCameraOutput{
+    height: 70vh;
+    display: none;
+}
+
+
+/* sorular */
+
+.soru{
+    padding: 5px;
+    border-top: 1px solid var(--acikmavi);
+    transition: background-color 0.3s;
+}
+
+.soru:hover{
+    background-color: var(--acikmavi);
+}
+
+.soruBaslik a{
+    text-decoration: none;
+    color: var(--mavi);
+}
+
+.soruBaslik a:hover{
+    text-decoration: underline;
+}
+
+.soruBadge{
+    text-align: right;
+    font-size: 14px;
+}
+
+
+/* diger */
+.page-name {
+    font-size: 1.3em;
+}
+
+.dropdown a {
+    color: var(--kapalimavi);
+}
+
+
+/* scroll bar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--mavi);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--kapalimavi)
+}

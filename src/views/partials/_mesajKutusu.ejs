@@ -1,0 +1,13 @@
+<div class="mesajKutusu d-flex justify-content-<%= (state=="sender") ? "end" : 'start' %>">
+  <div class="d-flex justify-content-<%= (state=="sender") ? "end" : 'start' %> align-items-start col-md-5 col-11">
+    <div class="mesaj <%= state %> d-flex justify-content-<%= (state=="sender") ? "end" : 'start' %> align-items-end gap-2">
+      <div class="mesajLeft"><%= content %></div>
+      <div class="mesajRight d-flex align-items-center gap-2">
+        <div class="mesajTime">15:30</div>
+        <% if (state=="sender") { %>
+        <div class="mesajState"><i class="fa-solid fa-check"></i></div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="dropdown">
+  <button class="nav-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <% if (title=="Bildirimler") { %>
+    <i class="fa-solid fa-bell"></i>
+    <% } else if (title=="Mesajlar") { %>
+    <i class="fa-solid fa-message"></i>
+    <% } %>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end panelDropdown">
+    <li class="panelTitle">
+      <h3 class="m-0">
+        <%= title %>
+      </h3>
+    </li>
+    <div class="panelScrollArea">
+      <% for( let index = 0; index < 30; index++ ) { %>
+      <li class="panelRow">
+        <a href="#">
+          <div class="d-flex justify-content-between">
+            <div class="panelRowLeft">Bildirim notu</div>
+            <div class="panelRowRight">Sağ</div>
+          </div>
+          <div class="panelRowContent">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+        </a>
+
+      </li>
+      <% } %>
+    </div>
+
+
+  </ul>
+</div>

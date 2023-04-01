@@ -1,0 +1,7 @@
+<div class="row">
+    <% siniflar.forEach(sinif => { %>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 p-2">
+            <%- include('../partials/_card',{sinif}) %>
+        </div>
+    <% }) %>
+</div>

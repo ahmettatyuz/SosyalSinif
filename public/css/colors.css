@@ -1,0 +1,71 @@
+:root{
+    --acik:#F9F7F7;
+    --acikmavi:#DBE2EF; /* 219, 226, 239*/
+    --mavi:#3F72AF; /* 63, 114, 175 */
+    --kapalimavi:#112D4E;
+    --kirmizi:#e74c3c;
+    --koyukirmizi:#c0392b;
+    --yesil:rgb(101, 173, 101);
+    --koyuyesil:rgb(65, 110, 65);
+    --sari:#ffc107;
+    --koyusari:#9e7600;
+    --golge1 :rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    --golge2:rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    --icgolge:rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+
+
+
+.bg-mavi{
+    background-color: var(--mavi) !important;
+}
+.bg-acik{
+    background-color: var(--acik) !important;
+}
+.bg-acikmavi{
+    background-color: var(--acikmavi) !important;
+}
+.bg-kapalimavi{
+    background-color: var(--kapalimavi) !important;
+}
+
+.bg-kirmizi{
+    background-color: var(--kirmizi) !important;
+}
+
+.bg-koyukirmizi{
+    background-color: var(--koyukirmizi) !important;
+}
+.bg-yesil{
+    background-color: var(--yesil) !important;
+}
+.bg-sari{
+    background-color: var(--sari) !important;
+}
+.bg-koyusari{
+    background-color: var(--koyusari) !important;
+}
+.bg-transparent{
+    background:none;
+    background-image: linear-gradient(to bottom,rgba(255, 255, 255, 0.3),rgba(255, 255, 255, 0.3));
+}
+
+.text-mavi{
+    color: var(--mavi);
+}
+
+.text-sari{
+    color: var(--sari);
+}
+
+.text-yesil{
+    color: var(--yesil);
+}
+
+.text-kirmizi{
+    color: var(--kirmizi);
+}
+
+.text-kapalimavi{
+    color: var(--kapalimavi);
+}

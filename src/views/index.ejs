@@ -1,0 +1,32 @@
+<%- include('./partials/_header',); %>
+<%- include('./partials/_navbar'); %>
+<%- include('./partials/_leftMenu'); %>
+<%- include('./partials/_profileMenu'); %>
+
+<div id="container" class="container my-2">
+  <% if (page=="siniflar") { %>
+  <%- include('./pages/dersler',{siniflar}) %>
+
+  <% }else if (page=="dersler" ) { %>
+  <%- include('./pages/dersler') %>
+
+  <% }else if (page=="dersDetay" ) { %>
+  <%- include('./pages/dersDetay') %>
+
+  <% }else if (page=="sinifDetay" ) { %>
+  <%- include('./pages/sinifDetay') %>
+
+  <% }else if (page=="sohbet" ) { %>
+  <%- include('./pages/sohbet') %>
+
+  <% }else if (page=="profile" ) { %>
+  <%- include('./pages/profile') %>
+
+  <% }else if (page=="sorular" ) { %>
+  <%- include('./pages/sorular') %>
+  <% } %>
+</div>
+
+
+
+<%- include('./partials/_footer') %>

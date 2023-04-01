@@ -1,0 +1,80 @@
+@import "colors.css";
+
+.button {
+    position: relative;
+    /* width: 100px; */
+    border: none;
+    padding: 0.3em;
+    transition: 0.3s;
+    border-radius: 5px;
+    opacity: 0.8;
+    letter-spacing: 1px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    opacity: 1;
+}
+
+.button:active {
+    top: 4px;
+    box-shadow: var(--kapalimavi) 0px 3px 2px, #000 0px 3px 5px;
+}
+
+.button-primary{
+    background: var(--mavi);
+    color: white;
+    box-shadow: var(--kapalimavi) 0px 7px 2px, #000 0px 8px 5px;
+}
+
+.button-danger{
+    background-color: var(--kirmizi);
+    color: white;
+    box-shadow: var(--koyukirmizi) 0px 7px 2px, #000 0px 8px 5px;
+}
+.button-success{
+    background-color: var(--yesil);
+    color: white;
+    box-shadow: var(--koyuyesil) 0px 7px 2px, #000 0px 8px 5px;
+}
+.button-warning{
+    background-color: var(--sari);
+    color: black;
+    box-shadow: var(--koyusari) 0px 7px 2px, #000 0px 8px 5px;
+}
+
+.nav-btn{
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    padding: 5px 13px;
+    display: inline-block;
+    border-radius: 10px;
+    color: var(--mavi);
+    transition: background 0.3s;
+    margin: 3px 3px;
+    text-align: center;
+}
+
+.nav-btn:hover{
+    background-color: var(--acikmavi);
+}
+.nav-btn:active{
+    color: var(--kapalimavi);
+}
+
+.addRow{
+    border:none;
+    text-align: center;
+    border-radius: 10px;
+    color: var(--acikmavi);
+    background: none;
+    transition-duration: 0.3s;
+    font-size: 25px;
+}
+
+.addRow:hover{
+    background-color: var(--acikmavi);
+    color: var(--mavi);
+}

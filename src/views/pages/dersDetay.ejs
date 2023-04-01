@@ -1,0 +1,19 @@
+<%- include('../partials/_sinifDersInfo') %>
+<div class="columnGroup d-md-flex justify-content-evenly">
+  <div class="column col-md-5 col-12">
+    <div class="title">Duyurular</div>
+    <div class="columnItems">
+      <% for( let index = 0; index < 7; index++ ) { %>
+      <%- include('../partials/_duyuruRow') %>
+      <% } %>
+    </div>
+  </div>
+  <div class="column col-md-5 col-12">
+    <div class="title">Ödevler</div>
+    <div class="columnItems">
+      <% for( let index = 0; index < 7; index++ ) { %>
+        <%- include('../partials/_odevRow') %>
+        <% } %>
+    </div>
+  </div>
+</div>
