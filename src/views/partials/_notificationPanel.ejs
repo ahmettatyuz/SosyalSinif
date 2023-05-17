@@ -1,32 +1,83 @@
-<div class="dropdown">
-  <button class="nav-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <% if (title=="Bildirimler") { %>
-    <i class="fa-solid fa-bell"></i>
-    <% } else if (title=="Mesajlar") { %>
-    <i class="fa-solid fa-message"></i>
+<% if (title=="Bildirimler" ) { %>
+<div id="bildirimlerDropdown" class="dropdown">
+  <% } else if (title=="Mesajlar" ) { %>
+  <div id="mesajlarDropdown" class="dropdown">
     <% } %>
-  </button>
-  <ul class="dropdown-menu dropdown-menu-end panelDropdown">
-    <li class="panelTitle">
-      <h3 class="m-0">
-        <%= title %>
-      </h3>
-    </li>
-    <div class="panelScrollArea">
-      <% for( let index = 0; index < 30; index++ ) { %>
-      <li class="panelRow">
-        <a href="#">
-          <div class="d-flex justify-content-between">
-            <div class="panelRowLeft">Bildirim notu</div>
-            <div class="panelRowRight">Sağ</div>
-          </div>
-          <div class="panelRowContent">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
-        </a>
-
-      </li>
+    <button class="nav-btn position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <% if (title=="Bildirimler" ) { %>
+      <i class="fa-solid fa-bell"></i>
+      <% if (userSession.bildirimler.length>0) { %>
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 12px;z-index:4">
+        <%= userSession.bildirimler.length %>
+      </span>
       <% } %>
-    </div>
+      <% } else if (title=="Mesajlar" ) { %>
+      <i class="fa-solid fa-message"></i>
+      <% if (userSession.mesajlar.length>0) { %>
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 12px;z-index:4">
+        <%= userSession.mesajlar.length %>
+      </span>
+      <% } %>
+      <% } %>
 
 
-  </ul>
-</div>
+    </button>
+
+    <ul class="dropdown-menu dropdown-menu-end panelDropdown">
+      <li class="panelTitle">
+        <h3 class="m-0">
+          <%= title %>
+        </h3>
+      </li>
+      <div class="panelScrollArea">
+        <% if (title=="Mesajlar") { %>
+        <% userSession.mesajlar.forEach(mesaj => { %>
+        <li class="panelRow">
+          <a href="/sohbet">
+            <div class="d-flex justify-content-between">
+              
+              <div class="fw-semibold"><%= mesaj.createdAt.split("T")[1].slice(0,5) %></div>
+            </div>
+            <div class="fw-bold fs-5"><%= mesaj.sender.ad +" "+mesaj.sender.soyad %></div>
+            <div class="panelRowContent"><%= mesaj.message %></div>
+          </a>
+        </li>
+        <% }) %>
+        <% } else if (title=="Bildirimler") { %>
+        <% userSession.bildirimler.forEach(bildirim => { %>
+        <li class="panelRow">
+          <% if (userSession.role=="ogrenci") { %>
+          <a href="/ogrenci/dersler/<%= bildirim.sinifid %>">
+          <% } else if (userSession.role=="ogretmen") { %>
+          <a href="/ogretmen/siniflar/<%= bildirim.sinifid %>">
+            <% } %>
+            <div class="fw-bold fs-5 text-center"><%= bildirim.sinifAd %></div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="fw-bold"><%= bildirim.title%></div>
+              <div class="fw-semibold text-end"><%= bildirim.createdAt %></div>
+            </div>
+            <div class="panelRowContent"><%= bildirim.content %></div>
+          </a>
+        </li>
+        <% }) %>
+        <% } %>
+
+      </div>
+
+    </ul>
+  </div>
+  <% if (title=="Bildirimler" ) { %>
+  <% } else if (title=="Mesajlar" ) { %>
+  <script>
+    $(document).ready(async function() {
+      const token = Cookies.get('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const mesajlar = await axios.get("/api/sohbet/unseen", config);
+      console.log(mesajlar.data.length);
+    });
+  </script>
+  <% } %>

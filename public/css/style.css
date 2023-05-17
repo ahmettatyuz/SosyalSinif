@@ -8,6 +8,16 @@ html {
     font-size: 16px;
 }
 
+body{
+    background-image: linear-gradient(to top, rgba(63, 113, 175, 1), rgb(255, 255, 255));
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    background-attachment: fixed;
+}
+
+
 /* offcanvas */
 .offcanvas {
     background-color: var(--acik);
@@ -35,12 +45,13 @@ html {
 
 /* navigation */
 .navigation {
-    border-bottom: 1px solid var(--acikmavi);
+    /* border-bottom: 1px solid var(--acikmavi); */
     padding: 5px 5px;
     position: sticky;
     top: 0;
     z-index: 999;
-    background-color: white;
+    /* background-color: white; */
+    transition: background 0.3s;
 }
 
 
@@ -178,7 +189,6 @@ html {
     transition-duration: 0.3s;
     padding: 10px;
     border-radius: 5px;
-
 }
 
 .nav-img:hover {
@@ -220,6 +230,7 @@ html {
     /* overflow: hidden; */
     padding: 10px;
     color: var(--acikmavi);
+    height: 120px;
 
 }
 
@@ -261,7 +272,7 @@ html {
     gap: 1px;
     color: var(--mavi);
     overflow-y: scroll;
-    height: 100px;
+    height: calc(100% - 166px);
     position: relative;
 }
 
@@ -288,6 +299,10 @@ html {
     color: var(--acikmavi) !important;
 }
 
+.course-background {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1192%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='%230e2a47'%3e%3c/rect%3e%3cpath d='M1299.384%2c530.627C1346.878%2c531.567%2c1388.387%2c502.952%2c1413.726%2c462.771C1441.139%2c419.302%2c1459.074%2c363.875%2c1432.141%2c320.107C1406.004%2c277.633%2c1349.114%2c273.188%2c1299.384%2c276.955C1257.068%2c280.16%2c1218.94%2c301.311%2c1197.419%2c337.886C1175.567%2c375.022%2c1172.473%2c420.307%2c1192.622%2c458.394C1214.157%2c499.101%2c1253.341%2c529.716%2c1299.384%2c530.627' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M258.5879019624266 168.491992516568L103.61575113851669 163.0802457600059 253.17615520586452 323.4641433404779z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M743.607057398888 234.90030620916525L794.9104396466371 155.90002536066933 715.9101587981412 104.59664311292022 664.606776550392 183.59692396141614z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M531.781%2c424.296C588.824%2c426.888%2c636.996%2c386.67%2c665.963%2c337.461C695.419%2c287.421%2c709.881%2c224.123%2c678.294%2c175.4C648.512%2c129.46%2c586.45%2c127.528%2c531.781%2c130.481C483.553%2c133.086%2c434.747%2c148.199%2c410.338%2c189.875C385.701%2c231.94%2c394.756%2c282.87%2c417.18%2c326.155C441.976%2c374.019%2c477.932%2c421.849%2c531.781%2c424.296' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M807.6611347107532 347.9960612671086L897.7200359815936 338.53048932016986 838.4922274257653 208.17492338737884z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M402.12857522401106 518.9013962485474L315.98480151242825 469.16626530715484 266.2496705710357 555.3100390187377 352.39344428261853 605.0451699601301z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float1'%3e%3c/path%3e%3cpath d='M442.7076928645352-117.31760573984418L371.1636811492461 23.095423258565845 511.5767101476561 94.63943497385496 583.1207218629452-45.77359402455505z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M433.3%2c198.34C461.881%2c196.932%2c479.292%2c170.101%2c493.073%2c145.022C506.168%2c121.192%2c516.316%2c93.936%2c503.987%2c69.701C490.653%2c43.491%2c462.705%2c27.231%2c433.3%2c27.53C404.375%2c27.825%2c379.432%2c46.01%2c365.064%2c71.116C350.799%2c96.043%2c348.801%2c126.152%2c362.376%2c151.461C376.732%2c178.228%2c402.963%2c199.835%2c433.3%2c198.34' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M1151.985%2c168.738C1168.513%2c168.406%2c1181.661%2c157.032%2c1190.464%2c143.04C1200.04%2c127.82%2c1208.208%2c109.127%2c1199.324%2c93.493C1190.374%2c77.743%2c1170.1%2c75.21%2c1151.985%2c75.326C1134.136%2c75.44%2c1114.81%2c78.753%2c1105.682%2c94.091C1096.4%2c109.688%2c1101.166%2c129.217%2c1110.733%2c144.641C1119.73%2c159.145%2c1134.92%2c169.081%2c1151.985%2c168.738' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M410.093%2c467.991C429.474%2c469.376%2c451.452%2c466.844%2c461.49%2c450.208C471.743%2c433.217%2c464.426%2c412.071%2c454.036%2c395.163C444.23%2c379.205%2c428.812%2c367.21%2c410.093%2c366.572C390.239%2c365.895%2c369.793%2c374.351%2c360.631%2c391.978C351.974%2c408.633%2c359.781%2c427.938%2c370.018%2c443.671C379.152%2c457.708%2c393.389%2c466.797%2c410.093%2c467.991' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float1'%3e%3c/path%3e%3cpath d='M429.556%2c663.257C463.436%2c663.087%2c491.473%2c638.919%2c507.313%2c608.97C522.099%2c581.014%2c520.591%2c548.034%2c505.073%2c520.477C489.236%2c492.353%2c461.804%2c472.264%2c429.556%2c470.885C394.784%2c469.398%2c359.182%2c483.259%2c341.953%2c513.5C324.864%2c543.495%2c333.007%2c579.958%2c350.438%2c609.756C367.667%2c639.209%2c395.434%2c663.428%2c429.556%2c663.257' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M453.2694451405828 317.44243979712877L361.8418177550136 255.7737264508665 391.6007317943205 408.87006718269794z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float1'%3e%3c/path%3e%3cpath d='M326.01212480516074-19.654511056213423L240.3111746550734-45.85592094725429 214.10976476403255 39.84502920283305 299.81071491411984 66.04643909387391z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M1309.6487109025463 291.9013684908793L1429.1179040361474 372.48435675978584 1509.700892305054 253.0151636261848 1390.2316991714529 172.43217535727825z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M111.06694261078698 425.0011028869979L85.45781563535623 279.76452665495594-59.778760596685714 305.3736536303867-34.169633621254974 450.61022986242864z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1192'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3cstyle%3e %40keyframes float1 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(-10px%2c 0)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float1 %7b animation: float1 5s infinite%3b %7d %40keyframes float2 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(-5px%2c -5px)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float2 %7b animation: float2 4s infinite%3b %7d %40keyframes float3 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(0%2c -10px)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float3 %7b animation: float3 6s infinite%3b %7d %3c/style%3e%3c/defs%3e%3c/svg%3e");
+}
+
 
 /* profile offcanvas */
 .profileImage {
@@ -311,11 +326,11 @@ html {
     text-align: center;
 }
 
-#takenPhoto{
+#takenPhoto {
     display: none;
 }
 
-.profileCameraButtons{
+.profileCameraButtons {
     display: none;
 }
 
@@ -323,9 +338,9 @@ html {
 /* ders detay */
 .courseInfo {
     position: relative;
-    background-position: center; 
+    background-position: center;
     background-size: cover;
-    background-image: linear-gradient(to bottom, rgba(37, 55, 90, 0.5), rgba(37, 55, 90, 0.5));
+    /* background-image: linear-gradient(to bottom, rgba(37, 55, 90, 0.5), rgba(37, 55, 90, 0.5)); */
     border-radius: 7px;
     padding: 10px;
     color: var(--acikmavi);
@@ -341,10 +356,11 @@ html {
 
 .column {
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; */
     border-radius: 5px;
     /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
     margin-bottom: 7px;
+    background-color: white;
 }
 
 .column .addRow {
@@ -361,13 +377,18 @@ html {
     padding: 7px;
     position: sticky;
     top: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .columnItems {
     padding: 15px;
     box-shadow: var(--icgolge);
-    height: 80vh;
+    height: 75vh;
     overflow-y: scroll;
+    list-style: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .columnRow {
@@ -375,7 +396,11 @@ html {
     margin-bottom: 15px;
     background-color: var(--acikmavi);
     border-radius: 7px;
+    overflow-x: auto;
 }
+
+
+
 
 .tarih {
     font-size: 12px;
@@ -419,14 +444,12 @@ html {
     color: white;
 }
 
-.panelRowLeft {
-    font-weight: bold;
-    font-size: 1.2em;
-}
 
 /* ekleme modalları */
 .eklemeModal {
-    background-color: var(--acikmavi);
+    background-color: transparent;
+    background-image: linear-gradient(to top, rgba(219, 226, 239, 0.6), rgba(219, 226, 239, 0.6));
+    box-shadow: var(--golge1);
     position: relative;
 }
 
@@ -440,13 +463,20 @@ html {
 }
 
 .modal-footer {
-    position: sticky;
+    /* position: sticky;
     bottom: 0;
-    right: 0;
-    border-top: 1px solid var(--mavi);
-    background-color: var(--acikmavi) !important;
+    right: 0; */
+    /* background-color: var(--acikmavi) !important; */
+    background-color: transparent !important;
     width: 100%;
     margin: 5px 0;
+}
+
+.modal-backdrop
+{
+    opacity:0.9 !important;
+    background-image: linear-gradient(to top, rgba(63, 113, 175, 1), rgba(255, 255, 255,1));
+    transition-duration: 0.3s;
 }
 
 /* ogrenci bilgi */
@@ -455,11 +485,15 @@ html {
 
 .ogrenciBilgiler {
     font-size: 14px;
+    text-align: center;
+    border-right: 1px solid var(--mavi);
+    padding-right: 10px;
 
 }
 
-.ogrenciBilgiler div {
-    border-top: 1px solid var(--mavi);
+.ogrenciBilgiler div:not(.profileImage) {
+    /* border-top: 1px solid var(--mavi); */
+    /* border-bottom: 1px solid var(--mavi); */
     margin: 3px 0;
     padding: 5px;
 }
@@ -482,6 +516,13 @@ html {
     background-color: var(--mavi);
 }
 
+.sohbetGrupHeader {
+    border-bottom: 1px solid var(--acikmavi);
+    padding: 10px;
+    color: var(--mavi);
+    transition-duration: 0.3s;
+    background-color: var(--acikmavi);
+}
 
 .kisi {
     border-bottom: 1px solid var(--acikmavi);
@@ -493,6 +534,7 @@ html {
 .kisi a {
     text-decoration: none;
     color: var(--acikmavi);
+    cursor: pointer;
 }
 
 .kisi:hover,
@@ -519,6 +561,11 @@ html {
     color: var(--acikmavi);
     position: sticky;
     top: 0;
+    height: 60px;
+}
+
+.mesajHeaderLeft {
+    display: none;
 }
 
 .kisiStatus {
@@ -538,9 +585,53 @@ html {
     background-image: url("../image/sohbet-bg.png");
 }
 
+.mesajKutulariInfo {
+    color: var(--mavi);
+    font-weight: 400;
+    text-align: center;
+    display: flex;
+    height: 80%;
+    align-items: center;
+    justify-content: center;
+}
+
+.mesajKutusu {
+    position: relative;
+}
+
+.mesajTime:hover .mesajPopover {
+    /* display: inline-block; */
+    visibility: visible;
+    opacity: 1;
+}
+
+.mesajTime {
+    position: relative;
+}
+
+.mesajPopover {
+    /* mesaj kutusunu güzelleştir */
+    position: absolute;
+    top: -10px;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 4;
+    right: 0px;
+    width: 100px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: var(--acikmavi);
+    color: var(--mavi);
+    border: 1px solid var(--mavi);
+    transition: visibility 0.3s, opacity 0.3s linear;
+}
+
 .mesaj {
-    padding: 10px;
+    padding: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
     margin: 5px 0;
+    font-size: 14px;
     display: inline-block;
     background-color: var(--mavi);
 }
@@ -553,7 +644,13 @@ html {
     border-radius: 10px 0 10px 10px;
 }
 
-.mesajTime {
+.mesajLeft {
+    max-width: 400px;
+    word-wrap: break-word;
+}
+
+.mesajTime,
+.mesajState {
     font-size: 12px;
 }
 
@@ -562,39 +659,135 @@ html {
     padding: 10px;
 }
 
+.unseenMessages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    background-color: var(--yesil);
+    color: var(--kapalimavi);
+    border-radius: 50%;
+}
+
 /* profile */
-#profileCameraOutput{
+#profileCameraOutput {
     height: 70vh;
     display: none;
 }
 
-
+.profileRight,.profileLeft{
+    box-shadow: var(--golge1);
+    border-radius: 5px;
+    padding-top: 10px;
+}
 /* sorular */
 
-.soru{
-    padding: 5px;
-    border-top: 1px solid var(--acikmavi);
-    transition: background-color 0.3s;
+.soru {
+    padding:10px 15px;
+    transition-duration: 0.3s;
+    /* transition: scale 0.3s ease-in-out; */
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-image: linear-gradient(to top, rgb(255, 255, 255,0.4), rgba(255, 255, 255,0.4));
 }
 
-.soru:hover{
-    background-color: var(--acikmavi);
+.soru:hover {
+    box-shadow: var(--golge1);
+    transform: scale(1.02);
 }
 
-.soruBaslik a{
+.soruBaslik a {
     text-decoration: none;
     color: var(--mavi);
 }
 
-.soruBaslik a:hover{
+.soruBaslik a:hover {
     text-decoration: underline;
 }
 
-.soruBadge{
+.soruBadge {
     text-align: right;
     font-size: 14px;
+    background-color: var(--acikmavi);
+    padding: 3px 5px;
+    border-radius: 5px;
+    color: var(--acik);
 }
 
+.sorularWrapper{
+    border-radius: 5px;
+    box-shadow: var(--golge1);
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.editorWrapper{
+    background-color: white;
+}
+
+.ql-editor{
+    min-height: 200px;
+}
+
+.ql-syntax{
+    background-color: rgb(246,246,246);
+    border-radius: 2px;
+    display: inline-block;
+    padding: 5px !important;
+    color: var(--kapalimavi);
+}
+
+/* soruDetay */
+.soruDetay{
+    box-shadow: var(--golge1);
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    /* border: 1px solid rgb(255, 255, 255,0.4); */
+    background-image: linear-gradient(to top, rgb(255, 255, 255,0.4), rgba(255, 255, 255,0.4));
+}
+
+
+
+/* todolist */
+
+.todoRow {
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: var(--acikmavi);
+    border-radius: 7px;
+    color: var(--mavi);
+    overflow-x: auto;
+    transition: background-color 0.2s;
+}
+
+.todoRow:hover {
+    cursor: grab;
+    background-color: var(--acik);
+}
+
+.todoRow:active{
+    cursor: grabbing;
+}
+
+.todoRow:active {
+    background-color: var(--mavi);
+    color: var(--acikmavi);
+}
+
+.todoHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-position: center;
+    background-size: cover;
+    border-radius: 7px;
+    padding: 10px;
+    color: var(--acikmavi);
+    height: 200px;
+    margin-bottom: 10px;
+}
 
 /* diger */
 .page-name {
@@ -603,12 +796,25 @@ html {
 
 .dropdown a {
     color: var(--kapalimavi);
+    transition-duration: 0.3s;
+}
+
+.dropdown a:hover {
+    background-color: var(--mavi);
+    color: white;
 }
 
 
 /* scroll bar */
+/* body {
+  scrollbar-color: var(--mavi);
+} */
+html {
+    scrollbar-color: var(--mavi) transparent;
+}
+
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
 }
 
 /* Track */
@@ -619,9 +825,92 @@ html {
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: var(--mavi);
+    border-radius: 5px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: var(--kapalimavi)
+}
+
+
+/* succes - error icon */
+.success-checkmark,.error-checkmark{
+    display: none;
+    text-align: center;
+    font-size: 20px;
+}
+.success-checkmark > p {
+    color: var(--yesil);
+}
+.error-checkmark > p {
+    color: var(--kirmizi);
+}
+.success-checkmark-svg,.error-checkmark-svg {
+    width: 100px;
+    display: block;
+    margin: 40px auto 0;
+}
+
+.path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+
+    &.circle {
+        -webkit-animation: dash .9s ease-in-out;
+        animation: dash .9s ease-in-out;
+    }
+
+    &.line {
+        stroke-dashoffset: 1000;
+        -webkit-animation: dash .9s .35s ease-in-out forwards;
+        animation: dash .9s .35s ease-in-out forwards;
+    }
+
+    &.check {
+        stroke-dashoffset: -100;
+        -webkit-animation: dash-check .9s .35s ease-in-out forwards;
+        animation: dash-check .9s .35s ease-in-out forwards;
+    }
+}
+
+
+@-webkit-keyframes dash {
+    0% {
+        stroke-dashoffset: 1000;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 1000;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@-webkit-keyframes dash-check {
+    0% {
+        stroke-dashoffset: -100;
+    }
+
+    100% {
+        stroke-dashoffset: 900;
+    }
+}
+
+@keyframes dash-check {
+    0% {
+        stroke-dashoffset: -100;
+    }
+
+    100% {
+        stroke-dashoffset: 900;
+    }
 }

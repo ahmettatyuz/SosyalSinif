@@ -5,17 +5,58 @@
         <h3 class="modal-title" id="ogrenciEkleModal">Öğrenci Ekle</h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="">
+      <form id="ogrenciEkleForm">
         <div class="modal-body py-0">
           <div class="modalInput">
-            <input type="number" class="form-control" placeholder="Öğrenci numarasını yazın...">
+            <input type="hidden" name="sinifid" value="<%= sinif._id %>">
+            <select data-placeholder="Bir öğrenci seçin" name="ogrenciler" id="" class="chosen-select" multiple>
+              <% tumOgrenciler.forEach(ogrenci => { %>
+              <option value="<%= ogrenci._id %>"><%="Öğrenci: "+ ogrenci.ad + " | No:"+ ogrenci.no %></option>
+              <% }) %>
+            </select>
+            <script>
+              $(function() {
+                $(".chosen-select").chosen({
+                  width: "100%",
+                  no_results_text: "Öğrenci bulunamadı !"
+                });
+              })
+            </script>
           </div>
         </div>
         <div class="modal-footer">
           <button type="reset" class="button button-danger" data-bs-dismiss="modal">İptal</button>
-          <button type="submit" class="button button-success">Onayla</button>
+          <button type="submit" class="button button-success" id="ogrenciEkleBtn">Onayla</button>
         </div>
       </form>
+      <script>
+        $(document).ready(function() {
+          $("#ogrenciEkleBtn").click(async function(e) {
+            e.preventDefault();
+            const formData = $("#ogrenciEkleForm").serializeArray();
+            const token = Cookies.get('token');
+            const config = {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            };
+            const formJson = formArrayToJson(formData);
+            console.log(formJson);
+            if (formJson.ogrenciler) {
+              const result = await axios.post("/api/siniflar/ogrenciEkle", formJson, config);
+              console.log(result);
+              if (result.data.status == 404) {
+                createToast("Hata", result.data.mesaj, "error");
+              } else {
+                createToast("Bilgi", result.data.mesaj, "success");
+                yonlendir("/ogretmen/siniflar/" + formJson.sinifid, 2);
+              }
+            } else {
+              createToast("Hata", "Lütfen öğrenci seçiniz", "warning");
+            }
+          })
+        })
+      </script>
     </div>
   </div>
 </div>

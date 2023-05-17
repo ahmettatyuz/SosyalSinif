@@ -1,0 +1,49 @@
+<div class="modal fade" id="sinifEkleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="sinifEkleModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
+    <div class="modal-content eklemeModal">
+      <div class="modal-header pb-0">
+        <h3 class="modal-title" id="sinifEkleModal">Sınıf Ekle</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="" id="sinifEkleForm">
+        <div class="modal-body py-0">
+          <div class="modalInput">
+            <input name="ad" type="text" class="form-control" placeholder="Sınıf adı" required>
+          </div>
+          <div class="modalInput">
+            <input name="bolum" type="text" class="form-control" placeholder="Bölüm" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="reset" class="button button-danger" data-bs-dismiss="modal">İptal</button>
+          <button type="button" class="button button-success" id="sinifEkleBtn">Onayla</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    $("#sinifEkleBtn").click(async function(e) {
+      e.preventDefault();
+      const formData = $("#sinifEkleForm").serializeArray();
+      const token = Cookies.get('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const formJson = formArrayToJson(formData);
+      console.log(formJson);
+      const result = await axios.post("/api/siniflar", formJson, config);
+      console.log(result);
+      if (result.data.status == 404) {
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        createToast("Bilgi", result.data.mesaj, "success");
+        yonlendir("/ogretmen/siniflar", 2);
+      }
+    })
+  })
+</script>

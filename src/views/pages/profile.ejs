@@ -1,43 +1,56 @@
 <div class="row justify-content-between">
-  <div class="col-md-2 col-12">
+  <div class="col-md-2 col-12 profileLeft">
     <div class="profileImage">
-      <img src="https://picsum.photos/200/300" alt="">
+      <img src="<%= user.profileImage %>" alt="">
     </div>
     <div class="profilIslemler text-center my-3">
 
-      <button class="button button-primary collapsed my-2" type="button" data-bs-toggle="collapse" data-bs-target="#bilgilerUpdate">Bilgileri Düzenle</button>
-
-      <button type="button" data-bs-toggle="collapse" data-bs-target="#profileImageUpdate" class="button button-success my-2 collapsed">Profil Resmi Değiştir</button>
-
-      <button type="button" data-bs-toggle="collapse" data-bs-target="#parolaUpdate" class="button button-warning my-2 collapsed">Parola Değiştir</button>
-
-      <button type="button" data-bs-toggle="collapse" data-bs-target="#faceUpdate" class="button button-warning my-2 collapsed">Yüz Tanıma Bilgileri Değiştir</button>
+      <button class="button button-primary collapsed my-2 w-100 collapseBtn" type="button" data-bs-toggle="collapse" data-bs-target="#bilgilerUpdate">Bilgileri Düzenle</button>
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#parolaUpdate" class="button button-primary my-2 collapsed w-100 collapseBtn">Parola Değiştir</button>
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#profileImageUpdate" class="button button-primary my-2 collapsed w-100 collapseBtn">Profil Resmi Değiştir</button>
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#faceUpdate" class="button button-primary my-2 collapsed w-100 collapseBtn">Yüz Tanıma Bilgileri Değiştir</button>
     </div>
   </div>
-  <div class="col-md-9 col-12">
+  <div class="col-md-9 col-12 profileRight">
     <div class="px-3 py-2" id="profileSettings">
       <div class="accordion-item text-center">
         <div id="bilgilerUpdate" class="accordion-collapse collapse show" data-bs-parent="#profileSettings">
           <div class="accordion-body">
             <h2>Bilgileri Düzenle</h2>
-            <form action="" method="">
+            <form id="kullaniciGuncelleForm">
+              <div class="hidden">
+                <input type="hidden" id="userid" value="<%= user._id %>">
+              </div>
               <div class="d-flex gap-2 my-2">
                 <div class="w-50">
-                  <input type="text" class="form-control" placeholder="Adınızı girin" value="Ahmet">
+                  <input type="text" class="form-control" placeholder="Adınızı girin" name="ad" value="<%= user.ad %>">
                 </div>
                 <div class="w-50">
-                  <input type="text" class="form-control" placeholder="Soyadınızı girin" value="Tatyüz">
+                  <input type="text" class="form-control" placeholder="Soyadınızı girin" name="soyad" value="<%= user.soyad %>">
                 </div>
               </div>
-              <div class="">
-                <input type="email" class="form-control" placeholder="Emailinizi girin" value="ahmettatyuz@gmail.com">
+              <div class="d-flex gap-2">
+                <div class="w-50">
+                  <input type="email" class="form-control" placeholder="Emailinizi girin" name="email" value="<%= user.email %>">
+                </div>
+                <div class="w-50 d-flex align-items-center justify-content-evenly gap-3 border rounded bg-light">
+                  <div>
+                    <label for="erkek">Erkek</label>
+                    <input class="form-check-input" type="radio" name="cinsiyet" value="erkek" id="erkek" required <%= user.cinsiyet=="erkek" ? "checked":"" %>>
+                  </div>
+                  <div>
+                    <label for="kadin">Kadın</label>
+                    <input class="form-check-input" type="radio" name="cinsiyet" value="kadin" id="kadin" required <%= user.cinsiyet=="kadin" ? "checked":"" %>>
+                  </div>
+                </div>
               </div>
+
               <div class="my-2">
-                <textarea class="form-control" name="" id="" rows="3" placeholder="Adresinizi girin">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora aliquam quas atque placeat.</textarea>
+                <textarea class="form-control" id="" rows="3" name="adres" placeholder="Adresinizi girin"><%= user.adres %></textarea>
               </div>
 
               <div class="my-2 text-center">
-                <button class="button button-primary w-50">Güncelle</button>
+                <button class="button button-primary w-50" id="guncelleBtn">Güncelle</button>
               </div>
             </form>
           </div>
@@ -47,12 +60,12 @@
         <div id="profileImageUpdate" class="accordion-collapse collapse " data-bs-parent="#profileSettings">
           <div class="accordion-body text-center">
             <h2>Profil Resmi Değiştir</h2>
-            <img src="https://picsum.photos/200/300" class="profileImage" id="newProfile" alt="">
-            <form action="">
-              <input class="form-control my-3 w-50 mx-auto d-block" type="file" id=newProfile">
-              <button class="button button-primary my-3 w-50 d-block mx-auto" type="button">Önizle</button>
+            <img src="<%= user.profileImage %>" class="profileImage" id="newProfilePrew" alt="">
+            <form action="/api/user/<%= user._id %>" method="patch" id="profileImageUpdateForm" enctype="multipart/form-data">
+              <input class="form-control my-3 w-50 mx-auto d-block" type="file" id="newProfile" name="newProfile">
+              <!-- <button id="profileImagePreviewBtn" class="button button-primary my-3 w-50 d-block mx-auto" type="button">Önizle</button> -->
 
-              <button class="button button-success my-3 w-50 d-block mx-auto">Güncelle</button>
+              <button id="profileImageUploadBtn" class="button button-success my-3 w-50 d-block mx-auto" type="submit">Güncelle</button>
             </form>
 
 
@@ -63,17 +76,21 @@
         <div id="parolaUpdate" class="accordion-collapse collapse" data-bs-parent="#profileSettings">
           <div class="accordion-body">
             <h2>Parola Değiştir</h2>
-            <form action="">
+            <form id="parolaGuncelleForm">
               <div class="d-block mx-auto col-md-6 col-12">
                 <div class="pwinput my-2">
                   <i class="eye fa-solid fa-eye"></i>
-                  <input name="password" type="password" class="form-control" placeholder="Parolanızı girin">
+                  <input name="mevcutparola" type="password" class="form-control password" placeholder="Mevcut parolanızı girin">
                 </div>
                 <div class="pwinput my-2">
                   <i class="eye fa-solid fa-eye"></i>
-                  <input name="password" type="password" class="form-control" placeholder="Parolanızı tekrar girin">
+                  <input name="parola" type="password" class="form-control password" placeholder="Parolanızı girin">
                 </div>
-                <button class="button button-warning w-100 my-2">
+                <div class="pwinput my-2">
+                  <i class="eye fa-solid fa-eye"></i>
+                  <input name="parola2" type="password" class="form-control password" placeholder="Parolanızı tekrar girin">
+                </div>
+                <button class="button button-warning w-100 my-2" id="parolaGuncelleBtn">
                   Parolayı Güncelle
                 </button>
               </div>
@@ -95,6 +112,7 @@
                 <canvas id="takenPhoto"></canvas>
                 <video id="webcam" autoplay class="w-100"></video>
                 <img src="//:0" alt="" id="profileCameraOutput">
+                <a id="downloadimage" href=""></a>
                 <div class="profileCameraButtons">
                   <button class="button button-primary" id="profileCameraTrigger">Çek</button>
                   <button class="button button-danger" id="profileTurnOffCamera">İptal</button>
@@ -107,63 +125,111 @@
     </div>
   </div>
 </div>
-<script src="/js/webcam.js"></script>
+
+<script src="js/face-api.min.js"></script>
+<script src="js/webcam.js"></script>
+<script src="js/helperMethods.js"></script>
+
 <script>
-  $(".eye").click(function() {
-    if ($(this).hasClass("fa-eye")) {
-      $(this).removeClass("fa-eye");
-      $(this).addClass("fa-eye-slash");
-      $(this).siblings("input[name=password]").attr("type", "text");
-    } else {
-      $(this).removeClass("fa-eye-slash");
-      $(this).addClass("fa-eye");
-      $(this).siblings("input[name=password]").attr("type", "password");
-    }
+  $(function() {
+    $(".eye").click(function() {
+      if ($(this).hasClass("fa-eye")) {
+        $(this).removeClass("fa-eye");
+        $(this).addClass("fa-eye-slash");
+        $(this).siblings("input.password").attr("type", "text");
+      } else {
+        $(this).removeClass("fa-eye-slash");
+        $(this).addClass("fa-eye");
+        $(this).siblings("input.password").attr("type", "password");
+      }
+    });
+
+    $("#profileImageUploadBtn").click(async function(e) {
+      e.preventDefault();
+      // const formData = $("#profileImageUpdateForm").serializeArray();
+      const form = document.querySelector("#profileImageUpdateForm");
+      var formData = new FormData();
+      var imagefile = document.querySelector('#newProfile');
+      formData.append("newProfile", imagefile.files[0]);
+      console.log(formData.get("newProfile"));
+      const token = Cookies.get('token');
+      const config = {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "multipart/form-data"
+        }
+      };
+      const userid = $("#userid").val();
+      console.log(formData.getAll("newProfile"));
+      const result = await axios.patch("/api/user/" + userid, formData, config);
+      console.log(result);
+      if (result.data.status == 404) {
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        createToast("Bilgi", result.data.mesaj, "success");
+        yonlendir("/profil",2);
+      }
+    });
+
+    $('#newProfile').change(function() {
+      const file = this.files[0];
+      console.log(file);
+      if (file) {
+        let reader = new FileReader();
+        reader.onload = function(event) {
+          console.log(event.target.result);
+          $('#newProfilePrew').attr('src', event.target.result);
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+
+    $("#guncelleBtn").click(async function(e) {
+      e.preventDefault();
+      const formData = $("#kullaniciGuncelleForm").serializeArray();
+      const token = Cookies.get('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const formJson = formArrayToJson(formData);
+      const userid = $("#userid").val();
+      const result = await axios.patch("/api/user/" + userid, formJson, config);
+      console.log(result);
+      if (result.data.status == 404) {
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        createToast("Bilgi", result.data.mesaj, "success");
+      }
+    });
+    
+    $("#parolaGuncelleBtn").click(async function(e) {
+      e.preventDefault();
+      const formData = $("#parolaGuncelleForm").serializeArray();
+      const token = Cookies.get('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const formJson = formArrayToJson(formData);
+      console.log(formJson);
+      const userid = $("#userid").val();
+      console.log(userid);
+      const result = await axios.patch("/api/user/" + userid, formJson, config);
+      console.log(result);
+      if (result.data.status == 404) {
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        createToast("Bilgi", result.data.mesaj, "success");
+      }
+    });
+
   });
 
-  // var constraints = {
-  //   video: {
-  //     facingMode: "environment"
-  //   },
-  //   audio: false
-  // };
-  // var track = null;
-  // const cameraView = document.querySelector("#webcam"),
-  //   cameraOutput = document.querySelector("#camera--output"),
-  //   cameraSensor = document.querySelector("#camera--sensor"),
-  //   cameraTrigger = document.querySelector("#camera--trigger");
 
-  // function cameraStart() {
-  //   navigator.mediaDevices
-  //     .getUserMedia(constraints)
-  //     .then(function(stream) {
-  //       track = stream.getTracks()[0];
-  //       cameraView.srcObject = stream;
-  //     })
-  //     .catch(function(error) {
-  //       console.error("Oops. Something is broken.", error);
-  //     });
-  // }
-  // cameraTrigger.onclick = function() {
-  //   cameraSensor.width = cameraView.videoWidth;
-  //   cameraSensor.height = cameraView.videoHeight;
-  //   cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
-  //   cameraOutput.src = cameraSensor.toDataURL("image/webp");
-  //   cameraOutput.classList.add("taken");
-  // };
-  // window.addEventListener("load", cameraStart, false);
 
-  // function turnOffCamera() {
-  //   console.log("123");
-  //   const video = document.querySelector("#webcam");
-  //   localStream.getVideoTracks()[0].stop();
-  //   video.src = "";
-  //   video.srcObject = null;
-  //   localStream = null;
-  //   $("#face-id-open").css("display", "inline-block");
-  //   $("#face-id-close").css("display", "none");
 
-  //   $("#pencilLoader").css("display", "none");
-  //   $("#loginLoader").css("display", "inline-block");
-  // }
+  
 </script>

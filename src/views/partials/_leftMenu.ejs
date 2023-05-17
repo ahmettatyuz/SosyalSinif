@@ -7,18 +7,23 @@
     </div>
   </div>
   <div class="offcanvas-body pt-0">
+    <% if (userSession.role=="ogretmen") { %>
     <div class="offcanvas-item">
       <a href="<%= baseURL %>/ogretmen/siniflar">
         <i class="fa-solid fa-house"></i>
         <span>Sınıflar</span>
       </a>
     </div>
+    <% } %>
+    <% if (userSession.role=="ogrenci") { %>
     <div class="offcanvas-item">
       <a href="<%= baseURL %>/ogrenci/dersler">
         <i class="fa-solid fa-book-open"></i>
         <span>Dersler & Ödevler</span>
       </a>
     </div>
+    <% } %>
+
     <div class="offcanvas-item">
       <a href="<%= baseURL %>/sohbet">
         <i class="fa-solid fa-message"></i>
@@ -28,11 +33,11 @@
     <div class="offcanvas-item">
       <a href="<%= baseURL %>/todolist">
         <i class="fa-solid fa-list-check"></i>
-        <span>To Do List</span>
+        <span>Yapılacaklar Listesi</span>
       </a>
     </div>
     <div class="offcanvas-item">
-      <a href="<%= baseURL %>/sorular">
+      <a href="<%= baseURL %>/sorular/1">
         <i class="fa-solid fa-circle-question"></i>
         <span>Sorular</span>
       </a>

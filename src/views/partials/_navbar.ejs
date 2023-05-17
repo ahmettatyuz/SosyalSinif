@@ -1,25 +1,31 @@
 <nav class="navigation d-flex align-items-center justify-content-between">
-    <div class="d-flex align-items-center">
-        <button class="nav-btn" data-bs-toggle="offcanvas" data-bs-target="#menu" aria-controls="menu">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <div class="nav-img">
-            <a href="/">
-                <img src="<%= baseURL %>/image/logo.png" alt="">
-            </a>
-        </div>
+  <div class="d-flex align-items-center">
+    <button class="nav-btn" data-bs-toggle="offcanvas" data-bs-target="#menu" aria-controls="menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="nav-img">
+      <a href="/">
+        <img src="<%= baseURL %>/image/logo.png" alt="">
+      </a>
     </div>
-    <div class="d-flex justify-content-end flex-wrap">
-        <button class="nav-btn">
-            <i class="fa-solid fa-plus"></i>
-        </button>
-        <%- include('./_notificationPanel',{title:"Bildirimler"}) %>
-        <%- include('./_notificationPanel',{title:"Mesajlar"}) %>
-        <!-- <button href="" class="nav-btn">
+  </div>
+  <div class="d-flex justify-content-end flex-wrap">
+    <% if (userSession.role=="ogretmen") { %>
+    <button class="nav-btn" data-bs-toggle="modal" data-bs-target="#sinifEkleModal">
+      <span>Sınıf Oluştur</span>
+      
+      <i class="fa-solid fa-plus"></i>
+    </button>
+    <% } %>
+    
+    <%- include('./_notificationPanel',{title:"Bildirimler"}) %>
+    <%- include('./_notificationPanel',{title:"Mesajlar"}) %>
+    <!-- <button href="" class="nav-btn">
             <i class="fa-solid fa-message"></i>
         </button> -->
-        <button class="nav-btn" data-bs-toggle="offcanvas" data-bs-target="#profile" aria-controls="profile">
-            <i class="fa-solid fa-user"></i>
-        </button>
-    </div>
+    <button class="nav-btn" data-bs-toggle="offcanvas" data-bs-target="#profile" aria-controls="profile">
+      <i class="fa-solid fa-user"></i>
+    </button>
+  </div>
 </nav>
+<%- include('./_sinifEkleModal') %>

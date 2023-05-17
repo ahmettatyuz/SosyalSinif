@@ -1,14 +1,11 @@
 <div class="columnRow duyuruRow">
-  <div class="d-flex justify-content-between align-items-center">
-    <h4>Ahmet Tatyüz</h4>
-    <div class="tarih badge bg-primary">01.06.2023</div>
+  <div class="d-flex justify-content-between align-items-start flex-wrap word-break">
+    <h4><%= duyuru.title %></h4>
+    <div class="tarih badge bg-primary"><%= duyuru.createdAt %></div>
   </div>
 
   <div>
-    Merhaba arkadaşlar. Ödevlerinizi tamamlayın.
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus quos labore aut tempore. Quos consectetur,
-    hic laboriosam ratione, perferendis tenetur ad ab ullam eum excepturi delectus, sapiente similique assumenda
-    quibusdam.
+    <%= duyuru.content %>
   </div>
 
 </div>

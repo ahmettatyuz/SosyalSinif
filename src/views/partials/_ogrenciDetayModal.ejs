@@ -9,29 +9,29 @@
       <div class="modal-body py-0">
         <div class="row">
           <div class="col-md-4 col-12">
-            <div class="profileImage">
-              <img src="https://picsum.photos/200/300" alt="">
-            </div>
             <div class="ogrenciBilgiler">
+              <div class="profileImage">
+                <img src="" alt="">
+              </div>
               <div>
                 <span class="fw-bold">Ad Soyad:</span>
-                <span>Ahmet Tatyüz</span>
+                <span id="ad"></span> <span id="soyad"></span>
               </div>
               <div>
                 <span class="fw-bold">Öğrenci Numarası:</span>
-                <span>20010011004</span>
+                <span id="no"></span>
               </div>
               <div>
                 <span class="fw-bold">Email:</span>
-                <span>ahmettatyuz@gmail.com</span>
+                <span id="email"></span>
               </div>
               <div>
                 <span class="fw-bold">Cinsiyet:</span>
-                <span>Erkek</span>
+                <span id="cinsiyet">Erkek</span>
               </div>
               <div>
                 <span class="fw-bold">Adres:</span>
-                <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime, nesciunt perspiciatis! Facere incidunt necessitatibus impedit rerum pariatur. Ut minima cumque, officiis quod eaque eum, necessitatibus enim laudantium ipsam voluptates fuga!</span>
+                <span id="adres"></span>
               </div>
             </div>
           </div>
@@ -45,7 +45,8 @@
         </div>
 
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer d-flex justify-content-between">
+        <button type="reset" class="button button-danger ogrenciKaldirBtn" id="id" value="">Öğrenciyi Sınıftan Kaldır</button>
         <button type="reset" class="button button-primary" data-bs-dismiss="modal">Kapat</button>
       </div>
     </div>

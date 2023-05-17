@@ -1,0 +1,132 @@
+<div class="">
+  <div class="todoHeader course-background">
+    <div class="text-center">
+      <div class="display-3">
+        Yapılacaklar Listesi
+      </div>
+      <div>
+        Yapılacaklar listesi ile çalışmalarınızı organize edin !
+      </div>
+      <div class="fw-bold">Sürükle ve Bırak</div>
+    </div>
+  </div>
+
+  <div class="row columnGroup">
+    <div class="col-4">
+      <div class="column">
+        <div class="title">
+          Yapılacaklar
+          <button class="addRow" data-bs-toggle="modal" data-bs-target="#todoEkleModal"><i class="fa-solid fa-plus"></i></button>
+        </div>
+        <ul id="todoList" value="1" class="connectedSortable columnItems inner-shadow-kirmizi">
+          <% todo.forEach(item => { %>
+          <% if (item.status==1) { %>
+          <%- include('../partials/_todoRow',{item}); %>
+          <% } %>
+          <% }) %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <div class="column">
+        <div class="title">
+          <div class="text-center position-relative">
+            <div>Şu anda yapılıyor</div>
+            <div class="position-absolute end-0 top-0">
+              <%- include('../partials/_pencilLoader') %>
+            </div>
+          </div>
+        </div>
+        <ul id="inProgressList" value="2" class="connectedSortable columnItems inner-shadow-sari">
+
+          <% todo.forEach(item => { %>
+          <% if (item.status==2) { %>
+          <%- include('../partials/_todoRow',{item}); %>
+          <% } %>
+          <% }) %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <div class="column">
+        <div class="title">
+          <div class="position-relative text-center">
+            <div>Yapıldı</div>
+            <div class="position-absolute end-0 top-0"><i class="fa-solid fa-check-double"></i></div>
+
+          </div>
+        </div>
+        <ul id="doneList" value="3" class="connectedSortable columnItems inner-shadow-yesil">
+          <% todo.forEach(item => { %>
+          <% if (item.status==3) { %>
+          <%- include('../partials/_todoRow',{item}); %>
+          <% } %>
+          <% }) %>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+<%- include('../partials/_todoEkleModal') %>
+<script>
+  $(function() {
+    $("#pencilLoader").css("display", "block");
+    $("#pencilLoader").css("height", "45px");
+    $("#pencilLoader").css("width", "50px");
+    const token = Cookies.get('token');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
+    $("#todoList, #inProgressList, #doneList").sortable({
+      connectWith: ".connectedSortable",
+      // change: function(event, ui) {
+      //   const row = ui.item[0];
+      //   console.log(row.id);
+      //   const status = ui.item[0].children[0].innerText;
+      //   const parent = row.parentElement;
+
+      //   const toWhere = $("#" + row.id).parent(".columnItems").attr("id");
+      //   console.log(status);
+      // },
+      update: async function(event, ui) {
+
+        const row = ui.item[0];
+        const status = ui.item[0].children[0].innerText;
+        const toWhere = $("#" + row.id).parent(".columnItems").attr("value");
+        const body = {
+          id: row.id,
+          status: toWhere
+        };
+        const sonuc = await axios.patch("/api/todo", body, config);
+        //$('#sortable li').removeClass('highlights');
+      }
+    }).disableSelection();
+
+    $(".deleteTodoBtn").click(async function(e) {
+      e.preventDefault();
+      const id = $(this).parents(".todoRow").attr("id");
+      const result = await axios.delete("/api/todo/" + id, config);
+      if (result.data.status == 404) {
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        createToast("Bilgi", result.data.mesaj, "success");
+        yonlendir("/todolist", 2);
+      }
+    });
+
+    $(".todoRow").contextmenu(function(e) {
+      e.preventDefault();
+      $(this).find(".dropdown-menu").show();
+    });
+
+    $("body").click(function() {
+      $(".dropdown-menu").hide();
+    })
+
+  });
+</script>

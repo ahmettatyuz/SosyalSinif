@@ -1,0 +1,14 @@
+<li class="todoRow" id="<%= item._id %>">
+  <div style="display: none;" class="status"><%= item.status %></div>
+  <div class="todoTitle fs-3 fw-semibold">
+    <%= item.title %>
+  </div>
+  <div class="content">
+    <%= item.content %>
+  </div>
+  <ul class="dropdown-menu">
+    <li>
+      <button class="dropdown-item deleteTodoBtn">Sil</button>
+    </li>
+  </ul>
+</li>

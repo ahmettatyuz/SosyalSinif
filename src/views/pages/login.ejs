@@ -12,85 +12,87 @@
           <div class="d-flex justify-content-center align-items-center">
             <%- include('../partials/_loginLoader') %>
             <%- include('../partials/_pencilLoader') %>
-
+            <%- include('../partials/_successCheck') %>
+            <%- include('../partials/_errorCheck') %>
           </div>
           <div class="text-center">
             <h1 class="loginTitle">Hoşgeldiniz</h1>
           </div>
+          <form id="loginForm">
+            <div class="my-3">
+              <input type="email" class="form-control" placeholder="Emailinizi girin" name="email">
+            </div>
+            <div class="my-3 pwinput">
+              <i class="eye fa-solid fa-eye"></i>
 
-          <div class="my-3">
-            <input type="text" class="form-control" placeholder="Emailinizi girin">
-          </div>
-          <div class="my-3 pwinput">
-            <i class="eye fa-solid fa-eye"></i>
+              <input type="password" class="form-control parola" placeholder="Parolanızı girin" name="parola">
+              <div class="forgotPassword"><a href="">Parolanızı mı unuttunuz ?</a></div>
 
-            <input name="password" type="password" class="form-control" placeholder="Parolanızı girin">
-            <div class="forgotPassword"><a href="">Parolanızı mı unuttunuz ?</a></div>
+            </div>
+            <div class="my-2 text-center">
+              <button class="button button-primary w-100 d-block" id="loginBtn">Giriş</button>
+            </div>
 
-          </div>
-          <div class="my-2 text-center">
-            <a href="/ogrenci/dersler" class="button button-primary w-100 d-block">Giriş</a>
-          </div>
+            <div class="text-center">VEYA</div>
+            <div class="my-2">
+              <button id="face-id-open" class="button button-success w-100">FACE ID</button>
+              <button style="display: none;" id="face-id-close" class="button button-danger w-100">FACE ID KAPAT</button>
+            </div>
+          </form>
 
-          <div class="text-center">VEYA</div>
-          <div class="my-2">
-            <button id="face-id-open" class="button button-success w-100">FACE ID</button>
-            <button style="display: none;" id="face-id-close" class="button button-danger w-100">FACE ID KAPAT</button>
-          </div>
         </div>
       </div>
     </div>
 
     <div style="display: none;" class="registerBox bg-transparent">
-      <form action="<%= process.env.BASE_URL %>/api/register" method="POST">
+      <form id="registerForm" action="<%= process.env.BASE_URL %>/api/user" method="POST">
         <div class="row">
           <div class="col-12 p-4">
             <div class="registerTitle text-center">Sosyal Sınıfa Katıl</div>
             <div class="d-flex gap-2 my-2">
               <div class="w-50">
-                <input type="text" class="form-control" placeholder="Adınızı girin" name="ad">
+                <input type="text" class="form-control" placeholder="Adınızı girin" name="ad" required>
               </div>
               <div class="w-50">
-                <input type="text" class="form-control" placeholder="Soyadınızı girin" name="soyad">
+                <input type="text" class="form-control" placeholder="Soyadınızı girin" name="soyad" required>
               </div>
               <div class="w-50 d-flex align-items-center justify-content-center gap-3 border rounded bg-light">
                 <div>
                   <label for="erkek">Erkek</label>
-                  <input class="form-check-input" type="radio" name="cinsiyet" value="erkek" id="erkek">
+                  <input class="form-check-input" type="radio" name="cinsiyet" value="erkek" id="erkek" required>
                 </div>
                 <div>
                   <label for="kadin">Kadın</label>
-                  <input class="form-check-input" type="radio" name="cinsiyet" value="kadin" id="kadin">
+                  <input class="form-check-input" type="radio" name="cinsiyet" value="kadin" id="kadin" required>
                 </div>
               </div>
             </div>
             <div class="d-flex gap-2 my-2">
               <div class="w-50">
-                <input type="email" class="form-control" placeholder="Emailinizi girin" name="email">
+                <input type="email" class="form-control" placeholder="Emailinizi girin" name="email" required>
               </div>
               <div class="w-50 d-flex align-items-center justify-content-center gap-3 border rounded bg-light">
                 <div>
                   <label for="ogretmen">Öğretmen</label>
-                  <input class="form-check-input" type="radio" name="role" value="ogretmen" id="ogretmen">
+                  <input class="form-check-input" type="radio" name="role" value="ogretmen" id="ogretmen" required>
                 </div>
                 <div>
                   <label for="ogrenci">Öğrenci</label>
-                  <input class="form-check-input" type="radio" name="role" value="ogrenci" id="ogrenci">
+                  <input class="form-check-input" type="radio" name="role" value="ogrenci" id="ogrenci" required>
                 </div>
               </div>
-              
             </div>
             <div class="my-2">
-              <textarea class="form-control" name="adres" id="" rows="3" placeholder="Adresinizi girin"></textarea>
+              <textarea class="form-control" name="adres" id="" rows="3" placeholder="Adresinizi girin" required></textarea>
             </div>
             <div class="d-flex gap-2 my-2">
               <div class="w-50 pwinput">
                 <i class="eye fa-solid fa-eye"></i>
-                <input name="parola" type="password" class="form-control parola" placeholder="Parolanızı girin">
+                <input name="parola" type="password" class="form-control parola" placeholder="Parolanızı girin" required>
               </div>
               <div class="w-50 pwinput">
                 <i class="eye fa-solid fa-eye"></i>
-                <input name="parola2" type="password" class="form-control parola" placeholder="Parolanızı tekrar girin">
+                <input name="parola2" type="password" class="form-control parola" placeholder="Parolanızı tekrar girin" required>
               </div>
             </div>
             <div class="my-2 text-center">
@@ -104,9 +106,50 @@
     </div>
   </div>
 </div>
+<script src="js/face-api.min.js"></script>
 <script src="js/webcam.js"></script>
+
+
 <script>
+
   $(document).ready(function() {
+    $("#registerBtn").click(async function(e) {
+      try {
+        e.preventDefault();
+        const formData = $("#registerForm").serializeArray();
+        const formJson = formArrayToJson(formData);
+        const result = await axiosPost("/api/user", formJson);
+        // console.log(result);
+        if (result.data.status == 404) {
+          // createAlert("Hata", result.data.mesaj, "error", "Tamam");
+          createToast("Hata", result.data.mesaj, "error");
+
+        } else {
+          // createAlert("Bilgi", result.data.mesaj, "success", "Tamam");
+          createToast("Bilgi", result.data.mesaj, "success");
+          $("#registerForm")[0].reset(); // kayıt formunu temizler
+          $(".loginBox").slideDown(); // login kısmını açar
+          $(".registerBox").slideUp(); // register kısmını kapatır
+        }
+      } catch (error) {
+        createToast("Hata", error.message, "error");
+      }
+    });
+    $("#loginBtn").click(async function(e) {
+      e.preventDefault();
+      const formData = $("#loginForm").serializeArray();
+      const formJson = formArrayToJson(formData);
+      const result = await axiosPost("/api/user/giris", formJson);
+      // console.log(result);
+      if (result.data.status == 404) {
+        // createAlert("Hata", result.data.mesaj, "error", "Tamam");
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        // createAlert("Bilgi", result.data.mesaj, "success", "Tamam",2);
+        createToast("Bilgi", result.data.mesaj, "success");
+        yonlendir("/", 2);
+      }
+    });
     $(".eye").click(function() {
       if ($(this).hasClass("fa-eye")) {
         $(this).removeClass("fa-eye");
@@ -123,8 +166,6 @@
       e.preventDefault();
       $(".loginBox").slideDown();
       $(".registerBox").slideUp();
-
-
     });
 
     $(".registerNavBtn").click(function(e) {
@@ -132,10 +173,6 @@
       $(".registerBox").slideDown();
       $(".loginBox").slideUp();
     });
-
-    $("#registerBtn").click(function(){
-      
-    })
 
   })
 </script>

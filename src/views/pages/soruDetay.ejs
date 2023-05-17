@@ -1,0 +1,105 @@
+<div class="soruDetay">
+  <div class="d-flex justify-content-between align-items-start">
+    <div>
+      <h2><%= soru.title %></h2>
+    </div>
+    <div>
+      <div class="bg-sari text-light rounded p-1 my-2">
+        <i class="fa-solid fa-calendar-days"></i>
+        <%= soru.createdAt %>
+      </div>
+      <div class="d-flex gap-3 justify-content-between">
+        <div class="soruBadge bg-mavi">
+          <i class="fa-solid fa-thumbs-up"></i>
+          <span><%= soru.likeCount %></span>
+        </div>
+        <div class="soruBadge bg-kirmizi">
+          <i class="fa-solid fa-thumbs-down"></i>
+          <span><%= soru.dislikeCount %></span>
+        </div>
+        <div class="soruBadge bg-yesil">
+          <i class="fa-solid fa-comment-dots"></i>
+          <span><%= soru.cevaplar.length %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <%- soru.htmlContent %>
+  </div>
+</div>
+
+<div class="cevaplar">
+
+</div>
+
+<div class="editorWrapper">
+  <div id="soruEditor">
+  </div>
+</div>
+<div class="text-end">
+  <button class="button button-success">Gönder</button>
+</div>
+
+<script>
+  $(function() {
+    var toolbarOptions = [
+      ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+      ['blockquote', 'code-block'],
+
+      [{
+        'header': 1
+      }, {
+        'header': 2
+      }], // custom button values
+      [{
+        'list': 'ordered'
+      }, {
+        'list': 'bullet'
+      }],
+      [{
+        'script': 'sub'
+      }, {
+        'script': 'super'
+      }], // superscript/subscript
+      [{
+        'indent': '-1'
+      }, {
+        'indent': '+1'
+      }], // outdent/indent
+      [{
+        'direction': 'rtl'
+      }], // text direction
+
+      [{
+        'size': ['small', false, 'large', 'huge']
+      }], // custom dropdown
+      [{
+        'header': [1, 2, 3, 4, 5, 6, false]
+      }],
+      ['link', 'image', 'video', 'formula'], // add's image support
+      [{
+        'color': []
+      }, {
+        'background': []
+      }], // dropdown with defaults from theme
+      [{
+        'font': []
+      }],
+      [{
+        'align': []
+      }],
+
+      ['clean'] // remove formatting button
+    ];
+
+    var quill = new Quill('#soruEditor', {
+      modules: {
+        toolbar: toolbarOptions
+      },
+      placeholder: "Yanıt oluşturun...",
+      theme: 'snow'
+    });
+  })
+</script>

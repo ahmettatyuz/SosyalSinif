@@ -1,59 +1,155 @@
 <div>
-  <div class="row">
-    <div class="col-lg-9 col-12 order-lg-1 order-2">
-      <div class="d-flex justify-content-between align-items-center py-2 flex-wrap">
+  <div class="row sorularWrapper">
+    <div class="col-lg-9 col-12 order-lg-1 order-2 sorularLeft">
+      <div class="d-flex justify-content-between align-items-start py-2 flex-wrap">
         <div class="d-flex align-items-center gap-2">
-          <div>
-            <span>Toplam</span>
-            <span><i class="fa-solid fa-circle-question"></i></span>
-            <span>7</span>
-          </div>
-          <div>
+          <div class="d-flex gap-3">
+            <select class="form-select" name="" id="">
+              <option value="" selected disabled>Sıralama</option>
+              <option value="">En yeni</option>
+              <option value="">En eski</option>
+              <option value="">En çok beğenilen</option>
+            </select>
             <div class="input-group">
               <input type="text" class="form-control" placeholder="Soru ara">
               <div class="input-group-text bg-mavi border-0">
                 <button class="border-0 p-0 bg-mavi text-light">
                   <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
-
               </div>
             </div>
           </div>
         </div>
-        <div class="d-flex gap-2 align-items-center">
-          <select class="form-select" name="" id="">
-            <option value="" selected disabled>Sıralama</option>
-            <option value="">En yeni</option>
-            <option value="">En eski</option>
-            <option value="">En çok beğenilen</option>
-          </select>
-          <div>
-            <button class="button button-success p-0 d-block">Soru Sor</button>
-          </div>
-          
+
+        <div>
+          <button class="button button-success" data-bs-toggle="modal" data-bs-target="#soruEkleModal">Soru Sor</button>
         </div>
+
         <!-- burada filtre ve sıralama butonları olacak -->
         <!--  -->
       </div>
       <div class="sorular">
-        <% for( let index = 0; index < 7; index++ ) { %>
-        <%- include('../partials/_soru') %>
-        <% } %>
+        <% sorular.forEach(soru => { %>
+          <%- include('../partials/_soru',{soru}) %>
+        <% }) %>
 
       </div>
+      <div class="d-flex justify-content-end">
+        <ul class="pagination">
+          <li class="page-item disabled">
+            <a class="page-link">Önceki</a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item " aria-current="page">
+            <a class="page-link" href="#">2</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Sonraki</a>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div class="col-lg-3 col-12 order-lg-2 order-1">
+    <div class="col-lg-3 col-12 order-lg-2 order-1 sorularRight">
       <!-- position sticky-top olacak -->
       <div class="popularQuestions">
         <div class="text-kapalimavi">
-            <h2>Popüler Sorular</h2>
+          <h2>Popüler Sorular</h2>
         </div>
-        <div>
-            
-        </div>
-        
       </div>
     </div>
   </div>
 
 </div>
+
+<%- include('../partials/_soruEkleModal') %>
+
+
+<script>
+  $(function() {
+    // ClassicEditor
+    //   .create(document.querySelector('#editor'), {
+    //     language: 'tr',
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //   });
+
+
+    // tinymce.init({
+    //   selector: '#tiny',
+    //   plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+    //   toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    //   tinycomments_mode: 'embedded',
+    //   tinycomments_author: 'Author name',
+    //   mergetags_list: [{
+    //       value: 'First.Name',
+    //       title: 'First Name'
+    //     },
+    //     {
+    //       value: 'Email',
+    //       title: 'Email'
+    //     },
+    //   ]
+    // });
+    // var toolbarOptions = [['bold', 'italic'], ['link', 'image']];
+    var toolbarOptions = [
+      ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+      ['blockquote', 'code-block'],
+
+      [{
+        'header': 1
+      }, {
+        'header': 2
+      }], // custom button values
+      [{
+        'list': 'ordered'
+      }, {
+        'list': 'bullet'
+      }],
+      [{
+        'script': 'sub'
+      }, {
+        'script': 'super'
+      }], // superscript/subscript
+      [{
+        'indent': '-1'
+      }, {
+        'indent': '+1'
+      }], // outdent/indent
+      [{
+        'direction': 'rtl'
+      }], // text direction
+
+      [{
+        'size': ['small', false, 'large', 'huge']
+      }], // custom dropdown
+      [{
+        'header': [1, 2, 3, 4, 5, 6, false]
+      }],
+      ['link', 'image', 'video', 'formula'], // add's image support
+      [{
+        'color': []
+      }, {
+        'background': []
+      }], // dropdown with defaults from theme
+      [{
+        'font': []
+      }],
+      [{
+        'align': []
+      }],
+
+      ['clean'] // remove formatting button
+    ];
+
+    var quill = new Quill('#soruEditor', {
+      modules: {
+        toolbar: toolbarOptions
+      },
+      placeholder: "Sorunuzu oluşturun...",
+      theme: 'snow'
+    });
+
+  })
+</script>

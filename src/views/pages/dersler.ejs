@@ -1,7 +1,36 @@
 <div class="row">
-    <% siniflar.forEach(sinif => { %>
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 p-2">
-            <%- include('../partials/_card',{sinif}) %>
-        </div>
-    <% }) %>
+  <% if (siniflar.length==0) { %>
+    <div class="text-center display-6">Henüz hiç sınıf eklenmemiş !</div>
+  <% } else { %>
+  <% siniflar.forEach(sinif => { %>
+  <div class="col-lg-3 col-md-4 col-sm-6 col-12 p-2">
+    <%- include('../partials/_card',{sinif}) %>
+  </div>
+  <% }) %>
+  <% } %>
+
 </div>
+
+
+<script>
+  $(function(){
+    $(".sinifiSilBtn").click(async function(e){
+      e.preventDefault();
+      const token = Cookies.get('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const sinifId = $(this).attr("value");
+      const result = await axios.delete("/api/siniflar/"+sinifId,config);
+      console.log(result);
+      if (result.data.status == 404) {
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        createToast("Bilgi", result.data.mesaj, "success");
+        yonlendir("/ogretmen/siniflar", 2);
+      }
+    })
+  })
+</script>

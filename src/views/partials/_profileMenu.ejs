@@ -8,25 +8,37 @@
     </div>
     <div class="offcanvas-body pt-0">
         <div class="profileImage mb-3">
-            <img src="https://picsum.photos/200/300" alt="">
+            <img src="<%= userSession.profileImage %>" alt="">
         </div>
         <div class="profileInfo">
-            <div class="profileName">Ahmet Tatyüz</div>
-            <div class="level">3.Sınıf</div>
+            <div class="profileName"><%= userSession.ad + " " + userSession.soyad %></div>
+            <div class="no"><%= userSession.no %></div>
+            <div class="role"><%= userSession.role=="ogretmen" ? "Öğretmen":"Öğrenci" %></div>
         </div>
 
         <hr>
         <div class="offcanvas-item">
-            <a href="/ogrenci/profil">
+            <a href="/profil">
                 <i class="fa-solid fa-gears"></i>
                 <span>Profilim</span>
             </a>
         </div>
         <div class="offcanvas-item">
-            <a href="#">
+            <a id="logoutBtn" href="#">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span>Çıkış</span>
             </a>
         </div>
     </div>
 </div>
+
+<script>
+    $(function(){
+        $("#logoutBtn").click(function(e){
+            e.preventDefault();
+            const sonuc = axiosDelete("/cikis");
+            window.location.href="/giris";
+        });
+        
+    })
+</script>

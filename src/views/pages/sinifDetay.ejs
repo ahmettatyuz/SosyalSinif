@@ -6,9 +6,9 @@
       <button class="addRow" data-bs-toggle="modal" data-bs-target="#duyuruEkleModal"><i class="fa-solid fa-plus"></i></button>
     </div>
     <div class="columnItems">
-      <% for( let index = 0; index < 7; index++ ) { %>
-      <%- include('../partials/_duyuruRow') %>
-      <% } %>
+      <% sinif.duyurular.forEach(duyuru => { %>
+        <%- include('../partials/_duyuruRow',{duyuru}) %>
+      <% }) %>
     </div>
   </div>
   <div class="column col-md-3 col-12">
@@ -28,12 +28,80 @@
       <button class="addRow" data-bs-toggle="modal" data-bs-target="#ogrenciEkleModal"><i class="fa-solid fa-plus"></i></button>
     </div>
     <div class="columnItems">
-      <% for( let index = 0; index < 7; index++ ) { %>
-      <%- include('../partials/_ogrenciRow') %>
+      <% if (sinif.ogrenciler.length==0) { %>
+      <div class="text-center display-6">Bu sınıfta hiç öğrenci yok !</div>
+      <% } else { %>
+      <% sinif.ogrenciler.forEach(ogrenci => { %>
+      <%- include('../partials/_ogrenciRow',{ogrenci}) %>
+      <% }) %>
       <% } %>
+
     </div>
   </div>
 </div>
+
+<script>
+  $(function() {
+    $(".ogrenciDetayBtn").click(async function(e) {
+      const ogrenciID = $(this).val();
+      const token = Cookies.get('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const ogrenci = await axios.get("/api/user/" + ogrenciID, config);
+      console.log(ogrenci.data);
+      for (const key in ogrenci.data) {
+        $("#" + key).text(ogrenci.data[key]);
+      }
+      $("#id").val(ogrenci.data._id);
+      $("#ogrenciDetayModal .profileImage img").attr("src",ogrenci.data.profileImage)
+
+    });
+    $(".ogrenciKaldirBtn").click(async function(e) {
+      e.preventDefault();
+      const ogrenciID = $(this).val();
+      const sinifID = $("#sinifid").val();
+      const token = Cookies.get('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const data = {
+        ogrenciID: ogrenciID,
+        sinifID: sinifID
+      };
+      const result = await axios.patch("/api/siniflar/ogrenciSil", data, config);
+      if (result.data.status == 404) {
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        createToast("Bilgi", result.data.mesaj, "success");
+        yonlendir("/ogretmen/siniflar/" + sinifID, 2);
+      }
+    })
+
+    $(".sinifiSilBtn").click(async function(e){
+      e.preventDefault();
+      const token = Cookies.get('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const sinifId = $(this).attr("value");
+      const result = await axios.delete("/api/siniflar/"+sinifId,config);
+      console.log(result);
+      if (result.data.status == 404) {
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        createToast("Bilgi", result.data.mesaj, "success");
+        yonlendir("/ogretmen/siniflar", 2);
+      }
+    })
+  })
+</script>
 
 <%- include('../partials/_duyuruEkleModal') %>
 <%- include('../partials/_odevEkleModal') %>

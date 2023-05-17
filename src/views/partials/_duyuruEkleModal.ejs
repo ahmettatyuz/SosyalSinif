@@ -5,20 +5,46 @@
         <h3 class="modal-title" id="duyuruEkleModal">Duyuru Ekle</h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="">
+      <form action="" id="duyuruEkleForm">
         <div class="modal-body py-0">
           <div class="modalInput">
-            <input type="text" class="form-control" placeholder="Duyuru başlığını yazın...">
+            <input type="hidden" name="sinifid" id="sinifid" value="<%= sinif._id %>">
+            <input type="text" class="form-control" placeholder="Duyuru başlığını yazın..." name="title">
           </div>
           <div class="modalInput">
-            <textarea name="" id="" rows="6" class="form-control" placeholder="Duyurunuzu yazın..."></textarea>
+            <textarea id="" rows="6" class="form-control" placeholder="Duyurunuzu yazın..." name="content"></textarea>
           </div>
         </div>
         <div class="modal-footer">
           <button type="reset" class="button button-danger" data-bs-dismiss="modal">İptal</button>
-          <button type="button" class="button button-success">Onayla</button>
+          <button type="button" class="button button-success" id="duyuruEkleBtn">Onayla</button>
         </div>
       </form>
     </div>
   </div>
 </div>
+
+<script>
+  $(function() {
+    $("#duyuruEkleBtn").click(async function(e) {
+      e.preventDefault();
+      const formData = $("#duyuruEkleForm").serializeArray();
+      const token = Cookies.get('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const formJson = formArrayToJson(formData);
+      console.log(formJson);
+      const result = await axios.post("/api/siniflar/duyuruEkle", formJson, config);
+      if (result.data.status == 404) {
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        createToast("Bilgi", result.data.mesaj, "success");
+        yonlendir("/ogretmen/siniflar/" + formJson.sinifid, 2);
+      }
+      // console.log(sonuc);
+    })
+  });
+</script>

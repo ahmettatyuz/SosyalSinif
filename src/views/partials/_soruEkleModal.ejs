@@ -1,0 +1,53 @@
+<div class="modal fade" id="soruEkleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="soruEkleModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down modal-lg">
+    <div class="modal-content eklemeModal">
+      <div class="modal-header pb-0">
+        <h3 class="modal-title" id="soruEkleModal">Soru Sor</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="" id="soruEkleForm">
+        <div class="modal-body py-0">
+          <div class="modalInput">
+            <!-- <input type="hidden" name="sinifid" id="sinifid" value="<%= //sinif._id %>"> -->
+            <input type="text" class="form-control" placeholder="Soru başlığını yazın..." name="title">
+          </div>
+          <div class="editorWrapper">
+            <div id="soruEditor">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="reset" class="button button-danger" data-bs-dismiss="modal">İptal</button>
+          <button type="button" class="button button-success" id="soruEkleBtn">Onayla</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $(function() {
+    $("#soruEkleBtn").click(async function(e) {
+      e.preventDefault();
+      const htmlContent = $("#soruEditor .ql-editor").html();
+      const formData = $("#soruEkleForm").serializeArray();
+      const token = Cookies.get('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const formJson = formArrayToJson(formData);
+      formJson.htmlContent = htmlContent;
+      const result = await axios.post("/api/sorular/", formJson, config);
+      if (result.data.status == 404) {
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        createToast("Bilgi", result.data.mesaj, "success");
+        yonlendir("/sorular", 2);
+      }
+
+    })
+  })
+</script>

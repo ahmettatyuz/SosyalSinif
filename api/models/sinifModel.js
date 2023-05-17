@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const Joi = require("joi");
 const Schema = mongoose.Schema;
 
 const sinifSchema = new Schema({
@@ -8,16 +8,27 @@ const sinifSchema = new Schema({
         require:true,
         trim:true
     },
-    aciklama:{
+    bolum:{
         type:String,
         trim:true
     },
-    ogretmen:{type: Schema.Types.ObjectId, ref: 'Ogretmen'},
-    ogrenciler:[{ type: Schema.Types.ObjectId, ref: 'Ogrenci' }],
+    ogretmen:{type: Schema.Types.ObjectId, ref: 'User'},
+    ogrenciler:[{ type: Schema.Types.ObjectId, ref: 'User' }],
+    duyurular:[{type:Schema.Types.ObjectId,ref:"Duyuru"}],
     deleted:{
         type:String
     }
-},{collection:"siniflar"});
+},{collection:"siniflar",timestamps:true});
+
+sinifSchema.methods.joiValidation = function(sinifObject){
+    // console.log(sinifObject);
+    const schema = Joi.object({
+        ad:Joi.string().trim().required(),
+        bolum:Joi.string().optional().allow(""),
+        ogretmen:Joi.string().trim().required()
+    }).messages({'string.empty':"Sınıf adı zorunludur !"}); 
+    return schema.validate(sinifObject);
+}
 
 const Sinif = mongoose.model("Sinif",sinifSchema);
 module.exports = Sinif;

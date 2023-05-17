@@ -1,22 +1,30 @@
-<div class="kisi">
-  <a href="#">
+<div class="kisi" id="<%= kisi._id %>">
+  <a>
     <div class="d-flex justify-content-between align-items-center">
       <div class="kisiLeft d-flex align-items-center gap-3">
         <div class="kisiImg">
-          <img src="https://picsum.photos/200/300?random=<%= index %>" alt="">
+          <img class="kisiImage" src="<%= kisi.profileImage %>" alt="">
         </div>
         <div>
-            <div class="kisiAd">Kişi Adı </div>
-            <div class="kisiSonMesaj">Lorem ipsum dolor sit amet.</div>
+          <div class="kisiAd"><%= kisi.ad +" "+ kisi.soyad %></div>
+          <% 
+            if(kisi.sonMesaj.mesaj.length>20){
+              kisi.sonMesaj.mesaj = kisi.sonMesaj.mesaj.substring(0,20)+"...";
+            } 
+          %>
+          <div class="kisiSonMesaj"><%= kisi.sonMesaj.mesaj %></div>
+          <div class="yaziyor kisiSonMesaj" style="display:none;">yazıyor...</div>
         </div>
-        
       </div>
-      <div class="kisiRight">
-        <div class="messageTime">15.30</div>
+      <div class="kisiRight d-flex gap-3">
+        <% if (kisi.unseenCount>0) { %>
+        <div class="unseenMessages">
+          <%= kisi.unseenCount %>
+        </div>
+        <% } %>
+        <div class="messageTime"><%= kisi.sonMesaj.time %></div>
       </div>
 
     </div>
   </a>
-
-
 </div>

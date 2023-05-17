@@ -1,33 +1,44 @@
 <div class="soru">
   <div class="row align-items-center">
-    <div class="col-1">
-        <div class="soruBadge text-mavi">
-            <i class="fa-solid fa-thumbs-up"></i>
-            <span>16</span>
-        </div>
-        <div class="soruBadge text-kirmizi">
-            <i class="fa-solid fa-thumbs-down"></i>
-            <span>8</span>
-        </div>
-        <div class="soruBadge text-yesil">
-            <i class="fa-solid fa-comment-dots"></i>
-            <span>5</span>
-        </div>
-        <div class="soruBadge text-sari">
-            <i class="fa-regular fa-eye"></i>
-            <span>45</span>
-        </div>
-    </div>
-    <div class="col-11">
+
+    <div class="col-12">
       <div class="soruBaslik">
-        <a href="/sorular/5">
-          <h3>Soru başlığı</h3>
+        <a href="/sorular/soru/<%= soru._id %>">
+          <h3><%= soru.title %></h3>
         </a>
 
       </div>
       <div class="soruIcerik">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero harum accusantium autem corporis sapiente nihil consequatur mollitia voluptatibus qui quo?</p>
+        <% soru.htmlContent = soru.htmlContent.replace(/(<([^>]+)>)/gi, ""); %>
+        <p>
+          <% if (soru.htmlContent.length>100) { %>
+          <%= soru.htmlContent.substring(0,100)+"..."; %>
+          <% } else { %>
+          <%= soru.htmlContent %>
+          <% } %>
+        </p>
       </div>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex gap-3">
+          <div class="soruBadge bg-mavi">
+            <i class="fa-solid fa-thumbs-up"></i>
+            <span><%= soru.likeCount %></span>
+          </div>
+          <div class="soruBadge bg-kirmizi">
+            <i class="fa-solid fa-thumbs-down"></i>
+            <span><%= soru.dislikeCount %></span>
+          </div>
+          <div class="soruBadge bg-yesil">
+            <i class="fa-solid fa-comment-dots"></i>
+            <span><%= soru.cevaplar.length %></span>
+          </div>
+        </div>
+        <div class="bg-sari text-light rounded p-1 my-2">
+          <i class="fa-solid fa-calendar-days"></i>
+          <%= soru.createdAt %>
+        </div>
+      </div>
+
     </div>
   </div>
 

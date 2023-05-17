@@ -1,6 +1,8 @@
-<div class="courseInfo" style="background-image: linear-gradient(to bottom, rgba(37, 55, 90, 0.5), rgba(37, 55, 90, 0.5)),url('<%= baseURL %>/image/math.jpeg');">
+<div class="courseInfo course-background">
+
+  <!-- <div class="courseInfo" style="background-image: linear-gradient(to bottom, rgba(37, 55, 90, 0.5), rgba(37, 55, 90, 0.5)),url('<%= baseURL %>/image/loginimage.jpg'); background-position: center;"></div> -->
   <%- include('./_dropdown') %>
-  <h1>Matematik</h1>
-  <p>Matematik Uygulamaları</p>
-  <p class="courseTeacher">Ahmet Tatyüz</p>
+  <h1><%= sinif.ad %></h1>
+  <p><%= sinif.bolum || sinif.aciklama %></p>
+  <p class="courseTeacher"><%= sinif.ogretmen.ad + " "+sinif.ogretmen.soyad%></p>
 </div>

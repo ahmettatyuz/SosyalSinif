@@ -1,61 +1,66 @@
 <div class="d-md-flex">
+
   <div class="kisiler col-md-4 col-lg-3 col-12 p-0 m-0">
-    <div class="kisilerSearch p-1">
-      <input type="search" class="form-control" placeholder="Kişileri arayın">
+    <div class="kisilerSearch py-2">
+      <input id="sohbetSearch" type="text" class="form-control rounded-0" placeholder="Kişileri arayın">
     </div>
     <div class="kisilerList">
-      <% for( let index = 0; index < 28; index++ ) { %>
-      <%- include('../partials/_kisiRow',{index}) %>
-      <% } %>
+      <div class="sohbetGrupHeader d-flex justify-content-center align-items-center">
+        Öğretmenler
+      </div>
+      <% ogretmenler.forEach(kisi => { %>
+      <%- include('../partials/_kisiRow',{kisi}) %>
+      <%  }) %>
+      <div class="sohbetGrupHeader d-flex justify-content-center align-items-center">
+        Öğrenciler
+      </div>
+      <% ogrenciler.forEach(kisi => { %>
+      <%- include('../partials/_kisiRow',{kisi}) %>
+      <%  }) %>
+
     </div>
   </div>
+
   <div class="mesajlar col-md-8 col-lg-9 col-12">
     <div class="mesajHeader d-flex justify-content-between align-items-center">
       <div class="mesajHeaderLeft d-flex align-items-center gap-3">
         <div class="kisiImg">
-          <img src="https://picsum.photos/200/300" alt="">
+          <img id="kisiImage" src="/image/user.png" alt="">
         </div>
         <div>
-          <div class="kisiAd">Kişi Adı </div>
-          <div class="kisiStatus">Son görülme dün 21:06</div>
+          <div class="kisiHeaderAd">Sosyal Sınıf</div>
+          <div class="kisiHeaderStatus"></div>
         </div>
-
       </div>
       <div class="mesajHeaderRight">
 
       </div>
     </div>
 
-    <div class="mesajKutulari">
-      <% for( let index = 0; index < 5; index++ ) { %>
-      <%- include('../partials/_mesajKutusu',{content:"Merhaba",state:"receiver"}) %>
-      <%- include('../partials/_mesajKutusu',{content:"Merhaba",state:"sender"}) %>
-      <%- include('../partials/_mesajKutusu',{content:"Nasılsın",state:"sender"}) %>
-      <%- include('../partials/_mesajKutusu',{content:"İyiyim",state:"receiver"}) %>
-      <%- include('../partials/_mesajKutusu',{content:"Sen nasılsın",state:"receiver"}) %>
-      <%- include('../partials/_mesajKutusu',{content:"Merhaba",state:"receiver"}) %>
-      <%- include('../partials/_mesajKutusu',{content:"Merhaba ",state:"sender"}) %>
-      <%- include('../partials/_mesajKutusu',{content:"Lorem ipsum dolor sit amet consecteturasdasd, adipisicing elit. Quis, quisquam!",state:"sender"}) %>
-      <%- include('../partials/_mesajKutusu',{content:"Merhaba",state:"receiver"}) %>
-      <%- include('../partials/_mesajKutusu',{content:"Lorem ipsum dolor sit amet consecteturasdasd, adipisicing elit. Quis, quisquam!",state:"receiver"}) %>
-      <%- include('../partials/_mesajKutusu',{content:"Merhaba",state:"sender"}) %>
-      <%- include('../partials/_mesajKutusu',{content:"Nasılsın",state:"sender"}) %>
-      <%- include('../partials/_mesajKutusu',{content:"İyiyim",state:"receiver"}) %>
-      <%- include('../partials/_mesajKutusu',{content:"Sen nasılsın",state:"receiver"}) %>
 
-      <% } %>
+
+    <div id="mesajKutulari" class="mesajKutulari">
+      <div class="mesajKutulariInfo">
+        <div class="display-1">Mesajlarınız burada görünür.</div>
+      </div>
 
     </div>
-    <div class="mesajFooter d-flex justify-content-between">
-      <div class="mesajInput col-9 col-md-10 ">
-        <input type="text" class="form-control" placeholder="Bir mesaj yazın...">
+
+    <div class="mesajFooter d-flex justify-content-between ps-0 mx-0">
+      <!-- <div class="dosyaEkleBtn col-md-1 text-center">
+        <button id="dosyaGonderBtn" class="button button-primary px-3"><i class="fa-solid fa-file"></i></button>
+      </div> -->
+      <div class="mesajInput col-11">
+        <input id="mesaj" type="text" class="form-control rounded-0" placeholder="Bir mesaj yazın...">
       </div>
-      <div class="dosyaEkleBtn col-md-1 text-center">
-        <button class="button button-primary px-3"><i class="fa-solid fa-file"></i></button>
-      </div>
-      <div class="mesajGonderBtn col-md-1 text-center">
-        <button class="button button-success px-3"><i class="fa-solid fa-paper-plane"></i></button>
-      </div>
+      <form>
+        <div style="color:green" class="mesajGonderBtn col-1 text-center">
+          <input type="hidden" id="me" value="<%= userSession.id %>">
+          <input type="hidden" id="receiver" value="">
+          <button type="submit" id="mesajGonderBtn" style="width: 50px;" class="button button-success"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+      </form>
+
     </div>
   </div>
 </div>
@@ -64,5 +69,242 @@
   $(document).ready(function() {
     $("#container").removeClass("container");
     $("#container").removeClass("my-2");
+
+    const token = Cookies.get('token');
+    // console.log(token);
+    const config = {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }
+    const socket = io.connect("localhost:3000");
+
+    $(".kisi").click(async function(e) {
+      $(".kisiStatus").text("");
+      const id = $(this).attr("id");
+      const me = $("#me").val();
+      $("#receiver").val(id);
+      const ad = $(this).find(".kisiAd").text();
+      const img = $(this).find(".kisiImage").attr("src");
+      $(".kisiHeaderAd").text(ad);
+      $("#kisiImage").attr("src", img);
+      const token = Cookies.get('token');
+      const config = {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      }
+      const params = {
+        sender: me,
+        receiver: id
+      }
+      config.params = params;
+
+      const mesajlar = await axios.get("/api/sohbet", config);
+      const you = $("#receiver").val();
+      socket.emit("seen", {
+        sender: me,
+        receiver: you
+      });
+
+      //okunmamış mesaj rozeti kaldırılıyor
+      $(this).find(".unseenMessages").remove();
+
+      // mesajları gösterme kısmı yapılacak
+      $(".mesajKutulari").empty();
+
+      mesajlar.data.forEach(mesaj => {
+        $(".mesajKutulari").append(mesajKutusuOlustur(mesaj._id, mesaj.sender._id, mesaj.message, mesaj.createdAt, mesaj.status));
+        var messageDiv = document.getElementById('mesajKutulari');
+        messageDiv.scrollTop = messageDiv.scrollHeight - messageDiv.clientHeight;
+      });
+    });
+
+    setInterval(async () => {
+      const me = $("#me").val();
+      const you = $("#receiver").val();
+      socket.emit("seen", {
+        sender: me,
+        receiver: you
+      });
+      // const params = {
+      //   sender: me,
+      //   receiver: you
+      // }
+      // config.params = params;
+      // const result = await axios.get("/api/sohbet/seen", config);
+
+    }, 2000);
+
+    socket.on("seen", async (mesaj) => {
+      const me = $("#me").val();
+      const you = $("#receiver").val();
+      // const id = mesaj.id;
+      // const token = Cookies.get('token');
+      // // console.log(token);
+      // const config = {
+      //   headers: {
+      //     "Authorization": `Bearer ${token}`
+      //   }
+      // }
+
+      // console.log(data);
+      if (mesaj.sender == you && mesaj.receiver == me) {
+        // console.log(config);
+
+        // console.log(result);
+        $(".mesajState").find(".fa-check-double").css("color", "var(--kapalimavi)");
+      }
+    });
+
+    const mesajGonder = async function(e) {
+      e.preventDefault();
+      const me = $("#me").val();
+      const receiver = $("#receiver").val();
+      const mesaj = $("#mesaj").val();
+
+      if (mesaj != "") {
+        const sonuc = await axios.post("/api/sohbet", {
+          sender: me,
+          receiver: receiver,
+          message: mesaj
+        }, config);
+        console.log(sonuc);
+        console.log(config);
+        socket.emit("chat", {
+          id: sonuc.id,
+          sender: me,
+          receiver: receiver,
+          message: mesaj,
+          createdAt: new Date(Date.now() + 3 * 60 * 60 * 1000),
+        });
+        $("#mesaj").val("");
+      }
+    }
+
+    $("#mesajGonderBtn").click(mesajGonder);
+
+    $("#mesaj").keydown(async function(e) {
+      if (e.which == 13) {
+        mesajGonder(e);
+      }
+    })
+
+    $("#mesaj").keypress(function(e) {
+      const me = $("#me").val();
+      const receiver = $("#receiver").val();
+      socket.emit("typing", {
+        sender: me,
+        receiver: receiver
+      });
+    })
+
+    socket.on("chat", async (mesaj) => {
+      console.log(mesaj);
+      const me = $("#me").val();
+      const receiver = $("#receiver").val();
+      const id = mesaj.id;
+      const token = Cookies.get('token');
+      console.log(token);
+      const config = {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      }
+      const params = {
+        sender: me,
+        receiver: receiver
+      }
+      config.params = params;
+      if ((mesaj.sender == me && mesaj.receiver == receiver) || (mesaj.receiver == me && mesaj.sender == receiver)) {
+        $(".mesajKutulari").append(mesajKutusuOlustur(mesaj.id, mesaj.sender, mesaj.message, mesaj.createdAt, "1"));
+        //scroll'un en altta kalması için
+        var messageDiv = document.getElementById('mesajKutulari');
+        messageDiv.scrollTop = messageDiv.scrollHeight - messageDiv.clientHeight;
+      }
+      mesaj.createdAt = mesaj.createdAt.split("T")[1].slice(0, 5);
+      if ((mesaj.receiver==me || mesaj.sender==me) && receiver!=mesaj.sender) {
+        if(mesaj.message.length>20){
+          mesaj.message=mesaj.message.substring(0,20)+"...";
+        }
+        $("#" + mesaj.sender).find(".kisiSonMesaj").text(mesaj.message);
+        $("#" + mesaj.sender).find(".messageTime").text(mesaj.createdAt);
+
+        $("#" + mesaj.receiver).find(".kisiSonMesaj").text(mesaj.message);
+        $("#" + mesaj.receiver).find(".messageTime").text(mesaj.createdAt);
+        if (!$("#" + mesaj.sender).find(".unseenMessages").text()) {
+          // console.log("eklendi");
+          $("#" + mesaj.sender).find(".kisiRight").prepend(mesajRozetiOlustur(1));
+        } else {
+          let unseen1 = parseInt($("#" + mesaj.sender).find(".unseenMessages").text());
+          $("#" + mesaj.sender).find(".unseenMessages").text(unseen1 + 1);
+        }
+      }
+    });
+
+    socket.on("typing", (typing) => {
+      const me = $("#me").val();
+      const receiver = $("#receiver").val();
+      if (typing.receiver == me && typing.sender == receiver) {
+        $(".kisiHeaderStatus").text("yazıyor...");
+
+      }
+      setTimeout(() => {
+        $(".kisiHeaderStatus").text("");
+      }, 2000)
+    });
+
+    $("#sohbetSearch").keyup(function(e) {
+      const searchText = $(this).val().toLowerCase();
+      if (searchText == "") {
+        $(".kisi").css("display", "block");
+      } else {
+        $(".kisi").each(function(index) {
+          if ($(this).find(".kisiAd").text().toLowerCase().includes(searchText)) {
+            $(this).css("display", "block");
+          } else {
+            $(this).css("display", "none");
+          }
+        })
+      }
+    })
+
+    const mesajKutusuOlustur = (id, sender, message, time, status) => {
+      const kisi = sender == $("#me").val() ? "sender" : "receiver";
+      const position = (kisi == "sender") ? "end" : 'start';
+      const mesajKutusu = `
+      <div id="${id}" class="mesajKutusu d-flex justify-content-${position}">
+        <div class="d-flex justify-content-${position} align-items-start col-md-5 col-11">
+          <div class="mesaj ${kisi} d-flex justify-content-${position} align-items-end gap-2">
+            <div class="mesajLeft">${message}</div>
+              <div class="mesajRight d-flex align-items-end gap-2">
+                <div class="mesajTime">${time.split("T")[1].slice(0,5)}
+                  <div class="mesajPopover">${dateFormat(time)}</div>
+                </div>
+                ${kisi=="sender"&& status=="1" ? '<div class="mesajState"><i class="fa-solid fa-check-double"></i></div>':''}
+                ${kisi=="sender"&& status=="2" ? '<div class="mesajState" style="color:var(--kapalimavi)"><i class="fa-solid fa-check-double"></i></div>':''}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      return mesajKutusu;
+    }
+
+    const mesajRozetiOlustur = () => {
+      return `<div class="unseenMessages">
+          1
+        </div>`;
+    }
+
+    const dateFormat = (time) => {
+      const datetime = time.split("T");
+      let saat = datetime[1].split(".")[0];
+      let date = datetime[0].split("-");
+      date = `${date[2]}/${date[1]}/${date[0]}`;
+
+      return date + " " + saat;
+    }
+
   })
 </script>

@@ -1,11 +1,14 @@
-<%- include('./partials/_header',); %>
+<%- include('./partials/_header'); %>
 <%- include('./partials/_navbar'); %>
 <%- include('./partials/_leftMenu'); %>
 <%- include('./partials/_profileMenu'); %>
 
 <div id="container" class="container my-2">
-  <% if (page=="siniflar") { %>
-  <%- include('./pages/dersler',{siniflar}) %>
+  <% if (page=="anasayfa") { %>
+  <%- include('./pages/anasayfa') %>
+
+  <% }else if (page=="siniflar") { %>
+  <%- include('./pages/dersler') %>
 
   <% }else if (page=="dersler" ) { %>
   <%- include('./pages/dersler') %>
@@ -24,7 +27,15 @@
 
   <% }else if (page=="sorular" ) { %>
   <%- include('./pages/sorular') %>
+
+  <% }else if (page=="soruDetay" ) { %>
+  <%- include('./pages/soruDetay') %>
+  
+  <% }else if (page=="todolist" ) { %>
+  <%- include('./pages/todolist') %>
   <% } %>
+
+
 </div>
 
 

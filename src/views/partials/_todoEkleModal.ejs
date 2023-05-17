@@ -1,0 +1,51 @@
+<div class="modal fade" id="todoEkleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="todoEkleModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
+    <div class="modal-content eklemeModal">
+      <div class="modal-header pb-0">
+        <h3 class="modal-title" id="todoEkleModal">Görev Ekle</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="" id="todoEkleForm">
+        <div class="modal-body py-0">
+          <div class="modalInput">
+            <input type="text" name="title" class="form-control" placeholder="Başlık yazın...">
+          </div>
+          <div class="modalInput">
+            <textarea name="content" id="" rows="6" class="form-control" placeholder="Görevi yazın..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="reset" class="button button-danger" data-bs-dismiss="modal">İptal</button>
+          <button type="button" class="button button-success" id="todoEkleBtn">Onayla</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    $("#todoEkleBtn").click(async function(e) {
+      e.preventDefault();
+      const formData = $("#todoEkleForm").serializeArray();
+      const token = Cookies.get('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const formJson = formArrayToJson(formData);
+      console.log(formJson);
+      const result = await axios.post("/api/todo/", formJson, config);
+      // console.log(result);
+
+      if (result.data.status == 404) {
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        $("#todoEkleModal").hide();
+        createToast("Bilgi", result.data.mesaj, "success");
+        yonlendir("/todolist", 2);
+      }
+    })
+  })
+</script>

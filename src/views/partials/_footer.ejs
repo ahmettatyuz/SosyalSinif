@@ -1,5 +1,12 @@
 <script>
-    // AOS.init();
+    $(window).scroll(function() {
+      var navbar = $('.navigation');
+      if ($(this).scrollTop() > 3) {
+        navbar.addClass('bg-white');
+      } else {
+        navbar.removeClass('bg-white');
+      }
+    });
 </script>
 </body>
 
