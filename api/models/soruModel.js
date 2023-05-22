@@ -3,6 +3,7 @@ const Joi = require("joi");
 const Schema = mongoose.Schema;
 
 const soruSchema = new Schema({
+    kisi:{ type: Schema.Types.ObjectId, ref: 'User' },
     title:{
         type:String,
         require:true,
@@ -13,14 +14,6 @@ const soruSchema = new Schema({
         require:true
     },
     cevaplar:[{ type: Schema.Types.ObjectId, ref: 'Cevap' }],
-    likeCount:{
-        type:Number,
-        default:0,
-    },
-    dislikeCount:{
-        type:Number,
-        default:0
-    },
     
 },{collection:"sorular",timestamps:true});
 

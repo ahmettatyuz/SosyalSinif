@@ -22,6 +22,8 @@ const soruGetir = async (req, res, next) => {
     let soru = await axios.get(process.env.BASE_URL+"/api/sorular/soru/"+soruId,config);
     // console.log(soru.data);
     soru = helper.toLocalTimeSingle(soru.data);
+
+    soru.cevaplar = helper.toLocalTime(soru.cevaplar);
     res.render("index", { page: "soruDetay", userSession: req.userSession, soru: soru });
 }
 

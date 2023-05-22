@@ -1,14 +1,15 @@
 <div class="soruDetay">
+  <div id="soruId" class="d-none"><%= soru._id %></div>
   <div class="d-flex justify-content-between align-items-start">
     <div>
-      <h2><%= soru.title %></h2>
+      <h4><%= soru.title %></h4>
     </div>
     <div>
       <div class="bg-sari text-light rounded p-1 my-2">
         <i class="fa-solid fa-calendar-days"></i>
         <%= soru.createdAt %>
       </div>
-      <div class="d-flex gap-3 justify-content-between">
+      <!-- <div class="d-flex gap-3 justify-content-between">
         <div class="soruBadge bg-mavi">
           <i class="fa-solid fa-thumbs-up"></i>
           <span><%= soru.likeCount %></span>
@@ -21,7 +22,7 @@
           <i class="fa-solid fa-comment-dots"></i>
           <span><%= soru.cevaplar.length %></span>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -31,7 +32,9 @@
 </div>
 
 <div class="cevaplar">
-
+  <% soru.cevaplar.forEach(cevap => { %>
+  <%- include('../partials/_cevap',{cevap}) %>
+  <% }) %>
 </div>
 
 <div class="editorWrapper">
@@ -39,7 +42,7 @@
   </div>
 </div>
 <div class="text-end">
-  <button class="button button-success">Gönder</button>
+  <button class="button button-success" id="cevapBtn">Gönder</button>
 </div>
 
 <script>
@@ -101,5 +104,30 @@
       placeholder: "Yanıt oluşturun...",
       theme: 'snow'
     });
+
+    const token = Cookies.get('token');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
+
+    $("#cevapBtn").click(async function(e) {
+      e.preventDefault();
+      const htmlContent = $("#soruEditor .ql-editor").html();
+      const formData = $("#soruEkleForm").serializeArray();
+      const formJson = formArrayToJson(formData);
+      formJson.htmlContent = htmlContent;
+      const cevapHtml = $("#soruEditor .ql-editor").html();
+      const soruId = $("#soruId").text();
+      const result = await axios.post("/api/sorular/cevap/" + soruId, formJson, config);
+      if (result.data.status == 404) {
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        createToast("Bilgi", result.data.mesaj, "success");
+        yonlendir("/sorular/soru/"+soruId, 2);
+      }
+    })
+
   })
 </script>

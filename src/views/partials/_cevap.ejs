@@ -1,0 +1,18 @@
+<div class="cevap">
+  <div class="d-flex align-items-start gap-2">
+    <div class="cevapSol">
+      <div class="profileImage">
+        <img src="<%= cevap.kisi.profileImage %>" alt="">
+      </div>
+      <div class="cevapBadge text-light bg-mavi my-1">
+        <%= cevap.kisi.ad+" "+cevap.kisi.soyad %>
+      </div>
+      <div class="cevapBadge bg-sari my-1">
+        <%= cevap.createdAt %> tarihinde cavapladı.
+      </div>
+    </div>
+    <div class="cevapSag">
+      <%- cevap.htmlContent %>
+    </div>
+  </div>
+</div>

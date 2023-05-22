@@ -8,7 +8,7 @@ html {
     font-size: 16px;
 }
 
-body{
+body {
     background-image: linear-gradient(to top, rgba(63, 113, 175, 1), rgb(255, 255, 255));
     background-size: cover;
     background-position: center;
@@ -472,10 +472,9 @@ body{
     margin: 5px 0;
 }
 
-.modal-backdrop
-{
-    opacity:0.9 !important;
-    background-image: linear-gradient(to top, rgba(63, 113, 175, 1), rgba(255, 255, 255,1));
+.modal-backdrop {
+    opacity: 0.9 !important;
+    background-image: linear-gradient(to top, rgba(63, 113, 175, 1), rgba(255, 255, 255, 1));
     transition-duration: 0.3s;
 }
 
@@ -676,20 +675,24 @@ body{
     display: none;
 }
 
-.profileRight,.profileLeft{
+.profileRight,
+.profileLeft {
     box-shadow: var(--golge1);
     border-radius: 5px;
     padding-top: 10px;
 }
+
 /* sorular */
 
 .soru {
-    padding:10px 15px;
+    padding: 10px 15px;
     transition-duration: 0.3s;
     /* transition: scale 0.3s ease-in-out; */
     border-radius: 5px;
     margin-bottom: 10px;
-    background-image: linear-gradient(to top, rgb(255, 255, 255,0.4), rgba(255, 255, 255,0.4));
+    background-image: linear-gradient(to top, rgb(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4));
+    font-size: 13px;
+    background-color: var(--acikmavi);
 }
 
 .soru:hover {
@@ -715,23 +718,23 @@ body{
     color: var(--acik);
 }
 
-.sorularWrapper{
+.sorularWrapper {
     border-radius: 5px;
     box-shadow: var(--golge1);
     padding: 10px;
     margin-bottom: 20px;
 }
 
-.editorWrapper{
+.editorWrapper {
     background-color: white;
 }
 
-.ql-editor{
+.ql-editor {
     min-height: 200px;
 }
 
-.ql-syntax{
-    background-color: rgb(246,246,246);
+.ql-syntax {
+    background-color: rgb(246, 246, 246);
     border-radius: 2px;
     display: inline-block;
     padding: 5px !important;
@@ -739,16 +742,54 @@ body{
 }
 
 /* soruDetay */
-.soruDetay{
+.soruDetay {
     box-shadow: var(--golge1);
-    padding: 10px;
+    padding: 10px 25px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     /* border: 1px solid rgb(255, 255, 255,0.4); */
-    background-image: linear-gradient(to top, rgb(255, 255, 255,0.4), rgba(255, 255, 255,0.4));
+    background-image: linear-gradient(to top, rgb(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4));
+    font-size: 14px;
 }
 
+.cevap {
+    font-size: 12px;
+    margin: 10px 0;
+}
 
+.cevapSol {
+    box-shadow: var(--golge1);
+    background-color: var(--acikmavi);
+    width: 130px;
+    text-align: center;
+    padding: 10px 5px;
+    border-radius: 10px 10px 0px 10px;
+}
+
+.cevapSol .profileImage {
+    width: 100px;
+}
+
+.cevapBadge{
+    border-radius: 5px;
+    font-size: 11px;
+}
+
+.cevapSag {
+    background-color: white;
+    overflow-x: scroll;
+    padding: 10px 15px;
+    width: 100%;
+    box-shadow: var(--golge1);
+}
+
+.cevaplar {
+    margin: 10px 0;
+}
+
+.ql-align-center {
+    text-align: center;
+}
 
 /* todolist */
 
@@ -767,7 +808,7 @@ body{
     background-color: var(--acik);
 }
 
-.todoRow:active{
+.todoRow:active {
     cursor: grabbing;
 }
 
@@ -835,18 +876,23 @@ html {
 
 
 /* succes - error icon */
-.success-checkmark,.error-checkmark{
+.success-checkmark,
+.error-checkmark {
     display: none;
     text-align: center;
     font-size: 20px;
 }
-.success-checkmark > p {
+
+.success-checkmark>p {
     color: var(--yesil);
 }
-.error-checkmark > p {
+
+.error-checkmark>p {
     color: var(--kirmizi);
 }
-.success-checkmark-svg,.error-checkmark-svg {
+
+.success-checkmark-svg,
+.error-checkmark-svg {
     width: 100px;
     display: block;
     margin: 40px auto 0;
