@@ -1,7 +1,6 @@
 const Soru = require("../models/soruModel");
 const Cevap = require("../models/cevapModel");
 
-
 const sorulariGetir = async (req, res, next) => {
     try {
         const pageNumber = req.params.pageNumber;
@@ -16,7 +15,9 @@ const sorulariGetir = async (req, res, next) => {
 
 const soruEkle = async (req, res, next) => {
     try {
+        const userId = req.userSession.id;
         const eklenecekSoru = new Soru(req.body);
+        eklenecekSoru.kisi=userId;
         eklenecekSoru.save().then(result => {
             res.json({
                 mesaj: "Sorunuz başarıyla eklendi !",
@@ -25,7 +26,6 @@ const soruEkle = async (req, res, next) => {
         }).catch(err => {
             next(err);
         });
-
     } catch (err) {
         next(err);
     }
@@ -38,7 +38,7 @@ const soruGetir = async (req, res, next) => {
             path: 'cevaplar',
             populate: {
               path: 'kisi',
-              select: 'ad soyad profileImage -_id'
+              select: 'ad soyad profileImage'
             }
           });
 
@@ -90,9 +90,25 @@ const cevapEkle = async (req, res, next) => {
     }
 }
 
+
+const markAsSolution = async (req,res,next)=>{
+    try{
+        const cevap = await Cevap.findById(req.params.cevapId);
+        cevap.isSolution = 1;
+        await cevap.save();
+        res.json({
+            status:200,
+            mesaj:"Cevap çözüm olarak işaretlendi",
+        })
+    }catch(err){
+        next(err);
+    }
+}
+
 module.exports = {
     sorulariGetir,
     soruEkle,
     soruGetir,
-    cevapEkle
+    cevapEkle,
+    markAsSolution
 }

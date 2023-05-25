@@ -7,9 +7,17 @@
       <div class="cevapBadge text-light bg-mavi my-1">
         <%= cevap.kisi.ad+" "+cevap.kisi.soyad %>
       </div>
-      <div class="cevapBadge bg-sari my-1">
-        <%= cevap.createdAt %> tarihinde cavapladı.
+      <div class="cevapBadge my-1">
+        <%= cevap.createdAt %> tarihinde cevapladı.
       </div>
+      <% if (cevap.isSolution==1) { %>
+        <div class="badge bg-success">Kesin Çözüm !</div>
+      <% } else if (soru.kisi==userSession.id) { %>
+        <div>
+          <button class="button button-success solutionBtn cevapBadge" id="<%= cevap._id %>">Kesin Çözüm olarak işaretle</button>
+        </div>
+      <% } %>
+
     </div>
     <div class="cevapSag">
       <%- cevap.htmlContent %>

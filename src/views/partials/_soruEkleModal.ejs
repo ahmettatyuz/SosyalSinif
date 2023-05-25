@@ -8,7 +8,6 @@
       <form action="" id="soruEkleForm">
         <div class="modal-body py-0">
           <div class="modalInput">
-            <!-- <input type="hidden" name="sinifid" id="sinifid" value="<%= //sinif._id %>"> -->
             <input type="text" class="form-control" placeholder="Soru başlığını yazın..." name="title">
           </div>
           <div class="editorWrapper">
@@ -45,7 +44,7 @@
         createToast("Hata", result.data.mesaj, "error");
       } else {
         createToast("Bilgi", result.data.mesaj, "success");
-        yonlendir("/sorular", 2);
+        yonlendir("/sorular/1", 2);
       }
 
     })

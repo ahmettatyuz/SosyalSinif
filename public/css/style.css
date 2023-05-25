@@ -753,14 +753,14 @@ body {
 }
 
 .cevap {
-    font-size: 12px;
+    /* font-size: 16px; */
     margin: 10px 0;
 }
 
 .cevapSol {
     box-shadow: var(--golge1);
     background-color: var(--acikmavi);
-    width: 130px;
+    width: 200px;
     text-align: center;
     padding: 10px 5px;
     border-radius: 10px 10px 0px 10px;
@@ -772,7 +772,7 @@ body {
 
 .cevapBadge{
     border-radius: 5px;
-    font-size: 11px;
+    font-size: 13px;
 }
 
 .cevapSag {

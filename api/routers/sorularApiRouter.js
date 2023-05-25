@@ -7,6 +7,7 @@ sorularApiRouter.get("/:pageNumber",authMiddleware,sorularApiController.sorulari
 
 sorularApiRouter.post("/",authMiddleware,sorularApiController.soruEkle);
 sorularApiRouter.post("/cevap/:soruId",authMiddleware,sorularApiController.cevapEkle);
+sorularApiRouter.post("/cozum/:cevapId",authMiddleware,sorularApiController.markAsSolution);
 
 sorularApiRouter.get("/soru/:soruId",authMiddleware,sorularApiController.soruGetir);
 

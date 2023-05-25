@@ -10,6 +10,7 @@ const cevapSchema = new Schema({
     },
     isSolution:{
         type:String,
+        default:0
     },
 
     

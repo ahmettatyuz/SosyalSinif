@@ -24,6 +24,9 @@ const soruGetir = async (req, res, next) => {
     soru = helper.toLocalTimeSingle(soru.data);
 
     soru.cevaplar = helper.toLocalTime(soru.cevaplar);
+
+    soru.cevaplar.sort((a,b)=>b.isSolution - a.isSolution);
+
     res.render("index", { page: "soruDetay", userSession: req.userSession, soru: soru });
 }
 

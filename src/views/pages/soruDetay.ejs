@@ -111,6 +111,7 @@
         Authorization: `Bearer ${token}`
       }
     };
+    const soruId = $("#soruId").text();
 
     $("#cevapBtn").click(async function(e) {
       e.preventDefault();
@@ -119,7 +120,6 @@
       const formJson = formArrayToJson(formData);
       formJson.htmlContent = htmlContent;
       const cevapHtml = $("#soruEditor .ql-editor").html();
-      const soruId = $("#soruId").text();
       const result = await axios.post("/api/sorular/cevap/" + soruId, formJson, config);
       if (result.data.status == 404) {
         createToast("Hata", result.data.mesaj, "error");
@@ -127,7 +127,20 @@
         createToast("Bilgi", result.data.mesaj, "success");
         yonlendir("/sorular/soru/"+soruId, 2);
       }
-    })
+    });
+
+    $(".solutionBtn").click(async function(e){
+      e.preventDefault();
+      const cevapId = $(this).attr("id");
+
+      const result = await axios.post("/api/sorular/cozum/"+cevapId,{},config);
+      if (result.data.status == 404) {
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        createToast("Bilgi", result.data.mesaj, "success");
+        yonlendir("/sorular/soru/"+soruId, 2);
+      }
+    });
 
   })
 </script>
