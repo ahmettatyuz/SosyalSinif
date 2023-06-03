@@ -462,6 +462,20 @@ body {
     overflow-y: scroll;
 }
 
+.eklenenSorular{
+    height: 70vh;
+    overflow-y: auto;
+    box-shadow: var(--golge1);
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.eklenenSoru{
+    overflow-x: auto;
+}
+
+
+
 .modal-footer {
     /* position: sticky;
     bottom: 0;

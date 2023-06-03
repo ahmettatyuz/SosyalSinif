@@ -5,27 +5,286 @@
         <h3 class="modal-title" id="odevEkleModal">Ödev Ekle</h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="">
-        <div class="modal-body py-0 odevEkleBody">
-          <div class="modalInput">
-            <input type="text" class="form-control" placeholder="Ödev başlığını yazın...">
+
+      <div class="modal-body py-0 odevEkleBody">
+        <div class="d-flex m-2 gap-2 align-items-center">
+          <div>
+            <input type="text" class="form-control" id="odevAdi" placeholder="Ödev Başlığı">
           </div>
-          <div class="modalInput">
-            <textarea name="" id="" rows="6" class="form-control" placeholder="Duyurunuzu yazın..."></textarea>
+          <div>
+            <input type="text" class="form-control" name="puan" id="puan" placeholder="Ödev Puanı">
           </div>
-          <div class="modalInput">
-            <input type="text" class="form-control" placeholder="Ödev başlığını yazın...">
-          </div>
-          <div class="modalInput">
-            <textarea name="" id="" rows="6" class="form-control" placeholder="Duyurunuzu yazın..."></textarea>
+          <div class="d-flex align-items-center gap-1">
+            <label for="odevTeslim">TeslimTarihi</label>
+            <input class="form-control" type="date" name="odevTeslim" id="odevTeslim">
+
           </div>
 
         </div>
-        <div class="modal-footer">
-          <button type="reset" class="button button-danger" data-bs-dismiss="modal">İptal</button>
-          <button type="button" class="button button-success">Onayla</button>
+
+        <div class="row">
+          <div class="col-lg-8 col-12">
+            <div class="modalInput">
+              <select class="form-select" name="soruType" id="soruType">
+                <option value="test">Test sorusu</option>
+                <option value="klasik">Klasik soru</option>
+              </select>
+            </div>
+            <form action="soru">
+              <div class="modalInput">
+                <div class="editorWrapper">
+                  <div id="soruEditor">
+
+                  </div>
+                </div>
+              </div>
+              <div class="optionGroup" id="options">
+                <div class="d-flex align-items-center gap-2 modalInput">
+                  <input class="form-check-input" type="radio" name="cevap" id="aRadio" value="a" required>
+                  <input class="form-control" type="text" name="a" id="a" placeholder="A Şıkkı" required>
+                </div>
+                <div class="d-flex align-items-center gap-2 modalInput">
+                  <input class="form-check-input" type="radio" name="cevap" id="bRadio" value="b" required>
+                  <input class="form-control" type="text" name="b" id="b" placeholder="B Şıkkı" required>
+                </div>
+                <div class="d-flex align-items-center gap-2 modalInput">
+                  <input class="form-check-input" type="radio" name="cevap" id="cRadio" value="c" required>
+                  <input class="form-control" type="text" name="c" id="c" placeholder="C Şıkkı" required>
+                </div>
+                <div class="d-flex align-items-center gap-2 modalInput">
+                  <input class="form-check-input" type="radio" name="cevap" id="dRadio" value="d" required>
+                  <input class="form-control" type="text" name="d" id="d" placeholder="D Şıkkı" required>
+                </div>
+              </div>
+
+              <div>
+                <button type="submit" class="button button-primary" id="soruEkleBtn">
+                  Soruyu Ödeve Ekle
+                </button>
+
+                <button type="reset" class="button button-danger" id="temizleBtn">Temizle</button>
+
+              </div>
+            </form>
+          </div>
+          <div class="col-lg-4 col-12 eklenenSorular">
+
+            <h3>Eklenen Sorular</h3>
+            <div id="eklenenSorular">
+              <div class="alert bg-mavi text-white">Hiç soru eklenmemiş !</div>
+            </div>
+          </div>
+
         </div>
-      </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="reset" class="button button-danger" data-bs-dismiss="modal">İptal</button>
+        <button type="button" class="button button-success" id="odeviOnaylaBtn">Ödevi Onayla ve Ekle</button>
+      </div>
+
     </div>
   </div>
 </div>
+
+
+<script>
+  $(function() {
+    var toolbarOptions = [
+      ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+      ['blockquote', 'code-block'],
+
+      [{
+        'header': 1
+      }, {
+        'header': 2
+      }], // custom button values
+      [{
+        'list': 'ordered'
+      }, {
+        'list': 'bullet'
+      }],
+      [{
+        'script': 'sub'
+      }, {
+        'script': 'super'
+      }], // superscript/subscript
+      [{
+        'indent': '-1'
+      }, {
+        'indent': '+1'
+      }], // outdent/indent
+      [{
+        'direction': 'rtl'
+      }], // text direction
+
+      [{
+        'size': ['small', false, 'large', 'huge']
+      }], // custom dropdown
+      [{
+        'header': [1, 2, 3, 4, 5, 6, false]
+      }],
+      ['link', 'image', 'video', 'formula'], // add's image support
+      [{
+        'color': []
+      }, {
+        'background': []
+      }], // dropdown with defaults from theme
+      [{
+        'font': []
+      }],
+      [{
+        'align': []
+      }],
+
+      ['clean'] // remove formatting button
+    ];
+
+    var quill = new Quill('#soruEditor', {
+      modules: {
+        toolbar: toolbarOptions
+      },
+      placeholder: "Sorunuzu oluşturun...",
+      theme: 'snow'
+    });
+    ///////////////////////////////////
+
+
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; // Ocak 0 ile başlar
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+      dd = '0' + dd
+    }
+
+    if (mm < 10) {
+      mm = '0' + mm
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    $("#odevTeslim").attr("min", today);
+
+
+    let sorular = [];
+
+    $("#soruType").change(function() {
+      const soruType = $(this).val();
+      if (soruType == "test") {
+        $(".optionGroup").slideDown();
+      } else if (soruType == "klasik") {
+        $(".optionGroup").slideUp();
+      }
+    });
+
+    $("#soruEkleBtn").click(function(e) {
+      e.preventDefault();
+      let soru;
+      let soruHtml;
+      const type = $("#soruType").val();
+      const htmlContent = $("#soruEditor .ql-editor").html();
+      if (type == "test") {
+        const cevap = $("input[name=cevap]:checked").val();
+        const aText = $("#a").val();
+        const bText = $("#b").val();
+        const cText = $("#c").val();
+        const dText = $("#d").val();
+
+        soru = {
+          type: type,
+          content: htmlContent,
+          answer: cevap,
+          a: aText,
+          b: bText,
+          c: cText,
+          d: dText
+        }
+      } else if (type == "klasik") {
+        soru = {
+          type: type,
+          content: htmlContent
+        }
+      }
+
+      sorular.push(soru);
+      eklenenSorulariGuncelle();
+
+      console.log(sorular);
+      $("#soruEditor .ql-editor").empty();
+      $()
+    });
+
+    $("#temizleBtn").click(function(e) {
+      $("#soruEditor .ql-editor").empty();
+    })
+
+    $("#odeviOnaylaBtn").click(function(e) {
+      e.preventDefault();
+      const sinifId = $("#sinifId").val();
+      const odev = {
+
+      }
+    })
+
+    $(document).on("click", ".eklenenSoruSilBtn", function(e) {
+      e.preventDefault();
+      console.log("soru sil");
+      const soruId = $(this).attr("id").split("-")[1];
+      console.log(soruId);
+      sorular.splice(soruId, 1);
+      eklenenSorulariGuncelle();
+    })
+
+    // $(".eklenenSoruSilBtn").click(function(e) {
+    //   e.preventDefault();
+    //   console.log("soru sil");
+    //   const soruId = $(this).attr("id").split("-")[1];
+    //   console.log(soruId);
+    //   sorular.splice(soruId, 1);
+    //   eklenenSorulariGuncelle();
+    // });
+
+
+    const eklenenSorulariGuncelle = () => {
+      $("#eklenenSorular").empty();
+      if (sorular.length > 0) {
+        sorular.forEach((soru, index) => {
+          if (soru.type == "test") {
+            soruHtml = `<div class="eklenenSoru shadow bg-mavi rounded p-3 text-white mb-2">
+                <div class="d-flex justify-content-between">
+                  <div>${index+ 1}.Soru ${soru.type}</div>
+                  <div><button type="button" id="soru-${index}" class="button button-danger px-2 eklenenSoruSilBtn mb-2"><i class="fa-solid fa-trash"></i></button></div>
+                </div>
+                <div>
+                  ${soru.content}
+                </div>
+                <div class="my-2">
+                  <div>A: ${soru.a}</div>
+                  <div>B: ${soru.b}</div>
+                  <div>C: ${soru.c}</div>
+                  <div>D: ${soru.d}</div>
+                </div>
+                <div class="badge bg-yesil fs-6">CEVAP : ${soru.answer}</div>
+              </div>`;
+          } else if (soru.type == "klasik") {
+            soruHtml = `<div class="eklenenSoru shadow bg-mavi rounded p-3 text-white mb-2">
+                <div class="d-flex justify-content-between">
+                  <div>${index+ 1}.Soru ${soru.type}</div>
+                  <div><button type="button" id="soru-${index}" class="button button-danger px-2 eklenenSoruSilBtn mb-2"><i class="fa-solid fa-trash"></i></button></div>
+                </div>
+                <div>
+                  ${soru.content}
+                </div>
+              </div>`;
+          }
+          $("#eklenenSorular").append(soruHtml);
+        });
+      } else {
+        const uyari = `<div class="alert bg-mavi text-white">Hiç soru eklenmemiş !</div>`;
+        $("#eklenenSorular").append(uyari);
+      }
+
+    }
+  });
+</script>
