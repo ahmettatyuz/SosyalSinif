@@ -133,6 +133,7 @@ function profileTurnOffCamera() {
 function cameraTrigger() {
   const video = document.querySelector("#webcam");
   const takenPhoto = document.querySelector("#takenPhoto");
+  console.log(takenPhoto);
   const cameraOutput = document.querySelector("#profileCameraOutput");
   const downloadimage = document.querySelector("#downloadimage");
   takenPhoto.width = video.videoWidth;

@@ -3,7 +3,8 @@ const authMiddleware = require("../middlewares/authMiddleware");
 const sorularApiController = require("../controller/sorularApiController");
 
 // apideki rotada parametre olarak pageNumber alınıyor.
-sorularApiRouter.get("/:pageNumber",authMiddleware,sorularApiController.sorulariGetir);
+sorularApiRouter.get("/",authMiddleware,sorularApiController.sorulariGetir);
+sorularApiRouter.get("/:search",authMiddleware,sorularApiController.soruAra);
 
 sorularApiRouter.post("/",authMiddleware,sorularApiController.soruEkle);
 sorularApiRouter.post("/cevap/:soruId",authMiddleware,sorularApiController.cevapEkle);

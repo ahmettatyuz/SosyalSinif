@@ -2,25 +2,14 @@
   <div class="row sorularWrapper">
     <div class="col-lg-9 col-12 order-lg-1 order-2 sorularLeft">
       <div class="d-flex justify-content-between align-items-start py-2 flex-wrap">
-        <div class="d-flex align-items-center gap-2">
-          <div class="d-flex gap-3">
-            <select class="form-select" name="" id="">
-              <option value="" selected disabled>Sıralama</option>
-              <option value="">En yeni</option>
-              <option value="">En eski</option>
-              <option value="">En çok beğenilen</option>
-            </select>
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Soru ara">
-              <div class="input-group-text bg-mavi border-0">
-                <button class="border-0 p-0 bg-mavi text-light">
-                  <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-              </div>
-            </div>
+        <div class="input-group w-50">
+          <input id="searchText" type="text" class="form-control" placeholder="Soru ara">
+          <div class="input-group-text bg-mavi border-0">
+            <button id="searchBtn" class="border-0 p-0 bg-mavi text-light">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
           </div>
         </div>
-
         <div>
           <button class="button button-success" data-bs-toggle="modal" data-bs-target="#soruEkleModal">Soru Sor</button>
         </div>
@@ -34,27 +23,17 @@
         <% }) %>
 
       </div>
-      <div class="d-flex justify-content-end">
-        <ul class="pagination">
-          <li class="page-item disabled">
-            <a class="page-link">Önceki</a>
-          </li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item " aria-current="page">
-            <a class="page-link" href="#">2</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Sonraki</a>
-          </li>
-        </ul>
-      </div>
     </div>
     <div class="col-lg-3 col-12 order-lg-2 order-1 sorularRight">
       <!-- position sticky-top olacak -->
       <div class="popularQuestions">
         <div class="text-kapalimavi">
           <h2>Popüler Sorular</h2>
+        </div>
+        <div class="popularList">
+          <% popular.forEach(soru => { %>
+          <%- include('../partials/_soru',{soru}) %>
+          <% }) %>
         </div>
       </div>
     </div>
@@ -67,32 +46,6 @@
 
 <script>
   $(function() {
-    // ClassicEditor
-    //   .create(document.querySelector('#editor'), {
-    //     language: 'tr',
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //   });
-
-
-    // tinymce.init({
-    //   selector: '#tiny',
-    //   plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
-    //   toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-    //   tinycomments_mode: 'embedded',
-    //   tinycomments_author: 'Author name',
-    //   mergetags_list: [{
-    //       value: 'First.Name',
-    //       title: 'First Name'
-    //     },
-    //     {
-    //       value: 'Email',
-    //       title: 'Email'
-    //     },
-    //   ]
-    // });
-    // var toolbarOptions = [['bold', 'italic'], ['link', 'image']];
     var toolbarOptions = [
       ['bold', 'italic', 'underline', 'strike'], // toggled buttons
       ['blockquote', 'code-block'],
@@ -150,7 +103,7 @@
       placeholder: "Sorunuzu oluşturun...",
       theme: 'snow'
     });
-    
+
     const token = Cookies.get('token');
     const config = {
       headers: {
@@ -158,26 +111,12 @@
       }
     };
 
-    // $(".likeBtn").click(async function(e) {
-    //   e.preventDefault();
-    //   console.log("likea basıldı");
-    //   const count = parseInt($(this).find(".count").text());
-    //   const soruId = $(this).siblings(".soruId").text();
-    //   $(this).find(".count").text(count + 1);
-
-    //   const result = await axios.get("/api/sorular/like/" + soruId, config);
-    //   console.log(result);
-    //   console.log(soruId);
-    // });
-
-    // $(".dislikeBtn").click(function(e) {
-    //   e.preventDefault();
-    //   console.log("dislikea basıldı");
-    //   const count = parseInt($(this).find(".count").text());
-    //   const soruId = $(this).siblings(".soruId").text();
-    //   $(this).find(".count").text(count + 1);
-    //   console.log(soruId);
-    // });
+    $("#searchBtn").click(async function(e) {
+      console.log("deneme123");
+      e.preventDefault();
+      const searchText = $("#searchText").val();
+      window.location.href = "/sorular/" + searchText;
+    });
 
   })
 </script>

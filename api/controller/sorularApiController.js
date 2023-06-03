@@ -3,9 +3,7 @@ const Cevap = require("../models/cevapModel");
 
 const sorulariGetir = async (req, res, next) => {
     try {
-        const pageNumber = req.params.pageNumber;
-        const pageSize = 10;
-        const sorular = await Soru.find({}).skip((pageNumber - 1) * pageSize).limit(pageSize);
+        const sorular = await Soru.find({});
         res.json(sorular);
     }
     catch (err) {
@@ -17,7 +15,7 @@ const soruEkle = async (req, res, next) => {
     try {
         const userId = req.userSession.id;
         const eklenecekSoru = new Soru(req.body);
-        eklenecekSoru.kisi=userId;
+        eklenecekSoru.kisi = userId;
         eklenecekSoru.save().then(result => {
             res.json({
                 mesaj: "Sorunuz başarıyla eklendi !",
@@ -37,10 +35,10 @@ const soruGetir = async (req, res, next) => {
         const soru = await Soru.findById(soruId).populate({
             path: 'cevaplar',
             populate: {
-              path: 'kisi',
-              select: 'ad soyad profileImage'
+                path: 'kisi',
+                select: 'ad soyad profileImage'
             }
-          });
+        });
 
         console.log(soru);
         res.json(soru);
@@ -90,17 +88,34 @@ const cevapEkle = async (req, res, next) => {
     }
 }
 
-
-const markAsSolution = async (req,res,next)=>{
-    try{
+const markAsSolution = async (req, res, next) => {
+    try {
         const cevap = await Cevap.findById(req.params.cevapId);
         cevap.isSolution = 1;
         await cevap.save();
         res.json({
-            status:200,
-            mesaj:"Cevap çözüm olarak işaretlendi",
+            status: 200,
+            mesaj: "Cevap çözüm olarak işaretlendi",
         })
-    }catch(err){
+    } catch (err) {
+        next(err);
+    }
+}
+
+const soruAra = async (req, res, next) => {
+    try {
+        const searchKeyword = req.params.search;
+        const regex = new RegExp(searchKeyword, "i");
+
+        const sorular = await Soru.find({
+            $or: [
+                { title: { $regex: regex } },
+                { htmlContent: { $regex: regex } }
+            ]
+        }).populate('kisi').populate('cevaplar');
+        res.json(sorular);
+    }
+    catch (err) {
         next(err);
     }
 }
@@ -110,5 +125,6 @@ module.exports = {
     soruEkle,
     soruGetir,
     cevapEkle,
-    markAsSolution
+    markAsSolution,
+    soruAra
 }

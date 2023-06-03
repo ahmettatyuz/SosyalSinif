@@ -6,11 +6,17 @@ const sorulariGetir = async (req, res, next) => {
     const config = {
         headers: { Authorization: `Bearer ${token}` }
     };
-    const pageNumber = req.params.pageNumber;
-    let sorular = await axios.get(process.env.BASE_URL + "/api/sorular/" + pageNumber, config);
+    const searchText = req.params.search;
+    let sorular = [];
+    if(searchText){
+        sorular = await axios.get(process.env.BASE_URL + "/api/sorular/"+searchText, config);
+    }else{
+        sorular = await axios.get(process.env.BASE_URL + "/api/sorular/", config);
+
+    }
     sorular = helper.toLocalTime(sorular.data);
-    console.log(sorular.data);
-    res.render("index", { page: "sorular", userSession: req.userSession, sorular: sorular });
+    const popular = [...sorular].sort((a,b)=>b.cevaplar.length-a.cevaplar.length).slice(0, 5);;
+    res.render("index", { page: "sorular", userSession: req.userSession, sorular: sorular,popular:popular });
 }
 
 const soruGetir = async (req, res, next) => {
