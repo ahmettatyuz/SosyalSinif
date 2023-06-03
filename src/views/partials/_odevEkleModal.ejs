@@ -30,7 +30,7 @@
                 <option value="klasik">Klasik soru</option>
               </select>
             </div>
-            <form action="soru">
+            <form action="" id="soruEkleForm">
               <div class="modalInput">
                 <div class="editorWrapper">
                   <div id="soruEditor">
@@ -212,7 +212,7 @@
 
       console.log(sorular);
       $("#soruEditor .ql-editor").empty();
-      $()
+      $('#soruEkleForm')[0].reset();
     });
 
     $("#temizleBtn").click(function(e) {
@@ -235,15 +235,6 @@
       sorular.splice(soruId, 1);
       eklenenSorulariGuncelle();
     })
-
-    // $(".eklenenSoruSilBtn").click(function(e) {
-    //   e.preventDefault();
-    //   console.log("soru sil");
-    //   const soruId = $(this).attr("id").split("-")[1];
-    //   console.log(soruId);
-    //   sorular.splice(soruId, 1);
-    //   eklenenSorulariGuncelle();
-    // });
 
 
     const eklenenSorulariGuncelle = () => {
