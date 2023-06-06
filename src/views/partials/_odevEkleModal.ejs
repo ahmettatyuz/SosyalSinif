@@ -9,15 +9,18 @@
       <div class="modal-body py-0 odevEkleBody">
         <div class="d-flex m-2 gap-2 align-items-center">
           <div>
-            <input type="text" class="form-control" id="odevAdi" placeholder="Ödev Başlığı">
+            <input type="text" class="form-control" name="title" id="odevAdi" placeholder="Ödev Başlığı (zorunlu)">
           </div>
           <div>
-            <input type="text" class="form-control" name="puan" id="puan" placeholder="Ödev Puanı">
+            <input type="text" class="form-control" name="puan" id="puan" placeholder="Ödev Puanı (zorunlu)">
           </div>
           <div class="d-flex align-items-center gap-1">
             <label for="odevTeslim">TeslimTarihi</label>
             <input class="form-control" type="date" name="odevTeslim" id="odevTeslim">
+          </div>
 
+          <div class="flex-grow-1">
+            <textarea class="form-control" name="aciklama" id="aciklama" rows="1" placeholder="Ödev ile ilgili açıklama"></textarea>
           </div>
 
         </div>
@@ -148,7 +151,12 @@
       theme: 'snow'
     });
     ///////////////////////////////////
-
+    const token = Cookies.get('token');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
 
     var today = new Date();
     var dd = today.getDate();
@@ -182,9 +190,10 @@
       e.preventDefault();
       let soru;
       let soruHtml;
-      const type = $("#soruType").val();
+      const soruType = $("#soruType").val();
+
       const htmlContent = $("#soruEditor .ql-editor").html();
-      if (type == "test") {
+      if (soruType == "test") {
         const cevap = $("input[name=cevap]:checked").val();
         const aText = $("#a").val();
         const bText = $("#b").val();
@@ -192,7 +201,7 @@
         const dText = $("#d").val();
 
         soru = {
-          type: type,
+          soruType: soruType,
           content: htmlContent,
           answer: cevap,
           a: aText,
@@ -200,9 +209,9 @@
           c: cText,
           d: dText
         }
-      } else if (type == "klasik") {
+      } else if (soruType == "klasik") {
         soru = {
-          type: type,
+          soruType: soruType,
           content: htmlContent
         }
       }
@@ -219,12 +228,34 @@
       $("#soruEditor .ql-editor").empty();
     })
 
-    $("#odeviOnaylaBtn").click(function(e) {
-      e.preventDefault();
+    $("#odeviOnaylaBtn").click(async function(e) {
       const sinifId = $("#sinifId").val();
-      const odev = {
+      const title = $("#odevAdi").val();
+      const aciklama = $("#aciklama").val();
+      const teslimTarihi = $("#teslimTarihi").val();
+      const puan = $("#puan").val();
 
+      if (sorular.length > 0 && title != "" && teslimTarihi != "" && puan != "") {
+        const odev = {
+          title: title,
+          teslimTarihi: teslimTarihi,
+          puan: puan,
+          aciklama: aciklama,
+          sorular: sorular
+        }
+
+        const result = await axios.post("/api/odevler/", odev, config);
+        if (result.data.status == 404) {
+          createToast("Hata", result.data.mesaj, "error");
+        } else {
+          createToast("Bilgi", result.data.mesaj, "success");
+          yonlendir("/ogretmen/siniflar/" + sinifId, 2);
+        }
+      }else{
+        createToast("Hata", "Lütfen tüm zorunlu alanları doldurduğunuzdan ve soru eklendiğinizden emin olun.", "error");
       }
+
+
     })
 
     $(document).on("click", ".eklenenSoruSilBtn", function(e) {
@@ -241,10 +272,10 @@
       $("#eklenenSorular").empty();
       if (sorular.length > 0) {
         sorular.forEach((soru, index) => {
-          if (soru.type == "test") {
+          if (soru.soruType == "test") {
             soruHtml = `<div class="eklenenSoru shadow bg-mavi rounded p-3 text-white mb-2">
                 <div class="d-flex justify-content-between">
-                  <div>${index+ 1}.Soru ${soru.type}</div>
+                  <div>${index+ 1}.Soru ${soru.soruType}</div>
                   <div><button type="button" id="soru-${index}" class="button button-danger px-2 eklenenSoruSilBtn mb-2"><i class="fa-solid fa-trash"></i></button></div>
                 </div>
                 <div>
@@ -258,10 +289,10 @@
                 </div>
                 <div class="badge bg-yesil fs-6">CEVAP : ${soru.answer}</div>
               </div>`;
-          } else if (soru.type == "klasik") {
+          } else if (soru.soruType == "klasik") {
             soruHtml = `<div class="eklenenSoru shadow bg-mavi rounded p-3 text-white mb-2">
                 <div class="d-flex justify-content-between">
-                  <div>${index+ 1}.Soru ${soru.type}</div>
+                  <div>${index+ 1}.Soru ${soru.soruType}</div>
                   <div><button type="button" id="soru-${index}" class="button button-danger px-2 eklenenSoruSilBtn mb-2"><i class="fa-solid fa-trash"></i></button></div>
                 </div>
                 <div>

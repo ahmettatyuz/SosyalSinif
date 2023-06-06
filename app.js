@@ -30,6 +30,7 @@ const derslerApiRouter = require("./api/routers/derslerApiRouter");
 const sohbetApiRouter = require("./api/routers/sohbetApiRouter");
 const todoApiRouter = require("./api/routers/todoApiRouter");
 const sorularApiRouter = require("./api/routers/sorularApiRouter");
+const odevlerApiRouter = require("./api/routers/odevlerApiRouter");
 const hataMiddleware = require("./api/middlewares/hataMiddleware");
 
 //api routers use 
@@ -39,6 +40,7 @@ app.use("/api/dersler", derslerApiRouter);
 app.use("/api/sohbet", sohbetApiRouter);
 app.use("/api/todo", todoApiRouter);
 app.use("/api/sorular", sorularApiRouter);
+app.use("/api/odevler", odevlerApiRouter);
 
 //frontend ****************
 
