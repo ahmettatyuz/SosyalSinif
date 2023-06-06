@@ -20,8 +20,14 @@ const odevEkle = async (req,res,next)=>{
     }
 }
 
-const odevleriGetir = (req,res,next)=>{
-
+const odevleriGetir = async (req,res,next)=>{
+    try{
+        const sinifId = req.params.sinifid;
+        const odevler = await Odev.find({sinifId:sinifId}).populate("tamamlayanOgrenciler.ogrenci");
+        res.json(odevler);
+    }catch(err){
+        next(err);
+    }
 }
 
 const odevGetir = (req,res,next)=>{
@@ -29,5 +35,6 @@ const odevGetir = (req,res,next)=>{
 }
 
 module.exports = {
-    odevEkle
+    odevEkle,
+    odevleriGetir,
 }

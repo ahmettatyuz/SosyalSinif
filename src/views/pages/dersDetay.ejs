@@ -4,16 +4,16 @@
     <div class="title">Duyurular</div>
     <div class="columnItems">
       <% sinif.duyurular.forEach(duyuru => { %>
-        <%- include('../partials/_duyuruRow',{duyuru}) %>
+      <%- include('../partials/_duyuruRow',{duyuru}) %>
       <% }) %>
     </div>
   </div>
   <div class="column col-md-5 col-12">
     <div class="title">Ödevler</div>
     <div class="columnItems">
-      <% for( let index = 0; index < 7; index++ ) { %>
-        <%- include('../partials/_odevRow') %>
-        <% } %>
+      <% odevler.forEach(odev => { %>
+        <%- include('../partials/_odevRow',{odev}) %>
+      <% }) %>
     </div>
   </div>
 </div>

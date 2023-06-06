@@ -26,7 +26,11 @@ const dersiGetir = async (req, res, next) => {
     let sinif = await axios.get(process.env.BASE_URL+"/api/dersler/"+req.params.sinifid,config);
     sinif=sinif.data;
     sinif.duyurular = toLocalTime(sinif.duyurular);
-    res.render("index", { page: "dersDetay" ,userSession:req.userSession,sinif:sinif});
+
+    let odevler = await axios.get(process.env.BASE_URL+ "/api/odevler/"+req.params.sinifid,config);
+    odevler = toLocalTime(odevler.data);
+    
+    res.render("index", { page: "dersDetay" ,userSession:req.userSession,sinif:sinif,odevler:odevler});
 }
 
 module.exports = {
