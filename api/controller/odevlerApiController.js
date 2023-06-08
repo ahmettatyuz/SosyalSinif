@@ -30,11 +30,19 @@ const odevleriGetir = async (req,res,next)=>{
     }
 }
 
-const odevGetir = (req,res,next)=>{
-
+const odevGetir = async (req,res,next)=>{
+    try{
+        const odevId = req.params.odevid;
+        console.log(odevId);
+        const odev = await Odev.findById(odevId).populate("tamamlayanOgrenciler.ogrenci");
+        res.json(odev);
+    }catch(err){
+        next(err);
+    }
 }
 
 module.exports = {
     odevEkle,
     odevleriGetir,
+    odevGetir
 }

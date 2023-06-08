@@ -6,21 +6,30 @@
       <button class="addRow" data-bs-toggle="modal" data-bs-target="#duyuruEkleModal"><i class="fa-solid fa-plus"></i></button>
     </div>
     <div class="columnItems">
+      <% if (sinif.duyurular.length==0) { %>
+      <div class="text-center display-6">Hiç duyuru yok !</div>
+      <% } else { %>
       <% sinif.duyurular.forEach(duyuru => { %>
-        <%- include('../partials/_duyuruRow',{duyuru}) %>
+      <%- include('../partials/_duyuruRow',{duyuru}) %>
       <% }) %>
+      <% } %>
     </div>
   </div>
   <div class="column col-md-4 col-12">
-      <div class="title">
-        Ödevler
-        <button class="addRow" data-bs-toggle="modal" data-bs-target="#odevEkleModal"><i class="fa-solid fa-plus"></i></button>
-      </div>
-    
+    <div class="title">
+      Ödevler
+      <button class="addRow" data-bs-toggle="modal" data-bs-target="#odevEkleModal"><i class="fa-solid fa-plus"></i></button>
+    </div>
+
     <div class="columnItems">
+      <% if (odevler.length==0) { %>
+      <div class="text-center display-6">Hiç ödev yok !</div>
+      <% } else { %>
       <% odevler.forEach(odev => { %>
-        <%- include('../partials/_odevRow',{odev}) %>
+      <%- include('../partials/_odevRow',{odev}) %>
       <% }) %>
+      <% } %>
+
     </div>
   </div>
   <div class="column col-md-4 col-12">
@@ -30,7 +39,7 @@
     </div>
     <div class="columnItems">
       <% if (sinif.ogrenciler.length==0) { %>
-      <div class="text-center display-6">Bu sınıfta hiç öğrenci yok !</div>
+      <div class="text-center display-6">Hiç öğrenci yok !</div>
       <% } else { %>
       <% sinif.ogrenciler.forEach(ogrenci => { %>
       <%- include('../partials/_ogrenciRow',{ogrenci}) %>
@@ -57,7 +66,7 @@
         $("#" + key).text(ogrenci.data[key]);
       }
       $("#id").val(ogrenci.data._id);
-      $("#ogrenciDetayModal .profileImage img").attr("src",ogrenci.data.profileImage)
+      $("#ogrenciDetayModal .profileImage img").attr("src", ogrenci.data.profileImage)
 
     });
     $(".ogrenciKaldirBtn").click(async function(e) {
@@ -83,7 +92,7 @@
       }
     })
 
-    $(".sinifiSilBtn").click(async function(e){
+    $(".sinifiSilBtn").click(async function(e) {
       e.preventDefault();
       const token = Cookies.get('token');
       const config = {
@@ -92,7 +101,7 @@
         }
       };
       const sinifId = $(this).attr("value");
-      const result = await axios.delete("/api/siniflar/"+sinifId,config);
+      const result = await axios.delete("/api/siniflar/" + sinifId, config);
       console.log(result);
       if (result.data.status == 404) {
         createToast("Hata", result.data.mesaj, "error");

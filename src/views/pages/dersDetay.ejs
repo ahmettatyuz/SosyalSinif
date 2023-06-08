@@ -3,17 +3,104 @@
   <div class="column col-md-5 col-12">
     <div class="title">Duyurular</div>
     <div class="columnItems">
+      <% if (sinif.duyurular.length==0) { %>
+      <div class="text-center display-6">Hiç duyuru yok !</div>
+      <% } else { %>
       <% sinif.duyurular.forEach(duyuru => { %>
       <%- include('../partials/_duyuruRow',{duyuru}) %>
       <% }) %>
+      <% } %>
     </div>
   </div>
   <div class="column col-md-5 col-12">
     <div class="title">Ödevler</div>
     <div class="columnItems">
+      <% if (odevler.length==0) { %>
+      <div class="text-center display-6">Hiç ödev yok !</div>
+      <% } else { %>
       <% odevler.forEach(odev => { %>
-        <%- include('../partials/_odevRow',{odev}) %>
+      <%- include('../partials/_odevRow',{odev}) %>
       <% }) %>
+      <% } %>
+
     </div>
   </div>
 </div>
+
+<%- include('../partials/_odevCozmeModal') %>
+
+
+<script>
+  $(function() {
+    $(".odeveBaslaBtn").click(async function() {
+      const odevId = $(this).attr("id");
+      const token = Cookies.get('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+
+      const odeviGetir = async (odevId) => {
+        console.log("/api/odevler/odev/" + odevId);
+        const result = await axios.get("/api/odevler/odev/" + odevId, config);
+        // console.log(result.data);
+        return result.data;
+      }
+
+      const odeviGoster = (odev) => {
+        $("#odevBaslik").text(odev.title)
+        $(".odevSorular").empty();
+        odev.sorular.forEach((soru, index) => {
+          let soruElement;
+          if (soru.soruType == "test") {
+            soruElement = `<div class="odevSoruTest">
+            <h3>${index+1}.Soru</h3>
+            <div class="odevSoruContent">
+              ${soru.content}
+            </div>
+            <div class="odevSoruSecenekler">
+              <div class="d-flex align-items-center gap-1">
+                <input type="radio" name="${index}" value="a" id="${index}a">
+                <label for="${index}a">${soru.a}</label>
+              </div>
+              <div class="d-flex align-items-center gap-1">
+                <input type="radio" name="${index}" value="b" id="${index}b">
+                <label for="${index}b">${soru.b}</label>
+              </div>
+              <div class="d-flex align-items-center gap-1">
+                <input type="radio" name="${index}" value="c" id="${index}c">
+                <label for="${index}c">${soru.c}</label>
+              </div>
+              <div class="d-flex align-items-center gap-1">
+                <input type="radio" name="${index}" value="d" id="${index}d">
+                <label for="${index}d">${soru.d}</label>
+              </div>
+
+            </div>
+          </div>`;
+          }
+          else if(soru.soruType=="klasik"){
+            soruElement=`<div class="odevSoruKlasik">
+            <h3>${index+1}.Soru</h3>
+            <div class="odevSoruContent">
+              ${soru.content}
+            </div>
+            <div class="odevSoruCevap mt-3">
+              <textarea class="form-control" name="${index}" id="" cols="30" rows="5" placeholder="Cevabınızı buraya yazın..."></textarea>
+            </div>
+          </div>`;
+          }
+
+
+
+          $(".odevSorular").append(soruElement);
+        });
+      
+      }
+
+      const odev = await odeviGetir(odevId);
+      odeviGoster(odev);
+    });
+  });
+</script>

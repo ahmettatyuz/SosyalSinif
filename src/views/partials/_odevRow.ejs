@@ -5,22 +5,19 @@
       <p><%= odev.aciklama %></p>
       <div class="badge bg-kirmizi">Son Teslim Tarihi: <br> <%= odev.teslimTarihi %></div>
     </div>
-    <div class="right pb-2">
+    <div class="right pb-2 text-end">
       <!-- eğer öğrenci ise başla butonu olacak -->
       <!-- öğretmen ise başla butonu gözükmeyecek -->
       <div>
-        Puan:<%= odev.puan %>
+        Ödev Puanı:<%= odev.puan %>
       </div>
       <% if (userSession.role=="ogrenci") { %>
-        <a href="#" class="button button-success">Başla</a>
+        <button class="button button-success odeveBaslaBtn" data-bs-toggle="modal" id="<%= odev._id %>" data-bs-target="#odevCozModal">Başla</button>
       <% } else if (userSession.role=="ogretmen") { %>
         <button class="button button-danger">Ödevi Kaldır</button>
       <% } %>
       
     </div>
 
-  </div>
-  <div class="progress mt-2" role="progressbar" aria-label="Animated striped example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-    <div class="progress-bar bg-mavi progress-bar-striped progress-bar-animated" style="width: 75%"></div>
   </div>
 </div>

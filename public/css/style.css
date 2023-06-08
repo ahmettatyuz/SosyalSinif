@@ -844,6 +844,34 @@ body {
     margin-bottom: 10px;
 }
 
+
+/* odev Çözme Modal */
+
+.odevSorular > div{
+    background-color: var(--mavi);
+    padding: 10px;
+    color: white;
+    margin: 10px auto;
+    border-radius: 5px;
+    width: 50%;
+    user-select: none;
+}
+
+.odevSoruSecenekler > div{
+    color: black;
+    display: inline-block;
+    padding: 5px;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.odevSoruSecenekler > div > label{
+    background-color: var(--acikmavi);
+    padding: 5px 10px;
+}
+
+
+
 /* diger */
 .page-name {
     font-size: 1.3em;
