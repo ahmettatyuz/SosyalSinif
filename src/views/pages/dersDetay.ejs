@@ -32,8 +32,9 @@
 
 <script>
   $(function() {
+    let odevId;
     $(".odeveBaslaBtn").click(async function() {
-      const odevId = $(this).attr("id");
+      odevId = $(this).attr("id");
       const token = Cookies.get('token');
       const config = {
         headers: {
@@ -79,9 +80,8 @@
 
             </div>
           </div>`;
-          }
-          else if(soru.soruType=="klasik"){
-            soruElement=`<div class="odevSoruKlasik">
+          } else if (soru.soruType == "klasik") {
+            soruElement = `<div class="odevSoruKlasik">
             <h3>${index+1}.Soru</h3>
             <div class="odevSoruContent">
               ${soru.content}
@@ -96,11 +96,27 @@
 
           $(".odevSorular").append(soruElement);
         });
-      
+
       }
 
       const odev = await odeviGetir(odevId);
       odeviGoster(odev);
+    });
+
+    $("#odeviTamamlaBtn").click(async function(e) {
+      const formData = $("#odevForm").serializeArray();
+      const token = Cookies.get('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      let formJson = formArrayToJson(formData);
+      formJson.odevId = odevId;
+      console.log(formJson);
+      const result = await axios.post("/api/odevler/cozum",formJson,config);
+      console.log(result);
+
     });
   });
 </script>

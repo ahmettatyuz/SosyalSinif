@@ -451,6 +451,7 @@ body {
     background-image: linear-gradient(to top, rgba(219, 226, 239, 0.6), rgba(219, 226, 239, 0.6));
     box-shadow: var(--golge1);
     position: relative;
+    overflow-y: auto;
 }
 
 .modalInput {

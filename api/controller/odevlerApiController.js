@@ -41,8 +41,42 @@ const odevGetir = async (req,res,next)=>{
     }
 }
 
+const odeviCoz = async(req,res,next)=>{
+    try{
+        const cozulenOdev = await Odev.findById(req.body.odevId);
+        delete req.body.odevId;
+        let ogrenci={
+            ogrenci:req.userSession._id,
+            dogruSayisi:0,
+            yanlisSayisi:0
+        };
+        cozulenOdev.sorular.forEach((item,index)=>{
+            console.log(item.answer);
+            console.log(req.body[index]);
+            if(item.answer == req.body[index] && item.answer!=undefined){
+                ogrenci.dogruSayisi+=1;
+            }else{
+                ogrenci.yanlisSayisi+=1;
+            }
+        });
+        console.log(ogrenci);
+        cozulenOdev.tamamlayanOgrenciler.push(ogrenci);
+        await cozulenOdev.save();
+        
+        res.json({
+            mesaj:"odev çözüldü",
+            status:200
+        });
+
+
+    }catch(err){
+        next(err);
+    }
+}
+
 module.exports = {
     odevEkle,
     odevleriGetir,
-    odevGetir
+    odevGetir,
+    odeviCoz
 }
