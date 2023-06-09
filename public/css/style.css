@@ -321,6 +321,12 @@ body {
     height: 100%;
 }
 
+.rowImage{
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+}
+
 .profileInfo {
     color: var(--mavi);
     text-align: center;
@@ -848,13 +854,17 @@ body {
 
 /* odev Çözme Modal */
 
-.odevSorular > div{
+.odevSorular{
+    height: 80vh;
+    overflow-y: auto;
+}
+
+.odevSorular>div{
     background-color: var(--mavi);
     padding: 10px;
     color: white;
     margin: 10px auto;
     border-radius: 5px;
-    width: 50%;
     user-select: none;
 }
 
@@ -866,11 +876,29 @@ body {
     margin-left: 15px;
 }
 
-.odevSoruSecenekler > div > label{
+.odevSoruSecenekler > div > *{
     background-color: var(--acikmavi);
     padding: 5px 10px;
+    border-radius: 10px;
 }
 
+.odevDetaylarBilgi{
+    position: sticky;
+    top: 0;
+}
+
+.detaylar{
+    height: 80vh;
+    overflow-y: scroll;
+}
+
+.tamamlayanOgrenci{
+    background-color: var(--kapalimavi);
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    margin: 10px 0;
+}
 
 
 /* diger */

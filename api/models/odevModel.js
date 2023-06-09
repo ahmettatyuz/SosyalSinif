@@ -16,7 +16,7 @@ const odevSchema = new Schema({
         trim:true
     },
     puan:{
-        type:String,
+        type:Number,
         require:true,
         trim:true
     },

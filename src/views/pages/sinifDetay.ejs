@@ -37,7 +37,7 @@
       Öğrenciler
       <button class="addRow" data-bs-toggle="modal" data-bs-target="#ogrenciEkleModal"><i class="fa-solid fa-plus"></i></button>
     </div>
-    <div class="columnItems">
+    <div class="columnItems ogrencilerColumn">
       <% if (sinif.ogrenciler.length==0) { %>
       <div class="text-center display-6">Hiç öğrenci yok !</div>
       <% } else { %>
@@ -52,14 +52,15 @@
 
 <script>
   $(function() {
+    const token = Cookies.get('token');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
     $(".ogrenciDetayBtn").click(async function(e) {
       const ogrenciID = $(this).val();
-      const token = Cookies.get('token');
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      };
+
       const ogrenci = await axios.get("/api/user/" + ogrenciID, config);
       console.log(ogrenci.data);
       for (const key in ogrenci.data) {
@@ -69,16 +70,11 @@
       $("#ogrenciDetayModal .profileImage img").attr("src", ogrenci.data.profileImage)
 
     });
+
     $(".ogrenciKaldirBtn").click(async function(e) {
       e.preventDefault();
       const ogrenciID = $(this).val();
       const sinifID = $("#sinifid").val();
-      const token = Cookies.get('token');
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      };
       const data = {
         ogrenciID: ogrenciID,
         sinifID: sinifID
@@ -94,12 +90,6 @@
 
     $(".sinifiSilBtn").click(async function(e) {
       e.preventDefault();
-      const token = Cookies.get('token');
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      };
       const sinifId = $(this).attr("value");
       const result = await axios.delete("/api/siniflar/" + sinifId, config);
       console.log(result);
@@ -109,7 +99,145 @@
         createToast("Bilgi", result.data.mesaj, "success");
         yonlendir("/ogretmen/siniflar", 2);
       }
-    })
+    });
+
+    const odeviGetir = async (odevId) => {
+      console.log("/api/odevler/odev/" + odevId);
+      const result = await axios.get("/api/odevler/odev/" + odevId, config);
+      // console.log(result.data);
+      return result.data;
+    }
+
+    const odeviGoster = (odev) => {
+      $("#odevBaslik").text(odev.title)
+      $(".odevSorular").empty();
+      odev.sorular.forEach((soru, index) => {
+        let soruElement;
+        if (soru.soruType == "test") {
+          soruElement = `<div class="odevSoruTest">
+            <h3>${index+1}.Soru</h3>
+            <div class="odevSoruContent">
+              ${soru.content}
+            </div>
+            <div class="odevSoruSecenekler">
+              <div class="d-flex align-items-center gap-1">
+                <div class"text-light">A)</div>
+                <label for="${index}a">${soru.a}</label>
+              </div>
+              <div class="d-flex align-items-center gap-1">
+                <div class"text-light">B)</div>
+                <label for="${index}b">${soru.b}</label>
+              </div>
+              <div class="d-flex align-items-center gap-1">
+                <div class"text-light">C)</div>
+                <label for="${index}c">${soru.c}</label>
+              </div>
+              <div class="d-flex align-items-center gap-1">
+                <div class"text-light">D)</div>
+                <label for="${index}d">${soru.d}</label>
+              </div>
+              <div class="d-flex align-items-center gap-1 text-light">
+                <div class="bg-yesil rounded" for="${index}d">Cevap: ${soru.answer}</div>
+              </div>
+
+            </div>
+          </div>`;
+        } else if (soru.soruType == "klasik") {
+          soruElement = `<div class="odevSoruKlasik">
+            <h3>${index+1}.Soru</h3>
+            <div class="odevSoruContent">
+              ${soru.content}
+            </div>
+          </div>`;
+        }
+
+
+
+        $(".odevSorular").append(soruElement);
+      });
+
+    }
+
+    const tamamlayanOgrencileriGoster = (ogrenciler, puan) => {
+      ogrenciler.forEach((ogrenci) => {
+        $(".detaylar").append(`
+          <div class="d-flex justify-content-between align-items-center tamamlayanOgrenci">
+            <div class="text-center">
+              <img src="${ogrenci.ogrenci.profileImage}" alt="" class="rowImage">
+              <div>
+                <div class="badge bg-sari">${ogrenci.ogrenci.ad} ${ogrenci.ogrenci.soyad}</div>
+              </div>
+              <div>
+                <div class="badge bg-acikmavi">No: ${ogrenci.ogrenci.no}</div>
+              </div>
+              
+            </div>
+
+            <div>
+              <div class="rounded p-3 bg-mavi my-2">Doğru: ${ogrenci.dogruSayisi}</div>
+              <div class="rounded p-3 bg-kirmizi my-2">Yanlış: ${ogrenci.yanlisSayisi}</div>
+              <div class="rounded p-3 bg-acikmavi my-2">Puan: ${ogrenci.dogruSayisi/(ogrenci.dogruSayisi+ogrenci.yanlisSayisi)*puan}</div>
+            </div>
+          </div>
+          
+          `);
+      })
+    }
+
+    const grafikCiz = (toplamDogru, toplamYanlis) => {
+      $(".grafik").append(`<canvas class="chart" id="basariOrani"></canvas>`);
+      const ctx = document.getElementById('basariOrani');
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Toplam Doğru', 'Toplam Yanlış'],
+          datasets: [{
+            label: 'Ödev Başarı Oranı',
+            data: [toplamDogru, toplamYanlis],
+            backgroundColor: [
+              'rgb(63, 114, 175)',
+              'rgb(231, 76, 60)'
+            ],
+          }]
+        }
+      });
+    }
+
+    $(".odevDetaylarBtn").click(async function(e) {
+      e.preventDefault();
+      const odevId = $(this).val();
+
+      $("#odevSorular").empty();
+      $(".grafik").empty();
+      $(".detaylar").empty();
+
+      const detaylarHtml = ``;
+      const odev = await odeviGetir(odevId);
+      odeviGoster(odev);
+      if (odev.tamamlayanOgrenciler.length > 0) {
+        tamamlayanOgrencileriGoster(odev.tamamlayanOgrenciler, odev.puan);
+        let toplamDogru = 0;
+        let toplamYanlis = 0;
+        odev.tamamlayanOgrenciler.forEach((item, index) => {
+          console.log(item);
+          toplamDogru += item.dogruSayisi;
+          toplamYanlis += item.yanlisSayisi;
+        });
+
+        grafikCiz(toplamDogru, toplamYanlis);
+        $(".grafik").append(`<div class="rounded p-3 bg-mavi my-2">Sınıf Ortalaması: ${toplamDogru/(toplamDogru+toplamYanlis)*100}</div>`);
+        $(".grafik").append(`<div class="rounded p-3 bg-mavi my-2">Ödevi Çözen Öğrenci Sayısı: ${odev.tamamlayanOgrenciler.length} / ${$(".ogrencilerColumn").children().length}</div>`);
+      }else{
+        $(".grafik").append(`<div class="rounded p-3 bg-mavi my-2">Ödevi henüz hiçbir öğrenci çözmemiş</div>`);
+
+
+
+      }
+
+    });
+
+
+
   })
 </script>
 
@@ -117,3 +245,4 @@
 <%- include('../partials/_odevEkleModal') %>
 <%- include('../partials/_ogrenciEkleModal') %>
 <%- include('../partials/_ogrenciDetayModal') %>
+<%- include('../partials/_odevDetayModal') %>

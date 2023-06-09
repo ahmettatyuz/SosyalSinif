@@ -1,75 +1,84 @@
 const Odev = require("../models/odevModel");
 
-const odevEkle = async (req,res,next)=>{
-    try{
+const odevEkle = async (req, res, next) => {
+    try {
         const eklenecekOdev = new Odev(req.body);
         const result = await eklenecekOdev.save();
-        if(result._id){
+        if (result._id) {
             res.json({
-                mesaj:"Ödev ekleniyor...",
-                status:200
+                mesaj: "Ödev ekleniyor...",
+                status: 200
             });
-        }else{
+        } else {
             res.json({
-                mesaj:"Ödev eklenemedi",
-                status:404
+                mesaj: "Ödev eklenemedi",
+                status: 404
             })
         }
-    }catch(err){
+    } catch (err) {
         next(err);
     }
 }
 
-const odevleriGetir = async (req,res,next)=>{
-    try{
+const odevleriGetir = async (req, res, next) => {
+    try {
         const sinifId = req.params.sinifid;
-        const odevler = await Odev.find({sinifId:sinifId}).populate("tamamlayanOgrenciler.ogrenci");
+        const userId = req.userSession._id;
+        const odevler = await Odev.find(
+            {
+                sinifId: sinifId
+            }).populate({
+                path: "tamamlayanOgrenciler",
+                select: 'ad soyad no profileImage'
+            });
         res.json(odevler);
-    }catch(err){
+    } catch (err) {
         next(err);
     }
 }
 
-const odevGetir = async (req,res,next)=>{
-    try{
+const odevGetir = async (req, res, next) => {
+    try {
         const odevId = req.params.odevid;
         console.log(odevId);
         const odev = await Odev.findById(odevId).populate("tamamlayanOgrenciler.ogrenci");
         res.json(odev);
-    }catch(err){
+    } catch (err) {
         next(err);
     }
 }
 
-const odeviCoz = async(req,res,next)=>{
-    try{
+const odeviCoz = async (req, res, next) => {
+    try {
         const cozulenOdev = await Odev.findById(req.body.odevId);
         delete req.body.odevId;
-        let ogrenci={
-            ogrenci:req.userSession._id,
-            dogruSayisi:0,
-            yanlisSayisi:0
+        console.log("çözen öğrenci");
+        console.log(req.userSession.id);
+        let object = {
+            ogrenci: req.userSession.id,
+            dogruSayisi: 0,
+            yanlisSayisi: 0
         };
-        cozulenOdev.sorular.forEach((item,index)=>{
+        cozulenOdev.sorular.forEach((item, index) => {
             console.log(item.answer);
             console.log(req.body[index]);
-            if(item.answer == req.body[index] && item.answer!=undefined){
-                ogrenci.dogruSayisi+=1;
-            }else{
-                ogrenci.yanlisSayisi+=1;
+            if (item.answer == req.body[index] && item.answer != undefined) {
+                object.dogruSayisi += 1;
+            } else {
+                object.yanlisSayisi += 1;
             }
         });
-        console.log(ogrenci);
-        cozulenOdev.tamamlayanOgrenciler.push(ogrenci);
+        console.log(object);
+        cozulenOdev.tamamlayanOgrenciler.push(object);
         await cozulenOdev.save();
-        
+
         res.json({
-            mesaj:"odev çözüldü",
-            status:200
+            mesaj: "Ödev çözüldü",
+            status: 200
         });
 
 
-    }catch(err){
+    } catch (err) {
         next(err);
     }
 }

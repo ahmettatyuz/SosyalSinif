@@ -191,24 +191,31 @@
       let soru;
       let soruHtml;
       const soruType = $("#soruType").val();
-
+      console.log(soruType);
       const htmlContent = $("#soruEditor .ql-editor").html();
       if (soruType == "test") {
         const cevap = $("input[name=cevap]:checked").val();
-        const aText = $("#a").val();
-        const bText = $("#b").val();
-        const cText = $("#c").val();
-        const dText = $("#d").val();
+        console.log(cevap);
+        if (cevap) {
+          const aText = $("#a").val();
+          const bText = $("#b").val();
+          const cText = $("#c").val();
+          const dText = $("#d").val();
 
-        soru = {
-          soruType: soruType,
-          content: htmlContent,
-          answer: cevap,
-          a: aText,
-          b: bText,
-          c: cText,
-          d: dText
+          soru = {
+            soruType: soruType,
+            content: htmlContent,
+            answer: cevap,
+            a: aText,
+            b: bText,
+            c: cText,
+            d: dText
+          }
+        }else{
+          createToast("Hata", "Lütfen cevabı seçiniz", "error");
+          return;
         }
+
       } else if (soruType == "klasik") {
         soru = {
           soruType: soruType,
@@ -237,14 +244,14 @@
 
       if (sorular.length > 0 && title != "" && teslimTarihi != "" && puan != "") {
         const odev = {
-          sinifId:sinifId,
+          sinifId: sinifId,
           title: title,
           teslimTarihi: teslimTarihi,
           puan: puan,
           aciklama: aciklama,
           sorular: sorular
         }
-        
+
         const result = await axios.post("/api/odevler/", odev, config);
         if (result.data.status == 404) {
           createToast("Hata", result.data.mesaj, "error");
@@ -252,7 +259,7 @@
           createToast("Bilgi", result.data.mesaj, "success");
           yonlendir("/ogretmen/siniflar/" + sinifId, 2);
         }
-      }else{
+      } else {
         createToast("Hata", "Lütfen tüm zorunlu alanları doldurduğunuzdan ve soru eklendiğinizden emin olun.", "error");
       }
     })

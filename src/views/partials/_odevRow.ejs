@@ -1,5 +1,5 @@
 <div class="columnRow odevRow">
-  <div class="d-flex justify-content-between align-items-center">
+  <div class="d-flex justify-content-between align-items-start">
     <div class="left">
       <h4><%= odev.title %></h4>
       <p><%= odev.aciklama %></p>
@@ -8,13 +8,19 @@
     <div class="right pb-2 text-end">
       <!-- eğer öğrenci ise başla butonu olacak -->
       <!-- öğretmen ise başla butonu gözükmeyecek -->
-      <div>
+      <div class="badge bg-mavi">
         Ödev Puanı:<%= odev.puan %>
       </div>
       <% if (userSession.role=="ogrenci") { %>
         <button class="button button-success odeveBaslaBtn" data-bs-toggle="modal" id="<%= odev._id %>" data-bs-target="#odevCozModal">Başla</button>
       <% } else if (userSession.role=="ogretmen") { %>
-        <button class="button button-danger">Ödevi Kaldır</button>
+        <div class="my-3">
+          <button class="button button-success odevDetaylarBtn" data-bs-toggle="modal" data-bs-target="#odevDetayModal" value="<%= odev._id %>">Detaylar</button>
+        </div>
+        <div class="my-1">
+          <button class="button button-danger" value="<%= odev._id %>">Ödevi Kaldır</button>
+        </div>
+        
       <% } %>
       
     </div>

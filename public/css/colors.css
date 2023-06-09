@@ -3,7 +3,7 @@
     --acikmavi:#DBE2EF; /* 219, 226, 239*/
     --mavi:#3F72AF; /* 63, 114, 175 */
     --kapalimavi:#112D4E;
-    --kirmizi:#e74c3c;
+    --kirmizi:#e74c3c;  /* 231, 76, 60 */
     --koyukirmizi:#c0392b;
     --yesil:rgb(101, 173, 101);
     --koyuyesil:rgb(65, 110, 65);
@@ -54,6 +54,7 @@
 }
 .bg-acikmavi{
     background-color: var(--acikmavi) !important;
+    color: var(--kapalimavi);
 }
 .bg-kapalimavi{
     background-color: var(--kapalimavi) !important;

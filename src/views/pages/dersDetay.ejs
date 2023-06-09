@@ -42,12 +42,6 @@
         }
       };
 
-      const odeviGetir = async (odevId) => {
-        console.log("/api/odevler/odev/" + odevId);
-        const result = await axios.get("/api/odevler/odev/" + odevId, config);
-        // console.log(result.data);
-        return result.data;
-      }
 
       const odeviGoster = (odev) => {
         $("#odevBaslik").text(odev.title)
@@ -55,7 +49,7 @@
         odev.sorular.forEach((soru, index) => {
           let soruElement;
           if (soru.soruType == "test") {
-            soruElement = `<div class="odevSoruTest">
+            soruElement = `<div class="odevSoruTest w-50">
             <h3>${index+1}.Soru</h3>
             <div class="odevSoruContent">
               ${soru.content}
@@ -81,7 +75,7 @@
             </div>
           </div>`;
           } else if (soru.soruType == "klasik") {
-            soruElement = `<div class="odevSoruKlasik">
+            soruElement = `<div class="odevSoruKlasik w-50">
             <h3>${index+1}.Soru</h3>
             <div class="odevSoruContent">
               ${soru.content}
@@ -99,6 +93,13 @@
 
       }
 
+      const odeviGetir = async (odevId) => {
+        console.log("/api/odevler/odev/" + odevId);
+        const result = await axios.get("/api/odevler/odev/" + odevId, config);
+        // console.log(result.data);
+        return result.data;
+      }
+
       const odev = await odeviGetir(odevId);
       odeviGoster(odev);
     });
@@ -106,6 +107,7 @@
     $("#odeviTamamlaBtn").click(async function(e) {
       const formData = $("#odevForm").serializeArray();
       const token = Cookies.get('token');
+      const sinifId = $("#sinifId").text();
       const config = {
         headers: {
           Authorization: `Bearer ${token}`
@@ -115,8 +117,12 @@
       formJson.odevId = odevId;
       console.log(formJson);
       const result = await axios.post("/api/odevler/cozum",formJson,config);
-      console.log(result);
-
+      if (result.data.status == 404) {
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        createToast("Bilgi", result.data.mesaj, "success");
+        yonlendir("/ogrenci/dersler/"+sinifId, 2);
+      }
     });
   });
 </script>
