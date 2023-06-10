@@ -10,12 +10,16 @@ const hataYakalayici = (err,req,res,next)=>{
             mesaj: `Bu ${hataKey} ile daha önceden bir kayıt eklenmiş !`,
         })
     }
+    else if (err.kind=="ObjectId"){
+        res.json({
+            status: 404,
+            mesaj: `Hatalı Kod !`,
+        })
+    }
     else{
         res.json({
             status:404,
-            mesaj:err.message
-            // proje sonunda
-            // buradaki mesajı hatalı işlem olarak değiştir
+            mesaj:"Hatalı İşlem !"
         });
     }
     

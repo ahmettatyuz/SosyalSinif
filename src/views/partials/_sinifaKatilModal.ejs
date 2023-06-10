@@ -1,0 +1,52 @@
+<div class="modal fade" id="katilModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="katilModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content eklemeModal">
+      <div class="modal-header pb-0">
+        <h3 class="modal-title" id="ogrenciEkleModal">Sınıfa Katıl</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="sinifaKatilForm">
+        <div class="modal-body py-0">
+          <div class="modalInput">
+            <input type="text" class="form-control" placeholder="Katıl Kodu" id="#sinifId" name="sinifid">
+            <input type="hidden" name="ogrenciler" value="<%= userSession.id %>">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="reset" class="button button-danger" data-bs-dismiss="modal">İptal</button>
+          <button type="submit" class="button button-success" id="katilBtn">Katıl</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $("#katilBtn").click(async function(e) {
+      e.preventDefault();
+      const formData = $("#sinifaKatilForm").serializeArray();
+      const token = Cookies.get('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const formJson = formArrayToJson(formData);
+      console.log(formJson);
+      if (formJson.ogrenciler) {
+        const result = await axios.post("/api/siniflar/ogrenciEkle", formJson, config);
+        console.log(result);
+        if (result.data.status == 404) {
+          createToast("Hata", result.data.mesaj, "error");
+        } else {
+          createToast("Bilgi", result.data.mesaj, "success");
+          yonlendir("/ogrenci/dersler/" + formJson.sinifid, 2);
+        }
+      } else {
+        createToast("Hata", "Lütfen öğrenci seçiniz", "warning");
+      }
+    })
+  })
+</script>

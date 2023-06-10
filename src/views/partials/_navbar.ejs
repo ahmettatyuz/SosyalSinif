@@ -13,11 +13,19 @@
     <% if (userSession.role=="ogretmen") { %>
     <button class="nav-btn" data-bs-toggle="modal" data-bs-target="#sinifEkleModal">
       <span>Sınıf Oluştur</span>
-      
+
       <i class="fa-solid fa-plus"></i>
     </button>
+
+    <% } else { %>
+    <button class="nav-btn" data-bs-toggle="modal" data-bs-target="#katilModal">
+      <span>Sınıfa Katıl</span>
+
+      <i class="fa-solid fa-plus"></i>
+    </button>
+
     <% } %>
-    
+
     <%- include('./_notificationPanel',{title:"Bildirimler"}) %>
     <%- include('./_notificationPanel',{title:"Mesajlar"}) %>
     <!-- <button href="" class="nav-btn">
@@ -28,4 +36,11 @@
     </button>
   </div>
 </nav>
+
+<% if (userSession.role=="ogretmen") { %>
 <%- include('./_sinifEkleModal') %>
+
+<% } else { %>
+<%- include('./_sinifaKatilModal') %>
+
+<% } %>
