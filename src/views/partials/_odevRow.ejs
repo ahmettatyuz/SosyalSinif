@@ -3,16 +3,27 @@
     <div class="left">
       <h4><%= odev.title %></h4>
       <p><%= odev.aciklama %></p>
-      <div class="badge bg-kirmizi">Son Teslim Tarihi: <br> <%= odev.teslimTarihi %></div>
+      <div class="badge bg-sari">Son Teslim Tarihi: <br> <%= odev.teslimTarihi %></div>
     </div>
     <div class="right pb-2 text-end">
       <!-- eğer öğrenci ise başla butonu olacak -->
       <!-- öğretmen ise başla butonu gözükmeyecek -->
-      <div class="badge bg-mavi">
+      <div class="badge bg-mavi d-block my-2">
         Ödev Puanı:<%= odev.puan %>
       </div>
       <% if (userSession.role=="ogrenci") { %>
-        <button class="button button-success odeveBaslaBtn" data-bs-toggle="modal" id="<%= odev._id %>" data-bs-target="#odevCozModal">Başla</button>
+        <% if (cozulmus!=1) { %>
+         <button class="button button-success odeveBaslaBtn" data-bs-toggle="modal" id="<%= odev._id %>" data-bs-target="#odevCozModal">Başla</button>
+        <% } else { %>
+         <% odev.tamamlayanOgrenciler.forEach(ogrenci => { %>
+          <% if (ogrenci.ogrenci==userSession.id) { %>
+            <div class="badge bg-mavi d-block my-2"><%= ogrenci.dogruSayisi %> Doğru</div>
+            <div class="badge bg-kirmizi d-block my-2"><%= ogrenci.yanlisSayisi %> Yanlış</div>
+            <div class="badge bg-yesil d-block my-2">Puan: <%= ogrenci.dogruSayisi/(ogrenci.dogruSayisi+ogrenci.yanlisSayisi)*odev.puan %></div>
+          <% } %>
+         <% }) %>
+        <% } %>
+        
       <% } else if (userSession.role=="ogretmen") { %>
         <div class="my-3">
           <button class="button button-success odevDetaylarBtn" data-bs-toggle="modal" data-bs-target="#odevDetayModal" value="<%= odev._id %>">Detaylar</button>

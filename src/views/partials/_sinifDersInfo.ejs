@@ -1,8 +1,23 @@
 <div class="courseInfo course-background">
-  <div id="sinifId"><%= sinif._id %></div>
+  
   <!-- <div class="courseInfo" style="background-image: linear-gradient(to bottom, rgba(37, 55, 90, 0.5), rgba(37, 55, 90, 0.5)),url('<%= baseURL %>/image/loginimage.jpg'); background-position: center;"></div> -->
   <%- include('./_dropdown') %>
   <h1><%= sinif.ad %></h1>
   <p><%= sinif.bolum || sinif.aciklama %></p>
   <p class="courseTeacher"><%= sinif.ogretmen.ad + " "+sinif.ogretmen.soyad%></p>
+  <div class="d-flex align-items-end justify-content-between">
+    <div>
+      
+    </div>
+    <div class="d-flex gap-2">
+      <div>
+        Sınıfa Katıl Kodu:
+      </div>
+      <div id="sinifId"><%= sinif._id %></div>
+    </div>
+
+
+  </div>
+  
+
 </div>

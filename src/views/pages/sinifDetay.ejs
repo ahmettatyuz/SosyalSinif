@@ -26,7 +26,7 @@
       <div class="text-center display-6">Hiç ödev yok !</div>
       <% } else { %>
       <% odevler.forEach(odev => { %>
-      <%- include('../partials/_odevRow',{odev}) %>
+      <%- include('../partials/_odevRow',{odev,cozulmus:0}) %>
       <% }) %>
       <% } %>
 
@@ -165,7 +165,7 @@
             <div class="text-center">
               <img src="${ogrenci.ogrenci.profileImage}" alt="" class="rowImage">
               <div>
-                <div class="badge bg-sari">${ogrenci.ogrenci.ad} ${ogrenci.ogrenci.soyad}</div>
+                <div class="badge bg-mavi">${ogrenci.ogrenci.ad} ${ogrenci.ogrenci.soyad}</div>
               </div>
               <div>
                 <div class="badge bg-acikmavi">No: ${ogrenci.ogrenci.no}</div>

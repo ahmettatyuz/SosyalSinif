@@ -72,6 +72,7 @@
 }
 .bg-sari{
     background-color: var(--sari) !important;
+    color: var(--kapalimavi);
 }
 .bg-koyusari{
     background-color: var(--koyusari) !important;

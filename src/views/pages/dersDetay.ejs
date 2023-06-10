@@ -13,14 +13,30 @@
     </div>
   </div>
   <div class="column col-md-5 col-12">
-    <div class="title">Ödevler</div>
+    <div class="title">
+      Ödevler
+    </div>
+    <div class="columnCheckbox">
+      <label for="tumunuGoster">Tümünü Göster</label>
+      <input class="form-check-input m-0 p-0" type="checkbox" name="" id="tumunuGoster">
+    </div>
     <div class="columnItems">
-      <% if (odevler.length==0) { %>
+      <% if (odevler.length==0 && cozulmemisOdevler.length==0) { %>
       <div class="text-center display-6">Hiç ödev yok !</div>
       <% } else { %>
-      <% odevler.forEach(odev => { %>
-      <%- include('../partials/_odevRow',{odev}) %>
-      <% }) %>
+      <div id="tamamlanmamis">
+        <% odevler.forEach(odev => { %>
+        <%- include('../partials/_odevRow',{odev,cozulmus:0}) %>
+        <% }) %>
+      </div>
+
+      <div id="tamamlanmis">
+        <% cozulmemisOdevler.forEach(odev => { %>
+        <%- include('../partials/_odevRow',{odev,cozulmus:1}) %>
+        <% }) %>
+      </div>
+
+
       <% } %>
 
     </div>
@@ -116,13 +132,24 @@
       let formJson = formArrayToJson(formData);
       formJson.odevId = odevId;
       console.log(formJson);
-      const result = await axios.post("/api/odevler/cozum",formJson,config);
+      const result = await axios.post("/api/odevler/cozum", formJson, config);
       if (result.data.status == 404) {
         createToast("Hata", result.data.mesaj, "error");
       } else {
         createToast("Bilgi", result.data.mesaj, "success");
-        yonlendir("/ogrenci/dersler/"+sinifId, 2);
+        yonlendir("/ogrenci/dersler/" + sinifId, 2);
       }
     });
+    
+    $("#tumunuGoster").change(function(e){
+      console.log($("#tumunuGoster").prop('checked'));
+      if($("#tumunuGoster").prop('checked')){
+        $("#tamamlanmis").slideDown();
+      }else{
+        $("#tamamlanmis").slideUp();
+      }
+      
+    });
+  
   });
 </script>

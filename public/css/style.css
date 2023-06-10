@@ -397,6 +397,25 @@ body {
     border-bottom-right-radius: 5px;
 }
 
+.columnCheckbox{
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    background-color: var(--acikmavi);
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.columnCheckbox label{
+    font-size: 12px;
+}
+.columnCheckbox input{
+    font-size: 20px;
+}
+
 .columnRow {
     padding: 15px;
     margin-bottom: 15px;
@@ -405,7 +424,9 @@ body {
     overflow-x: auto;
 }
 
-
+#tamamlanmis{
+    display: none;
+}
 
 
 .tarih {

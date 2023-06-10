@@ -35,7 +35,7 @@ const dersiGetir = async (req, res, next) => {
 
     console.log(odevler);
     const ogrenciId = req.userSession.id;
-    var filtrelenmisOdevler = odevler.filter(function (odev) {
+    var cozulmusOdevler = odevler.filter(function (odev) {
         // Tamamlayan öğrenciler dizisinde kullanıcının ID'sini kontrol et
         var tamamlayanOgrenciler = odev.tamamlayanOgrenciler;
         var tamamlandiMi = tamamlayanOgrenciler.some(function (ogrenci) {
@@ -46,8 +46,20 @@ const dersiGetir = async (req, res, next) => {
         return !tamamlandiMi;
     });
 
+    var cozulmemisOdevler = odevler.filter(function (odev) {
+        // Tamamlayan öğrenciler dizisinde kullanıcının ID'sini kontrol et
+        var tamamlayanOgrenciler = odev.tamamlayanOgrenciler;
+        var tamamlandiMi = tamamlayanOgrenciler.some(function (ogrenci) {
+            return ogrenci.ogrenci === ogrenciId;
+        });
 
-    res.render("index", { page: "dersDetay", userSession: req.userSession, sinif: sinif, odevler: filtrelenmisOdevler });
+        // Tamamlanmamış ödevleri döndür
+        return tamamlandiMi;
+    });
+
+
+
+    res.render("index", { page: "dersDetay", userSession: req.userSession, sinif: sinif, odevler: cozulmusOdevler,cozulmemisOdevler : cozulmemisOdevler });
 }
 
 module.exports = {
