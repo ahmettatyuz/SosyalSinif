@@ -178,6 +178,11 @@ body {
     text-decoration: underline;
 }
 
+#forgotPasswordForm,#codeVerificationForm,#newPasswordForm{
+    display: none;
+
+}
+
 .nav-img img {
     width: 100px;
 }

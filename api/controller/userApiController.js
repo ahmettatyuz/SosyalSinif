@@ -6,8 +6,9 @@ const createError = require("http-errors");
 const jwt = require("jsonwebtoken");
 const cookie = require("cookie");
 const multer = require("multer");
-const upload = multer({ dest: "./public/profileImages"});
+const upload = multer({ dest: "./public/profileImages" });
 const mongoose = require("mongoose");
+const nodemailer = require('nodemailer');
 
 const ogrencileriGetir = async (req, res, next) => {
     try {
@@ -61,7 +62,7 @@ const kullaniciEkle = async (req, res, next) => {
             eklenecekUser.parola = await bcrypt.hash(eklenecekUser.parola, 8);
             const sonuc = eklenecekUser.save()
                 .then(result => res.json(
-                    { mesaj: "Kayıt başarılı !" ,status:202}
+                    { mesaj: "Kayıt başarılı !", status: 202 }
                 ))
                 .catch(err => {
                     next(err);
@@ -84,7 +85,7 @@ const generateToken = async (user) => {
 const kullaniciGiris = async (req, res, next) => {
     try {
         // console.log(req.body);
-        const user = await User.findOne({ email: req.body.email }, { todo: 0 ,faceId:0});
+        const user = await User.findOne({ email: req.body.email }, { todo: 0, faceId: 0 });
         console.log("user " + user);
         if (user == null || user == undefined) {
             throw createError(404, "Email veya parola hatalı !");
@@ -111,7 +112,7 @@ const kullaniciGiris = async (req, res, next) => {
 }
 
 const faceIdileGiris = async (req, res, next) => {
-    const user = await User.findById(req.body.id,{todo:0});
+    const user = await User.findById(req.body.id, { todo: 0 });
     const token = await generateToken(user);
     res.cookie("token", token, {
         maxAge: 1000 * 60 * 60 * 2
@@ -124,6 +125,58 @@ const faceIdileGiris = async (req, res, next) => {
 
 const kullaniciSil = (req, res, next) => {
 
+}
+
+const kodGonder = async (req, res, next) => {
+    try {
+        const user = await User.findOne({ email: req.body.email });
+        console.log(user);
+        if (user) {
+            const transporter = nodemailer.createTransport({
+                service: 'gmail', // E-posta sağlayıcınızı burada belirtin, örneğin 'Gmail' veya 'SMTP'
+                auth: {
+                    user: process.env.SENDER_EMAIL, // Gönderen e-posta adresi
+                    pass: process.env.SENDER_PASSWORD // Gönderen e-posta hesabının şifresi
+                }
+            });
+
+            // E-posta ayarlarını ve içeriğini belirleyin
+            const mailOptions = {
+                from: process.env.SENDER_EMAIL, // Gönderen e-posta adresi
+                to: req.body.email, // Alıcı e-posta adresi
+                subject: 'Doğrulama Kodu', // E-posta konusu
+                html: `<div style="border-radius: 10px; padding:10px;font-size:20px;text-align: center;">
+                <img src="https://i.imgur.com/uPf4M5s.png" alt="" width="250px"> <br>
+                <b style="color: #3F72AF;">Sosyal Sınıf</b> tarafından gönderilen doğrulama kodu: <h4 style="color:#3F72AF">${req.body.code}</h4>Bu kodu kimseyle paylaşmayınız.
+              </div>`
+            };
+
+            // E-postayı gönderin
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log("kod gönderilemedi"),
+                        res.json({
+                            mesaj: "E-posta gönderilemedi",
+                            status: 404
+                        });
+                } else {
+                    console.log("kod epostanıza gönderildi"),
+                        res.json({
+                            mesaj: "Kod e-postanıza gönderildi.",
+                            status: 200
+                        });
+                }
+            });
+        } else {
+            res.json({
+                mesaj: "Kullanıcı bulunamadı",
+                status: 404
+            });
+        }
+
+    } catch (err) {
+        next(err);
+    }
 }
 
 const kullaniciGuncelle = async (req, res, next) => {
@@ -187,6 +240,29 @@ const kullaniciGuncelle = async (req, res, next) => {
 
 }
 
+const parolaDegistir = async (req, res, next) => {
+    try {
+        const user = await User.findOne({ email: req.body.email });
+        user.parola = await bcrypt.hash(req.body.parola1, 8);
+        console.log(req.body.parola1);
+        const result = await user.save();
+        if (result._id) {
+            res.json({
+                mesaj: "Parolanız değiştirildi",
+                status: 200,
+            });
+        } else {
+            res.json({
+                mesaj: "Parola değiştirilemedi",
+                status: 404
+            });
+        }
+    } catch (err) {
+        next(err);
+    }
+}
+
+
 const todoListGetir = async (req, res, next) => {
     try {
         const todoList = await User.findById(req.userSession.id, { todo: 1, _id: 0 }).populate("todo");
@@ -216,7 +292,7 @@ const todoEkle = async (req, res, next) => {
                     status: 202,
                     mesaj: "Görev ekleniyor..."
                 });
-            }else{
+            } else {
                 res.json({
                     status: 404,
                     mesaj: "Görev eklenemedi."
@@ -289,29 +365,29 @@ const faceIdPost = async (req, res, next) => {
 
 }
 
-const bildirimleriGetir = async ( req,res,next )=>{
-    try{
-        const result = await User.findById(req.userSession.id,{notifications:1}).populate("notifications");
+const bildirimleriGetir = async (req, res, next) => {
+    try {
+        const result = await User.findById(req.userSession.id, { notifications: 1 }).populate("notifications");
         res.json(result.notifications);
-    }catch(err){
+    } catch (err) {
         next(err);
     }
 }
 
 
-const bildirimleriKaldir = async (req,res,next)=>{
+const bildirimleriKaldir = async (req, res, next) => {
     // bu metod kullanıcı ders veya sınıfa girdiğinde çalışır.
-    try{
+    try {
         console.log("bildirimleri kaldir calisti");
         console.log(req.userSession);
-        const user = await User.findById(req.userSession.id,{notifications:1}).populate("notifications");
+        const user = await User.findById(req.userSession.id, { notifications: 1 }).populate("notifications");
         const sinifid = req.params.sinifid;
         console.log(sinifid);
-        user.notifications=user.notifications.filter(bildirim=>bildirim.sinifid!=sinifid);
+        user.notifications = user.notifications.filter(bildirim => bildirim.sinifid != sinifid);
         console.log(user);
         await user.save();
         next();
-    }catch(err){
+    } catch (err) {
         next(err);
     }
 }
@@ -331,5 +407,7 @@ module.exports = {
     faceIdPost,
     faceIdileGiris,
     bildirimleriGetir,
-    bildirimleriKaldir
+    bildirimleriKaldir,
+    kodGonder,
+    parolaDegistir
 }

@@ -20,7 +20,7 @@
           </div>
           <form id="loginForm">
             <div class="my-3">
-              <input type="email" class="form-control" placeholder="Emailinizi girin" name="email">
+              <input type="email" class="form-control" placeholder="Emailinizi girin" id="girisEmail" name="email">
             </div>
             <div class="my-3 pwinput">
               <i class="eye fa-solid fa-eye"></i>
@@ -40,6 +40,51 @@
             </div>
           </form>
 
+          <form action="" id="forgotPasswordForm">
+            <div class="text-center">
+              <h4>Sisteme kayıtlı e-posta adresinizi girin</h4>
+
+            </div>
+            <div class="my-3">
+              <input type="email" class="form-control" placeholder="Emailinizi girin" id="eposta" name="email">
+            </div>
+            <div class="my-2 text-center">
+              <button class="button button-primary w-100 d-block" id="sendCodeBtn">Kod Gönder</button>
+            </div>
+          </form>
+
+          <form action="" id="codeVerificationForm">
+            <div class="text-center">
+              <h4>E-postanıza gelen doğrulama kodunu girin</h4>
+            </div>
+            <div class="my-3">
+              <input type="text" class="form-control" placeholder="Doğrulama Kodunu Girin" id="code" name="code">
+            </div>
+            <div class="my-2 text-center">
+              <button class="button button-primary w-100 d-block" id="codeBtn">Onayla</button>
+            </div>
+          </form>
+
+          <form action="" id="newPasswordForm">
+            <div class="text-center">
+              <h4>Hesabınızın yeni parolasını oluşturun</h4>
+            </div>
+            <div class="my-3 pwinput">
+              <i class="eye fa-solid fa-eye"></i>
+              <input type="password" class="form-control parola" placeholder="Parolanızı girin" name="parola" id="password1">
+
+            </div>
+            <div class="my-3 pwinput">
+              <i class="eye fa-solid fa-eye"></i>
+              <input type="password" class="form-control parola" placeholder="Parolanızı tekrar girin" name="parola" id="password2">
+
+            </div>
+
+
+            <div class="my-2 text-center">
+              <button class="button button-primary w-100 d-block" id="passwordBtn">Onayla</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -104,6 +149,7 @@
       </form>
 
     </div>
+
   </div>
 </div>
 <script src="js/face-api.min.js"></script>
@@ -111,8 +157,8 @@
 
 
 <script>
-
   $(document).ready(function() {
+    let randomNum;
     $("#registerBtn").click(async function(e) {
       try {
         e.preventDefault();
@@ -174,5 +220,72 @@
       $(".loginBox").slideUp();
     });
 
-  })
+    $(".forgotPassword>a").click(function(e) {
+      e.preventDefault();
+      $("#loginForm").slideUp();
+      $("#forgotPasswordForm").slideDown();
+    });
+
+    $("#sendCodeBtn").click(async function(e) {
+      e.preventDefault();
+      const min = 1000;
+      const max = 9999;
+      randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+      const formData = $("#forgotPasswordForm").serializeArray();
+      const formJson = formArrayToJson(formData);
+      formJson.code = randomNum;
+      const result = await axios.post("/api/user/parolamiUnuttum", formJson);
+      if (result.data.status == 404) {
+        // createAlert("Hata", result.data.mesaj, "error", "Tamam");
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        // createAlert("Bilgi", result.data.mesaj, "success", "Tamam",2);
+        createToast("Bilgi", result.data.mesaj, "success");
+        $("#codeVerificationForm").slideDown();
+        $("#forgotPasswordForm").slideUp();
+
+      }
+    });
+
+    $("#codeBtn").click(function(e) {
+      e.preventDefault();
+      const code = $("#code").val();
+      if (code == randomNum) {
+        $("#newPasswordForm").slideDown();
+        $("#codeVerificationForm").slideUp();
+      } else {
+        createToast("Hata", "Doğrulama kodu hatalı !", "error");
+      }
+    });
+
+    $("#passwordBtn").click(async function(e) {
+      e.preventDefault();
+      const password1 = $("#password1").val();
+      const password2 = $("#password2").val();
+      const email = $("#eposta").val();
+      if (password1 == password2) {
+        const result = await axios.patch("/api/user/parolaGuncelle", {
+          parola1: password1,
+          email: email
+        });
+        if (result.data.status == 404) {
+          // createAlert("Hata", result.data.mesaj, "error", "Tamam");
+          createToast("Hata", result.data.mesaj, "error");
+        } else {
+          // createAlert("Bilgi", result.data.mesaj, "success", "Tamam",2);
+          createToast("Bilgi", result.data.mesaj, "success");
+          $("#newPasswordForm").slideUp();
+          $("#loginForm").slideDown();
+          $("#girisEmail").val(email);
+
+        }
+
+      } else {
+        createToast("Hata", "Parolalar eşleşmiyor !", "error");
+      }
+    })
+
+
+  });
 </script>
+

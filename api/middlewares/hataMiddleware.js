@@ -19,7 +19,7 @@ const hataYakalayici = (err,req,res,next)=>{
     else{
         res.json({
             status:404,
-            mesaj:"Hatalı İşlem !"
+            mesaj:err.message
         });
     }
     
