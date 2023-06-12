@@ -532,7 +532,6 @@ body {
 .ogrenciBilgiler {
     font-size: 14px;
     text-align: center;
-    border-right: 1px solid var(--mavi);
     padding-right: 10px;
 
 }
