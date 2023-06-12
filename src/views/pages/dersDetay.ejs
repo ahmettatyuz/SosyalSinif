@@ -60,7 +60,11 @@
 
 
       const odeviGoster = (odev) => {
-        $("#odevBaslik").text(odev.title)
+        $("#odevBaslik").text(odev.title);
+        $("#odevAciklama").text(odev.aciklama);
+        $("#odevPuan").text("Puan: "+odev.puan);
+        $("#soruSayisi").text("Soru Sayısı: "+odev.sorular.length);
+
         $(".odevSorular").empty();
         odev.sorular.forEach((soru, index) => {
           let soruElement;

@@ -13,7 +13,7 @@ const hataYakalayici = (err,req,res,next)=>{
     else if (err.kind=="ObjectId"){
         res.json({
             status: 404,
-            mesaj: `Hatalı Kod !`,
+            mesaj: `Kayıt Bulunamadı !`,
         })
     }
     else{

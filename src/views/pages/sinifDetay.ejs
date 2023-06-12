@@ -101,6 +101,19 @@
       }
     });
 
+    $(".odeviKaldirBtn").click(async function(e){
+      e.preventDefault();
+      const sinifID = $("#sinifid").val();
+      const odevId = $(this).val();
+      const result = await axios.delete("/api/odevler/delete/"+odevId,config);
+      if (result.data.status == 404) {
+        createToast("Hata", result.data.mesaj, "error");
+      } else {
+        createToast("Bilgi", result.data.mesaj, "success");
+        yonlendir("/ogretmen/siniflar/" + sinifID, 2);
+      }
+    });
+
     const odeviGetir = async (odevId) => {
       console.log("/api/odevler/odev/" + odevId);
       const result = await axios.get("/api/odevler/odev/" + odevId, config);
@@ -225,7 +238,7 @@
         });
 
         grafikCiz(toplamDogru, toplamYanlis);
-        $(".grafik").append(`<div class="rounded p-3 bg-mavi my-2">Sınıf Ortalaması: ${toplamDogru/(toplamDogru+toplamYanlis)*100}</div>`);
+        $(".grafik").append(`<div class="rounded p-3 bg-mavi my-2">Sınıf Başarı Oranı: %${toplamDogru/(toplamDogru+toplamYanlis)*100}</div>`);
         $(".grafik").append(`<div class="rounded p-3 bg-mavi my-2">Ödevi Çözen Öğrenci Sayısı: ${odev.tamamlayanOgrenciler.length} / ${$(".ogrencilerColumn").children().length}</div>`);
       }else{
         $(".grafik").append(`<div class="rounded p-3 bg-mavi my-2">Ödevi henüz hiçbir öğrenci çözmemiş</div>`);

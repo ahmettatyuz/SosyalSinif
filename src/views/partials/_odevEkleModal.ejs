@@ -27,12 +27,6 @@
 
         <div class="row">
           <div class="col-lg-8 col-12">
-            <div class="modalInput">
-              <select class="form-select" name="soruType" id="soruType">
-                <option value="test">Test sorusu</option>
-                <option value="klasik">Klasik soru</option>
-              </select>
-            </div>
             <form action="" id="soruEkleForm">
               <div class="modalInput">
                 <div class="editorWrapper">
@@ -177,20 +171,20 @@
 
     let sorular = [];
 
-    $("#soruType").change(function() {
-      const soruType = $(this).val();
-      if (soruType == "test") {
-        $(".optionGroup").slideDown();
-      } else if (soruType == "klasik") {
-        $(".optionGroup").slideUp();
-      }
-    });
+    // $("#soruType").change(function() {
+    //   const soruType = $(this).val();
+    //   if (soruType == "test") {
+    //     $(".optionGroup").slideDown();
+    //   } else if (soruType == "klasik") {
+    //     $(".optionGroup").slideUp();
+    //   }
+    // });
 
     $("#soruEkleBtn").click(function(e) {
       e.preventDefault();
       let soru;
       let soruHtml;
-      const soruType = $("#soruType").val();
+      const soruType = "test";
       console.log(soruType);
       const htmlContent = $("#soruEditor .ql-editor").html();
       if (soruType == "test") {
@@ -211,7 +205,7 @@
             c: cText,
             d: dText
           }
-        }else{
+        } else {
           createToast("Hata", "Lütfen cevabı seçiniz", "error");
           return;
         }

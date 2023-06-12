@@ -2,10 +2,16 @@
   <div class="modal-dialog modal-fullscreen">
     <div class="modal-content eklemeModal odevCozModal">
       <div class="modal-header py-1 px-3">
-        <h3 class="modal-title" id="odevBaslik"></h3>
+        <div class="d-flex align-items-center gap-3">
+          <h3 class="modal-title" id="odevBaslik"></h3>
+          <div id="odevAciklama"></div>
+          <div id="odevPuan" class="badge bg-mavi"></div>
+          <div id="soruSayisi" class="badge bg-mavi"></div>
+        </div>
+
         <div id="currentOdevId" class="d-none"></div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        
+
       </div>
       <form id="odevForm">
         <div class="modal-body py-0 odevCozBody">

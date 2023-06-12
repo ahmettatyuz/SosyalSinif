@@ -37,6 +37,18 @@ const odevleriGetir = async (req, res, next) => {
     }
 }
 
+const tumOdevleriGetir = async (req,res,next)=>{
+    try {
+        const odevler = await Odev.find().populate({
+                path: "tamamlayanOgrenciler",
+                select: 'ad soyad no profileImage'
+            }).populate("sinifId");
+        res.json(odevler);
+    } catch (err) {
+        next(err);
+    }
+}
+
 const odevGetir = async (req, res, next) => {
     try {
         const odevId = req.params.odevid;
@@ -83,9 +95,26 @@ const odeviCoz = async (req, res, next) => {
     }
 }
 
+const odeviKaldir = async(req,res,next)=>{
+    try{
+        const result = await Odev.findByIdAndDelete(req.params.odevId);
+        console.log("silinen odev id");
+        console.log(result._id);
+        if(result._id){}
+        res.json({
+            status:200,
+            mesaj:"Ödev kaldırıldı !",
+        });
+    }catch(err){
+        next(err)
+    }
+}
+
 module.exports = {
     odevEkle,
     odevleriGetir,
     odevGetir,
-    odeviCoz
+    odeviCoz,
+    odeviKaldir,
+    tumOdevleriGetir
 }
