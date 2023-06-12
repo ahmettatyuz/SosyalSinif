@@ -189,7 +189,7 @@
             <div>
               <div class="rounded p-3 bg-mavi my-2">Doğru: ${ogrenci.dogruSayisi}</div>
               <div class="rounded p-3 bg-kirmizi my-2">Yanlış: ${ogrenci.yanlisSayisi}</div>
-              <div class="rounded p-3 bg-acikmavi my-2">Puan: ${ogrenci.dogruSayisi/(ogrenci.dogruSayisi+ogrenci.yanlisSayisi)*puan}</div>
+              <div class="rounded p-3 bg-acikmavi my-2">Puan: ${(ogrenci.dogruSayisi/(ogrenci.dogruSayisi+ogrenci.yanlisSayisi)*puan).toFixed(2)}</div>
             </div>
           </div>
           
@@ -238,7 +238,7 @@
         });
 
         grafikCiz(toplamDogru, toplamYanlis);
-        $(".grafik").append(`<div class="rounded p-3 bg-mavi my-2">Sınıf Başarı Oranı: %${toplamDogru/(toplamDogru+toplamYanlis)*100}</div>`);
+        $(".grafik").append(`<div class="rounded p-3 bg-mavi my-2">Sınıf Başarı Oranı: %${(toplamDogru/(toplamDogru+toplamYanlis)*100).toFixed(2)}</div>`);
         $(".grafik").append(`<div class="rounded p-3 bg-mavi my-2">Ödevi Çözen Öğrenci Sayısı: ${odev.tamamlayanOgrenciler.length} / ${$(".ogrencilerColumn").children().length}</div>`);
       }else{
         $(".grafik").append(`<div class="rounded p-3 bg-mavi my-2">Ödevi henüz hiçbir öğrenci çözmemiş</div>`);
